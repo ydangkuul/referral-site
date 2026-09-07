@@ -54,16 +54,17 @@ function WelcomeScreen({ onNext }) {
 
       <div className="intro-welcome-container">
         <img src="/images/intro-bg.png" alt="" className="intro-bg-image" />
-        <img src="/images/intro-character.png" alt="" className="intro-character-image" />
+        <img src="/images/intro-linh-welcome.png" alt="" className="intro-character-image" />
       </div>
     </div>
   )
 }
 
-function PointingHero({ compact = false }) {
+function PointingHero({ compact = false, guideSrc = '/images/intro-linh-guide-line.png' }) {
   return (
     <div className={`intro-pointing-hero${compact ? ' compact' : ''}`} aria-hidden="true">
-      <img src="/images/intro-point-down.png" alt="" />
+      <img className="intro-pointing-guide" src={guideSrc} alt="" />
+      <img className="intro-pointing-mascot" src="/images/intro-linh-pointing.png" alt="" />
     </div>
   )
 }
@@ -177,7 +178,7 @@ function RewardScreen({ points, onNext, onBack }) {
         <img src={REWARD_ASSETS[points]} alt="" />
       </div>
       <img className="intro-reward-confetti" src="/images/intro-sequence-confetti.png" alt="" />
-      <img className="intro-reward-girl" src="/images/intro-sequence-girl.png" alt="" />
+      <img className="intro-reward-girl" src="/images/intro-linh-celebrate.png" alt="" />
       <div className="intro-reward-gradient" aria-hidden="true" />
       <SequenceFooter onClick={onNext}>Next</SequenceFooter>
       <div className="intro-home-indicator" aria-hidden="true" />
@@ -269,10 +270,11 @@ function InviteScreen({ playing, onPlayingChange, onNext, onBack }) {
     <div className="intro-screen intro-sequence-screen invite-screen">
       <IntroStatusBar />
       <IntroBackButton onBack={onBack} />
-      <PointingHero compact />
+      <h1 className="intro-video-title">Watch video<br />get more points</h1>
+      <PointingHero compact guideSrc="/images/intro-linh-video-guide-line.png" />
       <button className="intro-video-card" type="button" aria-label={playing ? 'Pause intro video' : 'Play intro video'} onClick={() => onPlayingChange(!playing)}>
         <img src="/images/intro-video-thumbnail.png" alt="" />
-        <span className={playing ? 'playing' : ''}><Play size={29} fill="none" /></span>
+        <span className={playing ? 'playing' : ''}><img src="/images/intro-video-play.svg" alt="" /></span>
       </button>
       <SequenceFooter onClick={onNext}>Next</SequenceFooter>
     </div>
@@ -284,6 +286,8 @@ const DEFAULT_INVITATION_MESSAGE = 'Hi! I’d like to invite you to join VietPay
 
 function InvitationShareScreen({ onNext, onBack }) {
   const [copied, setCopied] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [message, setMessage] = useState(DEFAULT_INVITATION_MESSAGE)
 
   async function copyInvitationLink() {
     await navigator.clipboard.writeText(INVITATION_LINK)
@@ -308,10 +312,22 @@ function InvitationShareScreen({ onNext, onBack }) {
       <section className="invitation-card" aria-label="Your invitation">
         <div className="invitation-card-heading">
           <h1>Your invitation</h1>
+          <button type="button" onClick={() => setEditing((value) => !value)}>
+            {editing ? 'Done' : 'Edit message'}
+          </button>
         </div>
 
         <div className="invitation-message-preview">
-          <p>{DEFAULT_INVITATION_MESSAGE}</p>
+          {editing ? (
+            <textarea
+              autoFocus
+              value={message}
+              aria-label="Invitation message"
+              onChange={(event) => setMessage(event.target.value)}
+            />
+          ) : (
+            <p>{message}</p>
+          )}
         </div>
 
         <span className="invitation-link-label">Invitation link</span>
@@ -379,6 +395,7 @@ export default function IntroFlow({ onComplete, onOpenEstimateGuide }) {
   if (stage === 'avatar') return <AvatarScreen choice={avatarChoice} name={name} onChoiceChange={setAvatarChoice} onNameChange={setName} onNext={goNext} onBack={goBack} />
   if (stage === 'upload') return <UploadScreen fileName={fileName} onFileChange={setFileName} onNext={goNext} onBack={goBack} />
   if (stage === 'invite') return <InviteScreen playing={videoPlaying} onPlayingChange={setVideoPlaying} onNext={goNext} onBack={goBack} />
+  if (stage === 'invitation-share') return <InvitationShareScreen onNext={goNext} onBack={goBack} />
   const points = Number(stage.split('-')[1])
   return <RewardScreen points={points} onNext={goNext} onBack={goBack} />
 }
