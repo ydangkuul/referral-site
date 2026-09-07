@@ -17,9 +17,10 @@ test('Network opens on the Figma My network overview scene', () => {
 
 test('first-launch network flow starts with synced contacts ready to invite', () => {
   assert.match(app, /const \[contactsSynced, setContactsSynced\] = useState\(true\)/)
-  assert.match(app, /\.slice\(0, 5\)/)
-  assert.match(app, /setContactInviteStage\(person \? 'preview' : 'select'\)/)
-  assert.match(app, /setContactInviteStage\(contactInviteDirect \? null : 'select'\)/)
+  assert.match(app, /const availableSyncedContacts = SYNCED_CONTACTS\.filter/)
+  assert.match(app, /setSelectedInviteNames\(\[person\.name\]\)/)
+  assert.match(app, /setContactInviteStage\('preview'\)/)
+  assert.doesNotMatch(app, /contactInviteStage === 'select'/)
 })
 
 test('first launch keeps Invited empty until an invitation is sent', () => {

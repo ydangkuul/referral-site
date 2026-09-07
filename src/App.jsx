@@ -233,7 +233,6 @@ function NetworkSyncOfferScreen({ onBack, onContinue }) {
       </section>
 
       <button type="button" className="network-sync-offer-terms">Terms and Conditions</button>
-      <button type="button" className="network-sync-offer-skip" onClick={onBack}>Skip</button>
       <button type="button" className="network-sync-offer-primary" onClick={onContinue}>Sync contacts get 1,000 pts</button>
     </div>
   )
@@ -254,7 +253,7 @@ const NETWORK_PRIVACY_POINTS = [
   },
 ]
 
-function NetworkPrivacyConsentScreen({ onBack, onSkip, onContinue, onOpenGuide }) {
+function NetworkPrivacyConsentScreen({ onBack, onContinue, onOpenGuide }) {
   const [infoOpen, setInfoOpen] = useState(false)
 
   return (
@@ -306,7 +305,6 @@ function NetworkPrivacyConsentScreen({ onBack, onSkip, onContinue, onOpenGuide }
         </section>
 
         <div className="network-privacy-actions">
-          <button type="button" className="network-privacy-skip" onClick={onSkip}>Skip</button>
           <button type="button" className="network-privacy-primary" onClick={onContinue}>Agree &amp; Continue</button>
         </div>
       </main>
@@ -490,7 +488,7 @@ function NetworkOverviewScreen({ onBack, onInvite, onNudge }) {
   )
 }
 
-function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contacts = SYNCED_CONTACTS, invitedContacts = NETWORK_CONTACTS, onBack, onRemind, onSync, onSkip, onInviteContact, onInviteContacts }) {
+function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contacts = SYNCED_CONTACTS, invitedContacts = NETWORK_CONTACTS, onBack, onRemind, onSync, onSkip, onInviteContact }) {
   const [tab, setTab] = useState(initialTab)
   const [query, setQuery] = useState('')
   const [showScrollHint, setShowScrollHint] = useState(true)
@@ -501,7 +499,6 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
       ? contacts
       : []
   const filteredPeople = people.filter(({ name }) => name.toLowerCase().includes(query.trim().toLowerCase()))
-  const displayedPeopleCount = showingSyncedContacts && !query.trim() ? 5 : filteredPeople.length
 
   return (
     <div className="network-scroll" tabIndex={0} aria-label="My Network">
@@ -575,7 +572,7 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
 
               <div className="network-list-heading">
                 <h2>{showingSyncedContacts ? 'Contacts' : tab === 'Invited' ? 'Invited contacts' : tab}</h2>
-                <span>{displayedPeopleCount} {displayedPeopleCount === 1 ? 'person' : 'people'}</span>
+                <span>{filteredPeople.length} {filteredPeople.length === 1 ? 'person' : 'people'}</span>
               </div>
 
               <div className="network-results-area">
@@ -605,7 +602,7 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
                 ) : (
                   <p className="network-empty-state">No people found.</p>
                 )}
-                {showingSyncedContacts && filteredPeople.length > 5 && showScrollHint && (
+                {showingSyncedContacts && filteredPeople.length > 6 && showScrollHint && (
                   <div className="network-scroll-hint" aria-hidden="true">
                     <ChevronDown size={14} />
                     <span>Swipe up</span>
@@ -613,13 +610,15 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
                 )}
               </div>
 
-              <button
-                type="button"
-                className="network-invite-button"
-                onClick={onInviteContacts}
-              >
-                {showingSyncedContacts ? 'Select contacts to invite' : 'Invite more people'}
-              </button>
+              {!showingSyncedContacts && (
+                <button
+                  type="button"
+                  className="network-invite-button"
+                  onClick={() => setTab('Contacts')}
+                >
+                  Invite more people
+                </button>
+              )}
             </>
           )}
         </div>
@@ -641,55 +640,6 @@ function ContactInviteHeader({ title, onBack, info = false }) {
   )
 }
 
-function ContactSelectScreen({ contacts, selectedNames, onSelectedNamesChange, onBack, onContinue }) {
-  const [query, setQuery] = useState('')
-  const filteredContacts = contacts.filter(({ name }) => name.toLowerCase().includes(query.trim().toLowerCase()))
-  const allSelected = contacts.length > 0 && contacts.every(({ name }) => selectedNames.includes(name))
-
-  function toggleName(name) {
-    onSelectedNamesChange(selectedNames.includes(name)
-      ? selectedNames.filter((item) => item !== name)
-      : [...selectedNames, name])
-  }
-
-  return (
-    <div className="contact-invite-screen contact-select-screen">
-      <ContactInviteHeader title="Select contacts" onBack={onBack} />
-      <main className="contact-select-body">
-        <label className="contact-select-search">
-          <Search size={21} aria-hidden="true" />
-          <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search people" />
-        </label>
-        <button
-          type="button"
-          className="contact-select-all"
-          onClick={() => onSelectedNamesChange(allSelected ? [] : contacts.map(({ name }) => name))}
-        >
-          <span className={`contact-check${allSelected ? ' checked' : ''}`}>{allSelected && <CircleCheck size={22} />}</span>
-          <strong>Select all</strong>
-          <small>{selectedNames.length} of {contacts.length} selected</small>
-        </button>
-        <section className="contact-select-list" aria-label="Synced contacts">
-          {filteredContacts.map((person) => {
-            const checked = selectedNames.includes(person.name)
-            return (
-              <button type="button" className={`contact-select-row${checked ? ' selected' : ''}`} key={person.name} onClick={() => toggleName(person.name)}>
-                <span className="contact-select-avatar">{person.initial}</span>
-                <span className="contact-select-copy"><strong>{person.name}</strong><small>Not invited yet</small></span>
-                <span className={`contact-check${checked ? ' checked' : ''}`}>{checked && <CircleCheck size={22} />}</span>
-              </button>
-            )
-          })}
-        </section>
-      </main>
-      <footer className="contact-select-footer">
-        <p>{selectedNames.length} contact{selectedNames.length === 1 ? '' : 's'} selected</p>
-        <button type="button" disabled={!selectedNames.length} onClick={onContinue}>Invite {selectedNames.length} {selectedNames.length === 1 ? 'person' : 'people'}</button>
-      </footer>
-    </div>
-  )
-}
-
 function ContactInvitationPreview({ names, onBack, onSent }) {
   function copyLink() {
     navigator.clipboard?.writeText(INVITATION_LINK)
@@ -699,7 +649,7 @@ function ContactInvitationPreview({ names, onBack, onSent }) {
     <div className="contact-invite-screen contact-invite-preview">
       <ContactInviteHeader onBack={onBack} info />
       <div className="contact-invite-hero" aria-hidden="true"><img src={assetUrl('images/network-invitation-hero.png')} alt="" /></div>
-      <div className="contact-invite-ready"><img src={assetUrl('images/network-invitation-sparkles.svg')} alt="" /><strong>{names.length === 1 ? `Ready to send invitation to ${names[0]}` : `Ready to send to ${names.length} contacts`}</strong></div>
+      <div className="contact-invite-ready"><img src={assetUrl('images/network-invitation-sparkles.svg')} alt="" /><strong>Ready to send invitation to {names[0]}</strong></div>
       <section className="contact-invite-card" aria-label="Invitation preview">
         <h2>Your invitation</h2>
         <p>{INVITATION_MESSAGE}</p>
@@ -991,7 +941,6 @@ export default function App() {
   const [reminderNames, setReminderNames] = useState([])
   const [networkStage, setNetworkStage] = useState('overview')
   const [contactInviteStage, setContactInviteStage] = useState(null)
-  const [contactInviteDirect, setContactInviteDirect] = useState(false)
   const [selectedInviteNames, setSelectedInviteNames] = useState([])
   const [recentlyInvitedNames, setRecentlyInvitedNames] = useState([])
   const [networkInitialTab, setNetworkInitialTab] = useState('Contacts')
@@ -1046,10 +995,8 @@ export default function App() {
   }
 
   function openContactInvite(person) {
-    const remainingContacts = SYNCED_CONTACTS.filter(({ name }) => !recentlyInvitedNames.includes(name))
-    setSelectedInviteNames(person ? [person.name] : remainingContacts.slice(0, 3).map(({ name }) => name))
-    setContactInviteDirect(Boolean(person))
-    setContactInviteStage(person ? 'preview' : 'select')
+    setSelectedInviteNames([person.name])
+    setContactInviteStage('preview')
   }
 
   function finishFirstLaunchInNetwork(contactsAreSynced) {
@@ -1061,21 +1008,7 @@ export default function App() {
     setContactInviteStage(null)
   }
 
-  const availableSyncedContacts = SYNCED_CONTACTS
-    .slice(0, 5)
-    .filter(({ name }) => !recentlyInvitedNames.includes(name))
-    .concat(
-      recentlyInvitedNames.includes('Thu Ha')
-        ? []
-        : [
-            { id: 'thu-ha-2', name: 'Thu Ha', initial: 'T' },
-            { id: 'thu-ha-3', name: 'Thu Ha', initial: 'T' },
-          ],
-    )
-  const syncedContactsWithStatus = SYNCED_CONTACTS.map((contact) => ({
-    ...contact,
-    invited: recentlyInvitedNames.includes(contact.name),
-  }))
+  const availableSyncedContacts = SYNCED_CONTACTS.filter(({ name }) => !recentlyInvitedNames.includes(name))
   const visibleInvitedContacts = recentlyInvitedNames.length
     ? recentlyInvitedNames.map((name) => ({ name, timing: 'Invited today', initial: name.slice(0, 1).toUpperCase() }))
     : launchMode === 'first'
@@ -1181,7 +1114,6 @@ export default function App() {
           ) : launchMode === 'first' && firstLaunchStage === 'privacy' ? (
             <NetworkPrivacyConsentScreen
               onBack={() => setFirstLaunchStage('network-offer')}
-              onSkip={() => finishFirstLaunchInNetwork(false)}
               onContinue={() => setFirstLaunchStage('syncing')}
               onOpenGuide={() => setGuideTopic('contactSync')}
             />
@@ -1220,18 +1152,10 @@ export default function App() {
               onClose={() => setReminderStage(null)}
             />
           ) : selectedNav === 'Network' ? (
-            contactInviteStage === 'select' ? (
-              <ContactSelectScreen
-                contacts={syncedContactsWithStatus}
-                selectedNames={selectedInviteNames}
-                onSelectedNamesChange={setSelectedInviteNames}
-                onBack={() => setContactInviteStage(null)}
-                onContinue={() => setContactInviteStage('preview')}
-              />
-            ) : contactInviteStage === 'preview' ? (
+            contactInviteStage === 'preview' ? (
               <ContactInvitationPreview
                 names={selectedInviteNames}
-                onBack={() => setContactInviteStage(contactInviteDirect ? null : 'select')}
+                onBack={() => setContactInviteStage(null)}
                 onSent={() => {
                   setRecentlyInvitedNames((names) => [...new Set([...names, ...selectedInviteNames])])
                   setContactInviteStage('reward')
@@ -1246,7 +1170,7 @@ export default function App() {
               <ContactInvitationSent
                 names={selectedInviteNames}
                 onBack={() => setContactInviteStage('preview')}
-                onInviteMore={() => openContactInvite()}
+                onInviteMore={() => setContactInviteStage(null)}
                 onViewInvited={() => {
                   setNetworkInitialTab('Invited')
                   setContactInviteStage(null)
@@ -1267,7 +1191,6 @@ export default function App() {
             ) : networkStage === 'consent' ? (
               <NetworkPrivacyConsentScreen
                 onBack={() => setNetworkStage('contacts')}
-                onSkip={() => setNetworkStage('contacts')}
                 onContinue={() => setNetworkStage('syncing')}
                 onOpenGuide={() => setGuideTopic('contactSync')}
               />
@@ -1300,7 +1223,6 @@ export default function App() {
                 onSync={() => setNetworkStage('consent')}
                 onSkip={() => setSelectedNav('Home')}
                 onInviteContact={openContactInvite}
-                onInviteContacts={() => openContactInvite()}
               />
             )
           ) : selectedNav === 'Plan' ? (
