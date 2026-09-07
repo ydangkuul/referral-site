@@ -31,9 +31,11 @@ test('first launch keeps Invited empty until an invitation is sent', () => {
   assert.match(app, /setRecentlyInvitedNames\(\(names\) => \[\.\.\.new Set\(\[\.\.\.names, \.\.\.selectedInviteNames\]\)\]\)/)
 })
 
-test('hides Nudge until at least one contact has been invited', () => {
+test('keeps Nudge visible but disabled until at least one contact has been invited', () => {
   assert.match(app, /function NetworkOverviewScreen\(\{[^}]*invitedCount = 0[^}]*\}\)/)
-  assert.match(app, /const hasAction = item\.key !== 'invited' \|\| invitedCount > 0/)
+  assert.match(app, /const enabled = item\.key === 'contacts' \|\| \(item\.key === 'invited' && invitedCount > 0\)/)
+  assert.match(app, /disabled=\{!enabled\}/)
+  assert.doesNotMatch(app, /const hasAction/)
   assert.match(app, /invitedCount=\{recentlyInvitedNames\.length\}/)
 })
 

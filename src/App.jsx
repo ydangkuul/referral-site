@@ -466,7 +466,6 @@ function NetworkOverviewScreen({ onBack, onInvite, onNudge, invitedCount = 0 }) 
 
         <div className="network-overview-list">
           {overviewRows.map((item) => {
-            const hasAction = item.key !== 'invited' || invitedCount > 0
             const enabled = item.key === 'contacts' || (item.key === 'invited' && invitedCount > 0)
             return (
               <article className={`network-overview-row${item.key === 'contacts' ? ' primary' : ''}`} key={item.key}>
@@ -477,16 +476,14 @@ function NetworkOverviewScreen({ onBack, onInvite, onNudge, invitedCount = 0 }) 
                     <span>{item.label}</span>
                   </div>
                 </div>
-                {hasAction && (
-                  <button
-                    type="button"
-                    className={enabled ? 'enabled' : ''}
-                    disabled={!enabled}
-                    onClick={() => handleAction(item.key)}
-                  >
-                    {item.action}
-                  </button>
-                )}
+                <button
+                  type="button"
+                  className={enabled ? 'enabled' : ''}
+                  disabled={!enabled}
+                  onClick={() => handleAction(item.key)}
+                >
+                  {item.action}
+                </button>
               </article>
             )
           })}
