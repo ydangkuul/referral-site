@@ -6,6 +6,5 @@ export const INTRO_STAGES = [
   'upload',
   'reward-3000',
   'invite',
-  'invitation-share',
   'reward-4000',
 ]
