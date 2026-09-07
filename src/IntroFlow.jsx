@@ -281,90 +281,6 @@ function InviteScreen({ playing, onPlayingChange, onNext, onBack }) {
   )
 }
 
-const INVITATION_LINK = 'vietpay.vn/invite/VIET2024XY'
-const DEFAULT_INVITATION_MESSAGE = 'Hi! I’d like to invite you to join VietPay — a simple way to make payments and earn rewards. Use my invitation link below.'
-
-function InvitationShareScreen({ onNext, onBack }) {
-  const [copied, setCopied] = useState(false)
-  const [editing, setEditing] = useState(false)
-  const [message, setMessage] = useState(DEFAULT_INVITATION_MESSAGE)
-
-  async function copyInvitationLink() {
-    await navigator.clipboard.writeText(INVITATION_LINK)
-    setCopied(true)
-  }
-
-  return (
-    <div className="intro-screen invitation-share-screen">
-      <IntroStatusBar />
-      <IntroBackButton onBack={onBack} />
-      <button className="invitation-share-info" type="button" aria-label="About invitations">
-        <Info size={17} />
-      </button>
-
-      <PointingHero compact />
-
-      <div className="invitation-ready-banner">
-        <img src="/images/invite-sparkles.svg" alt="" />
-        <strong>Your invitation is ready to send</strong>
-      </div>
-
-      <section className="invitation-card" aria-label="Your invitation">
-        <div className="invitation-card-heading">
-          <h1>Your invitation</h1>
-          <button type="button" onClick={() => setEditing((value) => !value)}>
-            {editing ? 'Done' : 'Edit message'}
-          </button>
-        </div>
-
-        <div className="invitation-message-preview">
-          {editing ? (
-            <textarea
-              autoFocus
-              value={message}
-              aria-label="Invitation message"
-              onChange={(event) => setMessage(event.target.value)}
-            />
-          ) : (
-            <p>{message}</p>
-          )}
-        </div>
-
-        <span className="invitation-link-label">Invitation link</span>
-        <div className="invitation-link-row">
-          <strong>{INVITATION_LINK}</strong>
-          <button type="button" onClick={copyInvitationLink}>
-            <img src="/images/invite-copy.svg" alt="" />
-            {copied ? 'Copied' : 'Copy'}
-          </button>
-        </div>
-      </section>
-
-      <section className="invitation-share-options" aria-label="Send invitation via">
-        <h2>Send invitation via</h2>
-        <div>
-          <button type="button" onClick={onNext} aria-label="Send via Zalo">
-            <span className="invitation-share-icon zalo"><img src="/images/invite-zalo.svg" alt="" /></span>
-            <span>Zalo</span>
-          </button>
-          <button type="button" onClick={onNext} aria-label="Send via Messenger">
-            <span className="invitation-share-icon messenger"><img src="/images/invite-messenger.svg" alt="" /></span>
-            <span>Messenger</span>
-          </button>
-          <button type="button" onClick={onNext} aria-label="Send via SMS">
-            <span className="invitation-share-icon sms"><img src="/images/invite-sms.svg" alt="" /></span>
-            <span>SMS</span>
-          </button>
-          <button type="button" onClick={onNext} aria-label="Send via Email">
-            <span className="invitation-share-icon email"><img src="/images/invite-email.svg" alt="" /></span>
-            <span>Email</span>
-          </button>
-        </div>
-      </section>
-    </div>
-  )
-}
-
 export default function IntroFlow({ onComplete, onOpenEstimateGuide }) {
   const [stage, setStage] = useState('welcome')
   const [merchants, setMerchants] = useState(10)
@@ -395,7 +311,6 @@ export default function IntroFlow({ onComplete, onOpenEstimateGuide }) {
   if (stage === 'avatar') return <AvatarScreen choice={avatarChoice} name={name} onChoiceChange={setAvatarChoice} onNameChange={setName} onNext={goNext} onBack={goBack} />
   if (stage === 'upload') return <UploadScreen fileName={fileName} onFileChange={setFileName} onNext={goNext} onBack={goBack} />
   if (stage === 'invite') return <InviteScreen playing={videoPlaying} onPlayingChange={setVideoPlaying} onNext={goNext} onBack={goBack} />
-  if (stage === 'invitation-share') return <InvitationShareScreen onNext={goNext} onBack={goBack} />
   const points = Number(stage.split('-')[1])
   return <RewardScreen points={points} onNext={goNext} onBack={goBack} />
 }
