@@ -37,8 +37,8 @@ test('individual invite follows preview, 1,000-point reward, then sent status', 
   assert.match(app, /images\/network-invitation-celebration\.png/)
 })
 
-test('bottom navigation stays on the overview and leaves the invitation scenes clear', () => {
-  assert.match(app, /selectedNav === 'Network' && networkStage !== 'overview'/)
+test('bottom navigation stays visible on network lists and leaves deeper flows clear', () => {
+  assert.match(app, /selectedNav === 'Network' && \['consent', 'syncing', 'success', 'reward'\]\.includes\(networkStage\)/)
   assert.match(css, /\.network-body\.contacts-synced \.network-invite-button \{\s*display: none;/)
 })
 
