@@ -969,7 +969,7 @@ input[type="file"] {
 
 .network-body.contacts-synced .network-results-area {
   min-height: 0;
-  height: 420px;
+  height: 504px;
   position: relative;
 }
 
@@ -1447,19 +1447,12 @@ input[type="file"] {
   gap: 14px;
 }
 
-.network-privacy-skip,
 .network-privacy-primary {
   width: 342px;
   height: 56px;
   border: 0;
   border-radius: 14px;
   font-size: 16px;
-}
-
-.network-privacy-skip {
-  background: transparent;
-  color: #0073bf;
-  font-weight: 600;
 }
 
 .network-privacy-primary {
@@ -2284,141 +2277,6 @@ input[type="file"] {
   right: 25px;
 }
 
-.contact-select-body {
-  height: calc(100% - 151px);
-  padding: 14px 20px 20px;
-  overflow-y: auto;
-  scrollbar-width: none;
-  background: #fdfbf7;
-}
-
-.contact-select-body::-webkit-scrollbar {
-  display: none;
-}
-
-.contact-select-search {
-  height: 52px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 0 14px;
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  color: var(--color-text-muted);
-  background: #fff;
-}
-
-.contact-select-search input {
-  width: 100%;
-  border: 0;
-  outline: 0;
-  color: var(--color-ink);
-  background: transparent;
-  font-size: 15px;
-}
-
-.contact-select-all {
-  width: 100%;
-  min-height: 58px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 0 12px;
-  border: 0;
-  border-bottom: 1px solid var(--color-border);
-  color: var(--color-ink);
-  background: transparent;
-  text-align: left;
-}
-
-.contact-select-all strong { flex: 1; font-size: 15px; }
-.contact-select-all small { color: var(--color-text-muted); font-size: 12px; }
-
-.contact-check {
-  width: 22px;
-  height: 22px;
-  display: grid;
-  place-items: center;
-  flex: none;
-  border: 1.5px solid #9da09d;
-  border-radius: 50%;
-  color: #fff;
-  background: #fff;
-}
-
-.contact-check.checked {
-  border-color: #0073bf;
-  background: #0073bf;
-}
-
-.contact-select-list {
-  margin-top: 12px;
-  overflow: hidden;
-  border: 1px solid var(--color-border);
-  border-radius: 14px;
-  background: #fff;
-  box-shadow: 0 3px 10px #0000000c;
-}
-
-.contact-select-row {
-  width: 100%;
-  min-height: 72px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
-  border: 0;
-  color: var(--color-ink);
-  background: #fff;
-  text-align: left;
-}
-
-.contact-select-row + .contact-select-row { border-top: 1px solid #ececec; }
-.contact-select-row.selected { background: #f2f9fd; }
-
-.contact-select-avatar {
-  width: 46px;
-  height: 46px;
-  display: grid;
-  place-items: center;
-  flex: none;
-  border-radius: 50%;
-  color: var(--color-primary);
-  background: #bfe0f5;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.contact-select-copy {
-  min-width: 0;
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.contact-select-copy strong { font-size: 15px; line-height: 21px; }
-.contact-select-copy small { color: var(--color-text-muted); font-size: 12px; }
-
-.contact-select-footer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 107px;
-  padding: 10px 20px 14px;
-  border-top: 1px solid var(--color-border);
-  background: #fff;
-}
-
-.contact-select-footer p {
-  margin: 0 0 8px;
-  color: var(--color-text-muted);
-  text-align: center;
-  font-size: 12px;
-}
-
-.contact-select-footer button,
 .contact-invite-primary {
   width: 100%;
   height: 54px;
@@ -2428,13 +2286,6 @@ input[type="file"] {
   background: var(--color-primary);
   font-size: 16px;
   font-weight: 600;
-}
-
-.contact-select-footer button:disabled {
-  color: #fff;
-  background: var(--color-primary);
-  opacity: 1;
-  cursor: default;
 }
 
 .contact-invite-preview { background: #fdfbf7; }
@@ -2579,7 +2430,7 @@ input[type="file"] {
   font-size: 14px;
 }
 
-.contact-invite-again { position: absolute; top: 603px; right: 24px; left: 24px; height: 20px; padding: 0; border: 0; color: #0073bf; background: transparent; font-size: 14px; font-weight: 600; }
+.contact-invite-again { position: absolute; top: 603px; right: 24px; left: 24px; height: 20px; padding: 0; border: 0; color: #0073bf; background: transparent; font-size: 16px; line-height: 20px; font-weight: 600; }
 .contact-invite-primary { position: absolute; top: 643px; right: 24px; left: 24px; width: auto; height: 56px; }
 
 .network-remind-button.already-invited:disabled {
@@ -2588,88 +2439,6 @@ input[type="file"] {
   background: #eaf6fd;
   cursor: default;
   opacity: 1;
-}
-
-/* Contact selection uses the verified VietPay style-guide palette. */
-.contact-select-screen {
-  --santorini-sea: #006fbe;
-  --santorini-sky: #69bde8;
-  --santorini-white: #fffdf8;
-  --santorini-sunset: #efa34a;
-  --santorini-peach: #f6d2b2;
-  background: #fff;
-}
-
-.contact-select-screen .contact-invite-header {
-  background: #fff;
-}
-
-.contact-select-screen .contact-select-body {
-  background: #fff;
-}
-
-.contact-select-screen .contact-select-search {
-  border-color: #dedede;
-  background: #fff;
-  box-shadow: none;
-}
-
-.contact-select-screen .contact-select-all {
-  border-bottom-color: #dedede;
-}
-
-.contact-select-screen .contact-select-all small,
-.contact-select-screen .contact-select-footer p {
-  color: #0d3c7d;
-}
-
-.contact-select-screen .contact-select-list {
-  border-color: #dedede;
-  background: #fff;
-  box-shadow: 0 2px 8px #00000014;
-}
-.contact-select-screen .contact-select-row {
-  background: #fff;
-  transition: background-color 160ms ease, box-shadow 160ms ease;
-}
-
-.contact-select-screen .contact-select-row.selected {
-  background: #eaf6fd;
-  box-shadow: inset 4px 0 0 #0073bf;
-}
-
-.contact-select-screen .contact-select-row:nth-child(3n + 1) .contact-select-avatar {
-  background: #bfe0f5;
-}
-
-.contact-select-screen .contact-select-row:nth-child(3n + 2) .contact-select-avatar {
-  background: #bfe0f5;
-}
-
-.contact-select-screen .contact-select-row:nth-child(3n) .contact-select-avatar {
-  background: #bfe0f5;
-  color: #0d3c7d;
-}
-
-.contact-select-screen .contact-check.checked {
-  border-color: #0073bf;
-  background: #0073bf;
-  box-shadow: none;
-}
-
-.contact-select-screen .contact-select-footer {
-  border-top-color: #dedede;
-  background: #fff;
-}
-
-.contact-select-screen .contact-select-footer button {
-  background: #0d3c7d;
-  box-shadow: none;
-}
-
-.contact-select-screen .contact-select-footer button:disabled {
-  background: #0d3c7d;
-  box-shadow: none;
 }
 
 /* Dashboard neutral/100 softened by 10% toward white. */

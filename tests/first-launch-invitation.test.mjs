@@ -5,6 +5,7 @@ import { readFile } from 'node:fs/promises'
 const sequenceSource = await readFile(new URL('../src/introSequence.js', import.meta.url), 'utf8')
 const introSource = await readFile(new URL('../src/IntroFlow.jsx', import.meta.url), 'utf8')
 const appSource = await readFile(new URL('../src/App.jsx', import.meta.url), 'utf8')
+const appCss = await readFile(new URL('../src/figma-overrides.css', import.meta.url), 'utf8')
 
 test('first launch continues from invitation video through share and 4,000-point reward', () => {
   assert.match(sequenceSource, /'invite',\s*'invitation-share',\s*'reward-4000'/s)
@@ -37,6 +38,31 @@ test('second flow finishes in the Network contacts screen', () => {
   assert.match(appSource, /setNetworkInitialTab\('Contacts'\)/)
   assert.match(appSource, /onNext=\{\(\) => finishFirstLaunchInNetwork\(true\)\}/)
   assert.doesNotMatch(appSource, /setFirstLaunchStage\('dashboard'\)/)
+})
+
+test('first launch invited tab starts empty until the user sends an invite', () => {
+  assert.match(
+    appSource,
+    /const visibleInvitedContacts = recentlyInvitedNames\.length[\s\S]*?: launchMode === 'first'[\s\S]*?\? \[\][\s\S]*?: NETWORK_CONTACTS/,
+  )
+  assert.match(appSource, /tab === 'Invited' && invitedContacts\.length > 0 && \(/)
+})
+
+test('contact invitations send one person at a time without a selection scene', () => {
+  assert.doesNotMatch(appSource, /function ContactSelectScreen/)
+  assert.doesNotMatch(appSource, /contactInviteStage === 'select'/)
+  assert.match(appSource, /function openContactInvite\(person\)[\s\S]*?setSelectedInviteNames\(\[person\.name\]\)[\s\S]*?setContactInviteStage\('preview'\)/)
+  assert.match(appSource, /Ready to send to \{names\[0\]\}/)
+})
+
+test('invitation sent actions use the same label size', () => {
+  assert.match(appCss, /\.contact-invite-again\s*\{[^}]*font-size:\s*16px;[^}]*line-height:\s*20px;/s)
+  assert.match(appCss, /\.contact-invite-primary\s*\{[^}]*font-size:\s*16px;/s)
+})
+
+test('synced contacts list shows six complete rows before scrolling', () => {
+  assert.match(appCss, /\.network-body\.contacts-synced \.network-results-area\s*\{[^}]*height:\s*504px;/s)
+  assert.match(appSource, /showingSyncedContacts && filteredPeople\.length > 6 && showScrollHint/)
 })
 
 test('second flow uses correctly framed reward and pointing assets', () => {
