@@ -414,6 +414,11 @@ const NETWORK_OVERVIEW_ROWS = [
 
 function NetworkOverviewScreen({ onBack, onInvite, onNudge, invitedCount = 0 }) {
   const [infoOpen, setInfoOpen] = useState(false)
+  const overviewRows = NETWORK_OVERVIEW_ROWS.map((item) => (
+    item.key === 'invited'
+      ? { ...item, value: String(invitedCount).padStart(2, '0') }
+      : item
+  ))
 
   function handleAction(key) {
     if (key === 'contacts') onInvite()
@@ -460,26 +465,28 @@ function NetworkOverviewScreen({ onBack, onInvite, onNudge, invitedCount = 0 }) 
         </button>
 
         <div className="network-overview-list">
-          {NETWORK_OVERVIEW_ROWS.map((item) => {
+          {overviewRows.map((item) => {
+            const hasAction = item.key !== 'invited' || invitedCount > 0
             const enabled = item.key === 'contacts' || (item.key === 'invited' && invitedCount > 0)
-            const value = item.key === 'invited' ? String(invitedCount).padStart(2, '0') : item.value
             return (
               <article className={`network-overview-row${item.key === 'contacts' ? ' primary' : ''}`} key={item.key}>
                 <div className="network-overview-row-main">
                   <img src={item.icon} alt="" />
                   <div className="network-overview-metric">
-                    <strong>{value}</strong>
+                    <strong>{item.value}</strong>
                     <span>{item.label}</span>
                   </div>
                 </div>
-                <button
-                  type="button"
-                  className={enabled ? 'enabled' : ''}
-                  disabled={!enabled}
-                  onClick={() => handleAction(item.key)}
-                >
-                  {item.action}
-                </button>
+                {hasAction && (
+                  <button
+                    type="button"
+                    className={enabled ? 'enabled' : ''}
+                    disabled={!enabled}
+                    onClick={() => handleAction(item.key)}
+                  >
+                    {item.action}
+                  </button>
+                )}
               </article>
             )
           })}
@@ -1032,11 +1039,11 @@ export default function App() {
   }
 
   const availableSyncedContacts = SYNCED_CONTACTS.filter(({ name }) => !recentlyInvitedNames.includes(name))
-  const visibleInvitedContacts = recentlyInvitedNames.length
-    ? recentlyInvitedNames.map((name) => ({ name, timing: 'Invited today', initial: name.slice(0, 1).toUpperCase() }))
-    : launchMode === 'first'
-      ? []
-      : NETWORK_CONTACTS
+  const visibleInvitedContacts = recentlyInvitedNames.map((name) => ({
+    name,
+    timing: 'Invited today',
+    initial: name.slice(0, 1).toUpperCase(),
+  }))
 
   function handlePhoneCommentClick(e) {
     if (!redCommentMode) return
@@ -1206,8 +1213,8 @@ export default function App() {
               />
             ) : networkStage === 'overview' ? (
               <NetworkOverviewScreen
-                onBack={() => setSelectedNav('Home')}
                 invitedCount={recentlyInvitedNames.length}
+                onBack={() => setSelectedNav('Home')}
                 onInvite={() => {
                   setNetworkInitialTab('Contacts')
                   setNetworkStage('contacts')

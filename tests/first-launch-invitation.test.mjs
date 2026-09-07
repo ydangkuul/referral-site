@@ -43,17 +43,15 @@ test('My network overview starts the Figma contact invitation flow', () => {
   assert.match(appSource, /onBack=\{\(\) => setNetworkStage\('overview'\)\}/)
 })
 
-test('Nudge is disabled until at least one contact has been invited', () => {
-  assert.match(appSource, /item\.key === 'invited' && invitedCount > 0/)
-  assert.match(appSource, /item\.key === 'invited' \? String\(invitedCount\)\.padStart\(2, '0'\)/)
+test('Nudge is hidden until at least one contact has been invited', () => {
+  assert.match(appSource, /const hasAction = item\.key !== 'invited' \|\| invitedCount > 0/)
+  assert.match(appSource, /item\.key === 'invited'[\s\S]*?String\(invitedCount\)\.padStart\(2, '0'\)/)
   assert.match(appSource, /invitedCount=\{recentlyInvitedNames\.length\}/)
 })
 
 test('first launch invited tab starts empty until the user sends an invite', () => {
-  assert.match(
-    appSource,
-    /const visibleInvitedContacts = recentlyInvitedNames\.length[\s\S]*?: launchMode === 'first'[\s\S]*?\? \[\][\s\S]*?: NETWORK_CONTACTS/,
-  )
+  assert.match(appSource, /const visibleInvitedContacts = recentlyInvitedNames\.map/)
+  assert.doesNotMatch(appSource, /launchMode === 'first'\s*\? \[\]\s*:\s*NETWORK_CONTACTS/)
   assert.match(appSource, /tab === 'Invited' && invitedContacts\.length > 0 && \(/)
 })
 

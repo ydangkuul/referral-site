@@ -17,6 +17,7 @@ test('Network opens on the Figma My network overview scene', () => {
 
 test('first-launch network flow starts with synced contacts ready to invite', () => {
   assert.match(app, /const \[contactsSynced, setContactsSynced\] = useState\(true\)/)
+  assert.doesNotMatch(app, /contacts-case-toggle|contacts: synced|contacts: not synced/)
   assert.match(app, /const availableSyncedContacts = SYNCED_CONTACTS\.filter/)
   assert.match(app, /setSelectedInviteNames\(\[person\.name\]\)/)
   assert.match(app, /setContactInviteStage\('preview'\)/)
@@ -25,8 +26,15 @@ test('first-launch network flow starts with synced contacts ready to invite', ()
 
 test('first launch keeps Invited empty until an invitation is sent', () => {
   assert.match(app, /tab === 'Invited' && invitedContacts\.length > 0/)
-  assert.match(app, /launchMode === 'first'\s*\? \[\]\s*:\s*NETWORK_CONTACTS/)
+  assert.match(app, /const visibleInvitedContacts = recentlyInvitedNames\.map/)
+  assert.doesNotMatch(app, /launchMode === 'first'\s*\? \[\]\s*:\s*NETWORK_CONTACTS/)
   assert.match(app, /setRecentlyInvitedNames\(\(names\) => \[\.\.\.new Set\(\[\.\.\.names, \.\.\.selectedInviteNames\]\)\]\)/)
+})
+
+test('hides Nudge until at least one contact has been invited', () => {
+  assert.match(app, /function NetworkOverviewScreen\(\{[^}]*invitedCount = 0[^}]*\}\)/)
+  assert.match(app, /const hasAction = item\.key !== 'invited' \|\| invitedCount > 0/)
+  assert.match(app, /invitedCount=\{recentlyInvitedNames\.length\}/)
 })
 
 test('individual invite follows preview, 1,000-point reward, then sent status', () => {
