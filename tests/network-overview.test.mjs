@@ -50,6 +50,8 @@ test('individual invite follows preview, 1,000-point reward, then sent status', 
 test('bottom navigation stays visible on network lists and leaves deeper flows clear', () => {
   assert.match(app, /selectedNav === 'Network' && \['consent', 'syncing', 'success', 'reward'\]\.includes\(networkStage\)/)
   assert.match(css, /\.network-body\.contacts-synced \.network-invite-button \{\s*display: none;/)
+  assert.match(css, /\.network-scroll \{[\s\S]*inset: 47px 0 0;/)
+  assert.match(css, /\.network-body:not\(\.contacts-unsynced\) \.network-invite-button \{[\s\S]*top: 665px;/)
 })
 
 test('Network overview actions continue into the existing contact flows', () => {
@@ -63,4 +65,5 @@ test('Network overview preserves the 390px Figma geometry and VietPay tokens', (
   assert.match(css, /\.network-overview-banner[\s\S]*width: 342px;[\s\S]*height: 68px;/)
   assert.match(css, /\.network-overview-row[\s\S]*height: 90px;/)
   assert.match(css, /\.network-overview-title h1[\s\S]*color: #0d3c7d;[\s\S]*font-size: 24px;/)
+  assert.match(css, /\.contact-share-options > div \{ display: flex; justify-content: center; gap: 16px;/)
 })

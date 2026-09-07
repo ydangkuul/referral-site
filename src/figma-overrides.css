@@ -973,7 +973,7 @@ input[type="file"] {
 /* Network tab — Figma node 878:2178. */
 .network-scroll {
   position: absolute;
-  inset: 47px 0 70px;
+  inset: 47px 0 0;
   overflow-y: auto;
   background: #fdfbf7;
   color: var(--color-ink);
@@ -1213,7 +1213,7 @@ input[type="file"] {
 
 .network-body:not(.contacts-unsynced) .network-invite-button {
   position: absolute;
-  top: 611px;
+  top: 665px;
   left: 24px;
   width: 342px;
   margin: 0;
@@ -2673,7 +2673,7 @@ input[type="file"] {
   line-height: 20px;
 }
 
-.contact-share-options > div { display: flex; justify-content: space-between; margin-top: 16px; }
+.contact-share-options > div { display: flex; justify-content: center; gap: 16px; margin-top: 16px; }
 .contact-share-options button { width: 62px; display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 0; border: 0; color: var(--color-text-muted); background: transparent; font-size: 12px; font-weight: 600; }
 .contact-share-options button img { width: 48px; height: 48px; padding: 13px; border-radius: 50%; }
 .contact-share-options button:nth-child(1) img { background: #0073bf; }
