@@ -1008,6 +1008,16 @@ export default function App() {
     setContactInviteStage(null)
   }
 
+  function restartLaunchMode(mode) {
+    setLaunchMode(mode)
+    setIntroCompleted(false)
+    setFirstLaunchStage(null)
+    setRecentlyInvitedNames([])
+    setSelectedInviteNames([])
+    setContactInviteStage(null)
+    setNetworkInitialTab('Contacts')
+  }
+
   const availableSyncedContacts = SYNCED_CONTACTS.filter(({ name }) => !recentlyInvitedNames.includes(name))
   const visibleInvitedContacts = recentlyInvitedNames.length
     ? recentlyInvitedNames.map((name) => ({ name, timing: 'Invited today', initial: name.slice(0, 1).toUpperCase() }))
@@ -1620,11 +1630,7 @@ export default function App() {
             key={key}
             type="button"
             aria-pressed={launchMode === key}
-            onClick={() => {
-              setLaunchMode(key)
-              setIntroCompleted(false)
-              setFirstLaunchStage(null)
-            }}
+            onClick={() => restartLaunchMode(key)}
           >
             {label}
           </button>

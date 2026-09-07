@@ -48,6 +48,11 @@ test('first launch invited tab starts empty until the user sends an invite', () 
   assert.match(appSource, /tab === 'Invited' && invitedContacts\.length > 0 && \(/)
 })
 
+test('replaying a launch mode resets invited contacts', () => {
+  assert.match(appSource, /function restartLaunchMode\(mode\)[\s\S]*?setRecentlyInvitedNames\(\[\]\)[\s\S]*?setNetworkInitialTab\('Contacts'\)/)
+  assert.match(appSource, /onClick=\{\(\) => restartLaunchMode\(key\)\}/)
+})
+
 test('contact invitations send one person at a time without a selection scene', () => {
   assert.doesNotMatch(appSource, /function ContactSelectScreen/)
   assert.doesNotMatch(appSource, /contactInviteStage === 'select'/)
