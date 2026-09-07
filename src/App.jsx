@@ -890,6 +890,19 @@ export default function App() {
   const [recentlyInvitedNames, setRecentlyInvitedNames] = useState([])
   const [networkInitialTab, setNetworkInitialTab] = useState('Contacts')
 
+  const handleGoalAmountChange = (event) => {
+    setGoalAmount(Number(event.target.value))
+    setGoalSaved(false)
+  }
+
+  const handleGoalMonthsChange = (nextMonths) => {
+    if (nextMonths === months) return
+    setMonths(nextMonths)
+    setGoalSaved(false)
+  }
+
+  const handleGoalSave = () => setGoalSaved(true)
+
   const sliderPct = ((goalAmount - MIN_GOAL) / (MAX_GOAL - MIN_GOAL)) * 100
 
   // A bigger goal needs more daily actions; a shorter timeline compresses
@@ -1325,25 +1338,17 @@ export default function App() {
                     max={MAX_GOAL}
                     step={STEP_GOAL}
                     value={goalAmount}
-                    onChange={(e) => {
-                      setGoalAmount(Number(e.target.value))
-                      setGoalSaved(false)
-                    }}
+                    onChange={handleGoalAmountChange}
                   />
                 </div>
                 <div className="sheet-bounds"><span>5M</span><span>100M</span></div>
 
                 <div className="sheet-months" role="group" aria-label="Time to reach your goal">
-                  {[6, 12, 18].map((m) => (
+                  {[12, 18, 24].map((m) => (
                     <button
                       key={m}
                       aria-pressed={months === m}
-                      onClick={() => {
-                        if (m !== months) {
-                          setMonths(m)
-                          setGoalSaved(false)
-                        }
-                      }}
+                      onClick={() => handleGoalMonthsChange(m)}
                     >
                       {months === m && <img src="/images/dashboard-check.svg" alt="" aria-hidden="true" />}
                       {m} months
@@ -1415,7 +1420,8 @@ export default function App() {
                     className="dashboard-save-button"
                     disabled={goalSaved}
                     aria-live="polite"
-                    onClick={() => setGoalSaved(true)}
+                    aria-atomic="true"
+                    onClick={handleGoalSave}
                   >
                     {goalSaved ? 'Saved' : 'Save changes'}
                   </button>
