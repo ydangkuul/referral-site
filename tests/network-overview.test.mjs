@@ -15,6 +15,32 @@ test('Network opens on the Figma My network overview scene', () => {
   assert.match(app, /Contacts.*Invite.*Invited.*Nudge.*Registered.*Connect.*Influencer.*Connect.*Merchant.*Connect/s)
 })
 
+test('first-launch network flow starts with synced contacts ready to invite', () => {
+  assert.match(app, /const \[contactsSynced, setContactsSynced\] = useState\(true\)/)
+  assert.match(app, /\.slice\(0, 5\)/)
+  assert.match(app, /setContactInviteStage\(person \? 'preview' : 'select'\)/)
+  assert.match(app, /setContactInviteStage\(contactInviteDirect \? null : 'select'\)/)
+})
+
+test('first launch keeps Invited empty until an invitation is sent', () => {
+  assert.match(app, /tab === 'Invited' && invitedContacts\.length > 0/)
+  assert.match(app, /launchMode === 'first'\s*\? \[\]\s*:\s*NETWORK_CONTACTS/)
+  assert.match(app, /setRecentlyInvitedNames\(\(names\) => \[\.\.\.new Set\(\[\.\.\.names, \.\.\.selectedInviteNames\]\)\]\)/)
+})
+
+test('individual invite follows preview, 1,000-point reward, then sent status', () => {
+  assert.match(app, /contactInviteStage === 'preview'[\s\S]*setContactInviteStage\('reward'\)/)
+  assert.match(app, /contactInviteStage === 'reward'[\s\S]*<ContactInvitationReward/)
+  assert.match(app, /onNext=\{\(\) => setContactInviteStage\('sent'\)\}/)
+  assert.match(app, /images\/network-invitation-points-1000\.png/)
+  assert.match(app, /images\/network-invitation-celebration\.png/)
+})
+
+test('bottom navigation stays on the overview and leaves the invitation scenes clear', () => {
+  assert.match(app, /selectedNav === 'Network' && networkStage !== 'overview'/)
+  assert.match(css, /\.network-body\.contacts-synced \.network-invite-button \{\s*display: none;/)
+})
+
 test('Network overview actions continue into the existing contact flows', () => {
   assert.match(app, /onInvite=\{\(\) => \{\s*setNetworkInitialTab\('Contacts'\)\s*setNetworkStage\('contacts'\)/s)
   assert.match(app, /onNudge=\{\(\) => \{\s*setNetworkInitialTab\('Invited'\)\s*setNetworkStage\('contacts'\)/s)

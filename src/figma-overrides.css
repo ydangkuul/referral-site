@@ -5,6 +5,7 @@
   padding: 7.825px 22px 4px;
   align-items: flex-start;
   border-top: 0.625px solid #dedede;
+  z-index: 40;
 }
 
 .nav-item {
@@ -1220,7 +1221,7 @@ input[type="file"] {
 
 .network-body.contacts-synced .network-results-area {
   min-height: 0;
-  height: 420px;
+  height: 529px;
   position: relative;
 }
 
@@ -1236,7 +1237,13 @@ input[type="file"] {
 }
 
 .network-body.contacts-synced .network-invite-button {
-  top: 600px;
+  display: none;
+}
+
+.network-body.contacts-synced .network-invited-person {
+  min-height: 76px;
+  padding-top: 7px;
+  padding-bottom: 7px;
 }
 
 .network-body.invited-tab .network-results-area {
@@ -1273,6 +1280,10 @@ input[type="file"] {
   font-size: 14px;
   font-weight: 600;
   pointer-events: none;
+}
+
+.network-body.contacts-synced .network-scroll-hint {
+  display: none;
 }
 
 .network-scroll-hint svg {
@@ -2690,18 +2701,19 @@ input[type="file"] {
 
 .contact-invite-hero {
   position: absolute;
-  top: 68px;
-  left: 30px;
-  width: 330px;
-  height: 207px;
+  top: 46px;
+  left: 10.5px;
+  width: 369px;
+  height: 253px;
   overflow: hidden;
 }
 
 .contact-invite-hero img {
   position: absolute;
-  top: -11px;
-  left: -60px;
-  width: 464px;
+  top: 0;
+  left: -3.02%;
+  width: 103.02%;
+  height: 100%;
   max-width: none;
 }
 
@@ -2718,7 +2730,8 @@ input[type="file"] {
   border-radius: 12px;
   color: var(--color-primary);
   background: #bfe0f5;
-  font-size: 13px;
+  font-size: 16px;
+  line-height: 20px;
 }
 
 .contact-invite-ready img { width: 20px; height: 20px; }
@@ -2729,7 +2742,7 @@ input[type="file"] {
   left: 20px;
   width: 350px;
   height: 258px;
-  padding: 16px;
+  padding: 0;
   border: 1px solid var(--color-border);
   border-radius: 14px;
   background: #fff;
@@ -2738,30 +2751,54 @@ input[type="file"] {
 
 .contact-invite-card h2,
 .contact-share-options h2 {
-  margin: 0 0 12px;
-  font-size: 17px;
+  margin: 0;
+  font-size: 18px;
   line-height: 24px;
   font-weight: 600;
 }
 
+.contact-invite-card h2 {
+  position: absolute;
+  top: 17px;
+  left: 19px;
+}
+
 .contact-invite-card > p {
-  min-height: 112px;
+  position: absolute;
+  top: 53px;
+  left: 19px;
+  width: 310px;
+  height: 106px;
   margin: 0;
   padding: 12px;
   border-radius: 10px;
   color: var(--color-text);
   background: #f5f7fa;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 20px;
 }
 
+.contact-invite-link-label {
+  position: absolute;
+  top: 167px;
+  left: 19px;
+  color: #696b68;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
 .contact-invite-card > div {
-  height: 42px;
+  position: absolute;
+  top: 189px;
+  left: 19px;
+  width: 310px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  margin-top: 12px;
+  margin: 0;
   padding: 0 8px 0 10px;
   border: 1px solid var(--color-border);
   border-radius: 9px;
@@ -2770,8 +2807,8 @@ input[type="file"] {
   font-weight: 600;
 }
 
-.contact-invite-card > div > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.contact-invite-card > div button { display: flex; align-items: center; gap: 5px; padding: 0; border: 0; color: #0073bf; background: transparent; font-size: 12px; font-weight: 600; }
+.contact-invite-card > div > span { overflow: hidden; color: #1c1d1b; text-overflow: ellipsis; white-space: nowrap; }
+.contact-invite-card > div button { width: 76px; height: 28px; display: flex; align-items: center; justify-content: center; gap: 5px; padding: 0; border: 0; border-radius: 6px; color: #fff; background: #0073bf; font-size: 12px; font-weight: 600; }
 .contact-invite-card > div img { width: 14px; height: 14px; }
 
 .contact-share-options {
@@ -2779,6 +2816,11 @@ input[type="file"] {
   top: 621px;
   right: 20px;
   left: 20px;
+}
+
+.contact-share-options h2 {
+  font-size: 16px;
+  line-height: 20px;
 }
 
 .contact-share-options > div { display: flex; justify-content: space-between; }
@@ -2791,7 +2833,8 @@ input[type="file"] {
 
 .contact-invite-sent-body {
   position: relative;
-  height: calc(100% - 44px);
+  height: calc(100% - 53px);
+  margin-top: 9px;
   text-align: center;
 }
 
@@ -2810,13 +2853,13 @@ input[type="file"] {
   text-align: left;
 }
 
-.contact-invite-sent-list div { min-height: 42px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; font-size: 13px; }
+.contact-invite-sent-list div { min-height: 53px; display: flex; align-items: center; justify-content: space-between; padding: 0 17px; font-size: 15px; }
 .contact-invite-sent-list div + div { border-top: 1px solid var(--color-border); }
 .contact-invite-sent-list strong { padding: 2px 8px; border-radius: 10px; color: #0073bf; background: #d8fffa; font-size: 12px; }
 
 .contact-invite-points-note {
   position: absolute;
-  top: calc(269px + var(--invite-count) * 42px);
+  top: calc(255px + var(--invite-count) * 53px);
   right: 24px;
   left: 24px;
   height: 44px;
@@ -2830,6 +2873,60 @@ input[type="file"] {
 
 .contact-invite-again { position: absolute; top: 603px; right: 24px; left: 24px; height: 20px; padding: 0; border: 0; color: #0073bf; background: transparent; font-size: 14px; font-weight: 600; }
 .contact-invite-primary { position: absolute; top: 643px; right: 24px; left: 24px; width: auto; height: 56px; }
+
+.contact-invite-reward-points {
+  position: absolute;
+  top: 53px;
+  left: 64px;
+  z-index: 3;
+  width: 264px;
+  height: 162px;
+  overflow: hidden;
+}
+
+.contact-invite-reward-points img {
+  position: absolute;
+  top: -108.24%;
+  left: -18.64%;
+  width: 139.78%;
+  height: 494.25%;
+  max-width: none;
+}
+
+.contact-invite-reward .reminder-reward-confetti {
+  top: 249px;
+  width: 336px;
+  height: 503px;
+}
+
+.contact-invite-reward .reminder-reward-girl {
+  top: 215px;
+  left: 28px;
+  width: 330px;
+  height: 495px;
+}
+
+.contact-invite-reward-gradient {
+  position: absolute;
+  top: 629px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), #fcfdfe 30.77%);
+}
+
+.contact-invite-reward-indicator {
+  position: absolute;
+  bottom: 10px;
+  left: 129px;
+  z-index: 5;
+  width: 132px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(13, 60, 125, .4);
+}
 
 .network-remind-button.already-invited:disabled {
   border-color: #bfe0f5;
