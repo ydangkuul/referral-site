@@ -53,6 +53,10 @@ test('replaying a launch mode resets invited contacts', () => {
   assert.match(appSource, /onClick=\{\(\) => restartLaunchMode\(key\)\}/)
 })
 
+test('preview hides the temporary contacts sync toggle', () => {
+  assert.doesNotMatch(appSource, /className="contacts-case-toggle"/)
+})
+
 test('contact invitations send one person at a time without a selection scene', () => {
   assert.doesNotMatch(appSource, /function ContactSelectScreen/)
   assert.doesNotMatch(appSource, /contactInviteStage === 'select'/)

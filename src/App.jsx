@@ -1605,23 +1605,6 @@ export default function App() {
       </div>
 
       <div className="launch-mode-controls" aria-label="Preview controls">
-        <button
-          type="button"
-          className="contacts-case-toggle"
-          aria-pressed={contactsSynced}
-          aria-label={contactsSynced ? 'Switch to contacts not synced' : 'Switch to contacts synced'}
-          onClick={() => {
-            setContactsSynced((value) => !value)
-            setIntroCompleted(true)
-            setFirstLaunchStage(null)
-            setSelectedNav('Network')
-            setNetworkStage('contacts')
-            setContactInviteStage(null)
-            setNetworkInitialTab('Contacts')
-          }}
-        >
-          {contactsSynced ? 'contacts: synced' : 'contacts: not synced'}
-        </button>
         {[
           { key: 'first', label: 'first launch' },
           { key: 'returning', label: '>= second times launch' },
