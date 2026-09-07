@@ -72,4 +72,6 @@ test('synced contacts list shows six complete rows before scrolling', () => {
 test('second flow uses correctly framed reward and pointing assets', () => {
   assert.match(appSource, /network-sync-offer-guide[^>]+intro-linh-guide-line\.png/)
   assert.match(appSource, /network-sync-offer-mascot[^>]+intro-linh-pointing\.png/)
+  assert.match(appSource, /Claim 2,000 pts/)
+  assert.doesNotMatch(appSource, /Claim 100,000 pts/)
 })

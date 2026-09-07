@@ -361,7 +361,7 @@ function NetworkSyncingScreen({ onBack, onComplete, onOpenGuide }) {
         </span>
         <h1>Synching<br />contacts</h1>
         <div className="network-flow-spacer" />
-        <button type="button" className="network-flow-primary" disabled>Claim 100,000 pts</button>
+        <button type="button" className="network-flow-primary" disabled>Claim 2,000 pts</button>
       </div>
     </div>
   )
@@ -380,7 +380,7 @@ function NetworkSyncSuccessScreen({ onBack, onContinue, onOpenGuide }) {
           <p>Contacts synced successfully!<br />Your network is now up to date.</p>
         </section>
         <div className="network-flow-spacer" />
-        <button type="button" className="network-flow-primary" onClick={onContinue}>Claim 100,000 pts</button>
+        <button type="button" className="network-flow-primary" onClick={onContinue}>Claim 2,000 pts</button>
       </div>
     </div>
   )
