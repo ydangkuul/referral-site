@@ -24,7 +24,7 @@ export default function FirstLaunchDashboard({ onInvite }) {
         <>
             <div className="first-launch-slider"><span /></div>
             <div className="first-launch-bounds"><span>5M</span><span>100M</span></div>
-            <div className="first-launch-months"><span>6 months</span><span className="selected">12 months <CircleCheck size={10} /></span><span>18 months</span></div>
+            <div className="first-launch-months"><span className="selected">12 months <CircleCheck size={10} /></span><span>18 months</span><span>24 months</span></div>
             <div className="first-launch-targets">
               <span><strong>27</strong><small>Target<br />Merchants</small></span>
               <span><strong>40</strong><small>Target<br />Influencers</small></span>
