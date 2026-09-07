@@ -92,13 +92,13 @@
 
 .intro-character-image {
   position: absolute;
-  left: 50%;
+  left: calc(50% - 12.65px);
   top: -101px;
   z-index: 2;
-  width: 385px;
-  height: 595px;
+  width: 557px;
+  height: 696px;
   transform: translateX(-50%);
-  object-fit: contain;
+  max-width: none;
   pointer-events: none;
 }
 
@@ -162,12 +162,23 @@
   pointer-events: none;
 }
 
-.intro-pointing-hero img {
+.intro-pointing-guide {
   position: absolute;
-  left: -18.04%;
-  top: -4.75%;
-  width: 140.77%;
-  height: 143.05%;
+  left: 35.94%;
+  top: 72.16%;
+  z-index: 1;
+  width: 50.14%;
+  height: 2px;
+  max-width: none;
+}
+
+.intro-pointing-mascot {
+  position: absolute;
+  left: -3.02%;
+  top: 0;
+  z-index: 2;
+  width: 103.02%;
+  height: 100%;
   max-width: none;
 }
 
@@ -411,8 +422,8 @@
   left: 28px;
   top: 262px;
   z-index: 2;
-  width: 322px;
-  height: 483px;
+  width: 330px;
+  height: 495px;
   object-fit: cover;
   pointer-events: none;
 }
@@ -646,17 +657,39 @@
 
 /* Invite */
 
+.intro-video-title {
+  position: absolute;
+  left: 50%;
+  top: 68.5px;
+  z-index: 6;
+  width: 342px;
+  margin: 0;
+  transform: translateX(-50%);
+  color: #0d3c7d;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 34px;
+  letter-spacing: -0.4px;
+  text-align: center;
+}
+
 .invite-screen .intro-pointing-hero.compact {
-  left: 30px;
-  top: 91px;
-  width: 330px;
-  height: 228px;
+  left: 17px;
+  top: 145px;
+  width: 345.377px;
+  height: 236.804px;
+}
+
+.invite-screen .intro-pointing-guide {
+  left: 124.492px;
+  top: 172.22px;
+  width: 173.157px;
 }
 
 .intro-video-card {
   position: absolute;
   left: 24px;
-  top: 319px;
+  top: 355.5px;
   z-index: 4;
   width: 342px;
   height: 364px;
@@ -690,7 +723,19 @@
 
 .intro-video-card > span.playing {
   background: #0073bf;
-  color: #fff;
+}
+
+.intro-video-card > span.playing > img {
+  filter: brightness(0) invert(1);
+}
+
+.intro-video-card > span > img {
+  width: 28px;
+  height: 28px;
+}
+
+.invite-screen .intro-sequence-footer {
+  top: 738.5px;
 }
 
 /* Invitation preview */

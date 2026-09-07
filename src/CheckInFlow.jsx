@@ -88,8 +88,8 @@ function ReturningSuccessScreen({ onNext }) {
         </div>
 
         <div className="checkin-success-character">
-          <img src="/images/reward-confetti.png" alt="" className="checkin-confetti" />
-          <img src="/images/reward-girl.png" alt="" className="checkin-character-img" />
+          <img src="/images/intro-sequence-confetti.png" alt="" className="checkin-confetti" />
+          <img src="/images/intro-linh-celebrate.png" alt="" className="checkin-character-img" />
         </div>
 
         <img src="/images/reward-gradient-bottom.png" alt="" className="checkin-gradient-overlay" />
@@ -135,14 +135,14 @@ function SuccessScreen({ onNext, rewardPoints = 5000 }) {
       <div className="checkin-success-content">
         <div className="checkin-points-display">
           <img
-            src={rewardPoints === 1000 ? '/images/intro-reward-1000.png' : '/images/points-5000-figma.png'}
+            src={rewardPoints === 1000 ? '/images/points-1000.png' : '/images/points-5000-figma.png'}
             alt={`${rewardPoints.toLocaleString('en-US')} points`}
           />
         </div>
 
         <div className="checkin-success-character">
-          <img src="/images/reward-confetti.png" alt="" className="checkin-confetti" />
-          <img src="/images/reward-girl.png" alt="" className="checkin-character-img" />
+          <img src="/images/intro-sequence-confetti.png" alt="" className="checkin-confetti" />
+          <img src="/images/intro-linh-celebrate.png" alt="" className="checkin-character-img" />
         </div>
 
         <img src="/images/reward-gradient-bottom.png" alt="" className="checkin-gradient-overlay" />

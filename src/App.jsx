@@ -7,7 +7,6 @@ import {
 import PointsFlow from './PointsFlow.jsx'
 import CheckInFlow from './CheckInFlow.jsx'
 import IntroFlow from './IntroFlow.jsx'
-import FirstLaunchDashboard from './FirstLaunchDashboard.jsx'
 
 // Brand bank icon (from design handoff) — recolored to currentColor so it
 // tracks the theme token instead of the hardcoded #0D3C7D in the source file.
@@ -223,7 +222,8 @@ function NetworkSyncOfferScreen({ onBack, onContinue }) {
       </header>
 
       <div className="network-sync-offer-hero" aria-hidden="true">
-        <img src="/images/intro-point-down.png" alt="" />
+        <img className="network-sync-offer-guide" src="/images/intro-linh-guide-line.png" alt="" />
+        <img className="network-sync-offer-mascot" src="/images/intro-linh-pointing.png" alt="" />
       </div>
 
       <section className="network-sync-offer-title">
@@ -409,7 +409,7 @@ function NetworkSyncRewardScreen({ onBack, onNext, points = 1000 }) {
         <img src={`/images/intro-reward-${points}.png`} alt="" />
       </div>
       <img className="network-sync-reward-confetti" src="/images/intro-sequence-confetti.png" alt="" />
-      <img className="network-sync-reward-girl" src="/images/intro-sequence-girl.png" alt="" />
+      <img className="network-sync-reward-girl" src="/images/intro-linh-celebrate.png" alt="" />
       <div className="network-sync-reward-gradient" aria-hidden="true" />
       <button type="button" className="network-sync-reward-next" onClick={onNext}>Next</button>
       <div className="network-sync-reward-indicator" aria-hidden="true" />
@@ -947,6 +947,15 @@ export default function App() {
     setContactInviteStage('select')
   }
 
+  function finishFirstLaunchInNetwork(contactsAreSynced) {
+    setContactsSynced(contactsAreSynced)
+    setFirstLaunchStage(null)
+    setSelectedNav('Network')
+    setNetworkStage('contacts')
+    setNetworkInitialTab('Contacts')
+    setContactInviteStage(null)
+  }
+
   const availableSyncedContacts = SYNCED_CONTACTS.filter(({ name }) => !recentlyInvitedNames.includes(name))
   const syncedContactsWithStatus = SYNCED_CONTACTS.map((contact) => ({
     ...contact,
@@ -1032,18 +1041,16 @@ export default function App() {
               onComplete={() => {
                 setIntroCompleted(true)
                 setSelectedNav('Home')
-                setFirstLaunchStage('preview')
+                setFirstLaunchStage('checkin')
               }}
               onOpenEstimateGuide={() => setGuideTopic('estimate')}
             />
-          ) : launchMode === 'first' && firstLaunchStage === 'preview' ? (
-            <FirstLaunchDashboard preview onPreviewComplete={() => setFirstLaunchStage('checkin')} />
           ) : launchMode === 'first' && firstLaunchStage === 'checkin' ? (
             <CheckInFlow
               launchMode="first"
               rewardPoints={1000}
               onStageChange={setCheckinStage}
-              onBack={() => setFirstLaunchStage('preview')}
+              onBack={() => setFirstLaunchStage(null)}
               onClose={() => {
                 setCheckinStage('checkin')
                 setFirstLaunchStage('network-offer')
@@ -1057,7 +1064,7 @@ export default function App() {
           ) : launchMode === 'first' && firstLaunchStage === 'privacy' ? (
             <NetworkPrivacyConsentScreen
               onBack={() => setFirstLaunchStage('network-offer')}
-              onSkip={() => setFirstLaunchStage('dashboard')}
+              onSkip={() => finishFirstLaunchInNetwork(false)}
               onContinue={() => setFirstLaunchStage('syncing')}
               onOpenGuide={() => setGuideTopic('contactSync')}
             />
@@ -1077,19 +1084,7 @@ export default function App() {
             <NetworkSyncRewardScreen
               points={2000}
               onBack={() => setFirstLaunchStage('sync-success')}
-              onNext={() => {
-                setContactsSynced(true)
-                setFirstLaunchStage('dashboard')
-              }}
-            />
-          ) : launchMode === 'first' && firstLaunchStage === 'dashboard' && selectedNav === 'Home' ? (
-            <FirstLaunchDashboard
-              onInvite={() => {
-                setFirstLaunchStage(null)
-                setSelectedNav('Network')
-                setNetworkStage('contacts')
-                setNetworkInitialTab('Contacts')
-              }}
+              onNext={() => finishFirstLaunchInNetwork(true)}
             />
           ) : checkinFlowOpen ? (
             <CheckInFlow
@@ -1419,7 +1414,7 @@ export default function App() {
           </div>
           )}
 
-          {!(checkinFlowOpen && checkinStage === 'success') && !(launchMode === 'first' && !introCompleted) && !(launchMode === 'first' && firstLaunchStage && !['preview', 'dashboard'].includes(firstLaunchStage)) && !reminderStage && !contactInviteStage && !(selectedNav === 'Network' && networkStage !== 'contacts') && (
+          {!(checkinFlowOpen && checkinStage === 'success') && !(launchMode === 'first' && !introCompleted) && !(launchMode === 'first' && firstLaunchStage) && !reminderStage && !contactInviteStage && !(selectedNav === 'Network' && networkStage !== 'contacts') && (
           <nav className="bottom-bar" aria-label="Main navigation">
             {[
               { key: 'Home', icon: House },
@@ -1432,7 +1427,6 @@ export default function App() {
                 className={`nav-item ${selectedNav === key ? 'selected' : ''}`}
                 aria-pressed={selectedNav === key}
                 onClick={() => {
-                  if (launchMode === 'first' && firstLaunchStage === 'dashboard' && key !== 'Home') setFirstLaunchStage(null)
                   setSelectedNav(key)
                 }}
               >
