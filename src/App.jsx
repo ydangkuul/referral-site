@@ -427,8 +427,13 @@ const NETWORK_OVERVIEW_ROWS = [
   { key: 'merchant', value: '00', label: 'Merchant', action: 'Connect', icon: assetUrl('images/network-overview-merchant.png') },
 ]
 
-function NetworkOverviewScreen({ onBack, onInvite, onNudge }) {
+function NetworkOverviewScreen({ invitedCount, onBack, onInvite, onNudge }) {
   const [infoOpen, setInfoOpen] = useState(false)
+  const overviewRows = NETWORK_OVERVIEW_ROWS.map((item) => (
+    item.key === 'invited'
+      ? { ...item, value: String(invitedCount).padStart(2, '0') }
+      : item
+  ))
 
   function handleAction(key) {
     if (key === 'contacts') onInvite()
@@ -475,8 +480,9 @@ function NetworkOverviewScreen({ onBack, onInvite, onNudge }) {
         </button>
 
         <div className="network-overview-list">
-          {NETWORK_OVERVIEW_ROWS.map((item) => {
-            const enabled = item.key === 'contacts' || item.key === 'invited'
+          {overviewRows.map((item) => {
+            const hasAction = item.key !== 'invited' || invitedCount > 0
+            const enabled = item.key === 'contacts' || (item.key === 'invited' && invitedCount > 0)
             return (
               <article className={`network-overview-row${item.key === 'contacts' ? ' primary' : ''}`} key={item.key}>
                 <div className="network-overview-row-main">
@@ -486,14 +492,16 @@ function NetworkOverviewScreen({ onBack, onInvite, onNudge }) {
                     <span>{item.label}</span>
                   </div>
                 </div>
-                <button
-                  type="button"
-                  className={enabled ? 'enabled' : ''}
-                  disabled={!enabled}
-                  onClick={() => handleAction(item.key)}
-                >
-                  {item.action}
-                </button>
+                {hasAction && (
+                  <button
+                    type="button"
+                    className={enabled ? 'enabled' : ''}
+                    disabled={!enabled}
+                    onClick={() => handleAction(item.key)}
+                  >
+                    {item.action}
+                  </button>
+                )}
               </article>
             )
           })}
@@ -1069,11 +1077,11 @@ export default function App() {
     ...contact,
     invited: recentlyInvitedNames.includes(contact.name),
   }))
-  const visibleInvitedContacts = recentlyInvitedNames.length
-    ? recentlyInvitedNames.map((name) => ({ name, timing: 'Invited today', initial: name.slice(0, 1).toUpperCase() }))
-    : launchMode === 'first'
-      ? []
-      : NETWORK_CONTACTS
+  const visibleInvitedContacts = recentlyInvitedNames.map((name) => ({
+    name,
+    timing: 'Invited today',
+    initial: name.slice(0, 1).toUpperCase(),
+  }))
 
   function handlePhoneCommentClick(e) {
     if (!redCommentMode) return
@@ -1261,6 +1269,7 @@ export default function App() {
               />
             ) : networkStage === 'overview' ? (
               <NetworkOverviewScreen
+                invitedCount={recentlyInvitedNames.length}
                 onBack={() => setSelectedNav('Home')}
                 onInvite={() => {
                   setNetworkInitialTab('Contacts')
@@ -1624,23 +1633,6 @@ export default function App() {
       </div>
 
       <div className="launch-mode-controls" aria-label="Preview controls">
-        <button
-          type="button"
-          className="contacts-case-toggle"
-          aria-pressed={contactsSynced}
-          aria-label={contactsSynced ? 'Switch to contacts not synced' : 'Switch to contacts synced'}
-          onClick={() => {
-            setContactsSynced((value) => !value)
-            setIntroCompleted(true)
-            setFirstLaunchStage(null)
-            setSelectedNav('Network')
-            setNetworkStage('contacts')
-            setContactInviteStage(null)
-            setNetworkInitialTab('Contacts')
-          }}
-        >
-          {contactsSynced ? 'contacts: synced' : 'contacts: not synced'}
-        </button>
         {[
           { key: 'first', label: 'first launch' },
           { key: 'returning', label: '>= second times launch' },
