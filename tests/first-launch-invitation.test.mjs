@@ -24,13 +24,29 @@ test('first flow continues directly into daily check-in without the dashboard pr
   assert.doesNotMatch(appSource, /<FirstLaunchDashboard preview/)
 })
 
-test('second flow finishes in the Network contacts screen', () => {
+test('second flow continues from the 2,000-point reward into My network', () => {
   assert.match(appSource, /function finishFirstLaunchInNetwork\(contactsAreSynced\)/)
   assert.match(appSource, /setSelectedNav\('Network'\)/)
-  assert.match(appSource, /setNetworkStage\('contacts'\)/)
+  assert.match(appSource, /function finishFirstLaunchInNetwork[\s\S]*setNetworkStage\('overview'\)/)
   assert.match(appSource, /setNetworkInitialTab\('Contacts'\)/)
   assert.match(appSource, /onNext=\{\(\) => finishFirstLaunchInNetwork\(true\)\}/)
   assert.doesNotMatch(appSource, /setFirstLaunchStage\('dashboard'\)/)
+})
+
+test('My network overview starts the Figma contact invitation flow', () => {
+  assert.match(appSource, /function NetworkOverviewScreen/)
+  assert.match(appSource, /<h1>My network<\/h1>/)
+  assert.match(appSource, /Earn points when you invite/)
+  assert.match(appSource, /Contacts.*Invite.*Invited.*Nudge.*Registered.*Nudge.*Influencer.*Connect.*Merchant.*Connect/s)
+  assert.match(appSource, /onInvite=\{\(\) => \{\s*setNetworkInitialTab\('Contacts'\)\s*setNetworkStage\('contacts'\)/s)
+  assert.match(appSource, /onNudge=\{\(\) => \{\s*setNetworkInitialTab\('Invited'\)\s*setNetworkStage\('contacts'\)/s)
+  assert.match(appSource, /onBack=\{\(\) => setNetworkStage\('overview'\)\}/)
+})
+
+test('Nudge is disabled until at least one contact has been invited', () => {
+  assert.match(appSource, /item\.key === 'invited' && invitedCount > 0/)
+  assert.match(appSource, /item\.key === 'invited' \? String\(invitedCount\)\.padStart\(2, '0'\)/)
+  assert.match(appSource, /invitedCount=\{recentlyInvitedNames\.length\}/)
 })
 
 test('first launch invited tab starts empty until the user sends an invite', () => {
@@ -41,8 +57,9 @@ test('first launch invited tab starts empty until the user sends an invite', () 
   assert.match(appSource, /tab === 'Invited' && invitedContacts\.length > 0 && \(/)
 })
 
-test('replaying a launch mode resets invited contacts', () => {
-  assert.match(appSource, /function restartLaunchMode\(mode\)[\s\S]*?setRecentlyInvitedNames\(\[\]\)[\s\S]*?setNetworkInitialTab\('Contacts'\)/)
+test('replaying first launch keeps already invited contacts in the current session', () => {
+  const restartLaunchMode = appSource.match(/function restartLaunchMode\(mode\) \{([\s\S]*?)\n  \}/)?.[1] ?? ''
+  assert.doesNotMatch(restartLaunchMode, /setRecentlyInvitedNames/)
   assert.match(appSource, /onClick=\{\(\) => restartLaunchMode\(key\)\}/)
 })
 
@@ -55,6 +72,18 @@ test('contact invitations send one person at a time without a selection scene', 
   assert.doesNotMatch(appSource, /contactInviteStage === 'select'/)
   assert.match(appSource, /function openContactInvite\(person\)[\s\S]*?setSelectedInviteNames\(\[person\.name\]\)[\s\S]*?setContactInviteStage\('preview'\)/)
   assert.match(appSource, /Ready to send invitation to \{names\[0\]\}/)
+})
+
+test('contact invitation moves through preview, 1,000-point reward, then sent status', () => {
+  assert.match(appSource, /contactInviteStage === 'preview'[\s\S]*setContactInviteStage\('reward'\)/)
+  assert.match(appSource, /contactInviteStage === 'reward'[\s\S]*<ContactInvitationReward/)
+  assert.match(appSource, /onNext=\{\(\) => setContactInviteStage\('sent'\)\}/)
+  assert.match(appSource, /images\/network-invitation-points-1000\.png/)
+  assert.match(appSource, /images\/network-invitation-celebration\.png/)
+})
+
+test('bottom navigation stays visible on network overview and lists', () => {
+  assert.match(appSource, /selectedNav === 'Network' && \['consent', 'syncing', 'success', 'reward'\]\.includes\(networkStage\)/)
 })
 
 test('invitation sent actions use the same label size', () => {

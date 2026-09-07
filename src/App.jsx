@@ -407,12 +407,12 @@ function NetworkSyncRewardScreen({ onBack, onNext, points = 1000 }) {
 const NETWORK_OVERVIEW_ROWS = [
   { key: 'contacts', value: '70', label: 'Contacts', action: 'Invite', icon: assetUrl('images/network-overview-contacts.png') },
   { key: 'invited', value: '00', label: 'Invited', action: 'Nudge', icon: assetUrl('images/network-overview-invited.png') },
-  { key: 'registered', value: '00', label: 'Registered', action: 'Connect', icon: assetUrl('images/network-overview-registered.png') },
+  { key: 'registered', value: '00', label: 'Registered', action: 'Nudge', icon: assetUrl('images/network-overview-registered.png') },
   { key: 'influencer', value: '00', label: 'Influencer', action: 'Connect', icon: assetUrl('images/network-overview-influencer.png') },
   { key: 'merchant', value: '00', label: 'Merchant', action: 'Connect', icon: assetUrl('images/network-overview-merchant.png') },
 ]
 
-function NetworkOverviewScreen({ onBack, onInvite, onNudge }) {
+function NetworkOverviewScreen({ onBack, onInvite, onNudge, invitedCount = 0 }) {
   const [infoOpen, setInfoOpen] = useState(false)
 
   function handleAction(key) {
@@ -461,13 +461,14 @@ function NetworkOverviewScreen({ onBack, onInvite, onNudge }) {
 
         <div className="network-overview-list">
           {NETWORK_OVERVIEW_ROWS.map((item) => {
-            const enabled = item.key === 'contacts' || item.key === 'invited'
+            const enabled = item.key === 'contacts' || (item.key === 'invited' && invitedCount > 0)
+            const value = item.key === 'invited' ? String(invitedCount).padStart(2, '0') : item.value
             return (
               <article className={`network-overview-row${item.key === 'contacts' ? ' primary' : ''}`} key={item.key}>
                 <div className="network-overview-row-main">
                   <img src={item.icon} alt="" />
                   <div className="network-overview-metric">
-                    <strong>{item.value}</strong>
+                    <strong>{value}</strong>
                     <span>{item.label}</span>
                   </div>
                 </div>
@@ -1016,7 +1017,7 @@ export default function App() {
     setContactsSynced(contactsAreSynced)
     setFirstLaunchStage(null)
     setSelectedNav('Network')
-    setNetworkStage('contacts')
+    setNetworkStage('overview')
     setNetworkInitialTab('Contacts')
     setContactInviteStage(null)
   }
@@ -1025,7 +1026,6 @@ export default function App() {
     setLaunchMode(mode)
     setIntroCompleted(false)
     setFirstLaunchStage(null)
-    setRecentlyInvitedNames([])
     setSelectedInviteNames([])
     setContactInviteStage(null)
     setNetworkInitialTab('Contacts')
@@ -1192,9 +1192,14 @@ export default function App() {
             ) : contactInviteStage === 'sent' ? (
               <ContactInvitationSent
                 names={selectedInviteNames}
-                onBack={() => setContactInviteStage('preview')}
-                onInviteMore={() => setContactInviteStage(null)}
+                onBack={() => setContactInviteStage('reward')}
+                onInviteMore={() => {
+                  setNetworkStage('contacts')
+                  setNetworkInitialTab('Contacts')
+                  setContactInviteStage(null)
+                }}
                 onViewInvited={() => {
+                  setNetworkStage('contacts')
                   setNetworkInitialTab('Invited')
                   setContactInviteStage(null)
                 }}
@@ -1202,6 +1207,7 @@ export default function App() {
             ) : networkStage === 'overview' ? (
               <NetworkOverviewScreen
                 onBack={() => setSelectedNav('Home')}
+                invitedCount={recentlyInvitedNames.length}
                 onInvite={() => {
                   setNetworkInitialTab('Contacts')
                   setNetworkStage('contacts')

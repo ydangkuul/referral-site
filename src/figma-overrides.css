@@ -719,7 +719,7 @@ input[type="file"] {
   }
 }
 
-/* Network overview — Figma node 1070:7668. */
+/* Network overview — Figma node 1070:7959. */
 .network-overview-screen {
   position: absolute;
   inset: 47px 0 0;
@@ -740,11 +740,11 @@ input[type="file"] {
 }
 
 .network-overview-back {
-  width: 28px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
-  margin-left: -7px;
+  margin-left: -16px;
   padding: 0;
   border: 0;
   background: transparent;
@@ -803,10 +803,10 @@ input[type="file"] {
 
 .network-overview-title > button {
   position: absolute;
-  top: 4px;
-  right: 3px;
-  width: 24px;
-  height: 24px;
+  top: -6px;
+  right: -7px;
+  width: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
   padding: 0;
@@ -970,7 +970,7 @@ input[type="file"] {
   opacity: 1;
 }
 
-/* Network contacts — Figma node 878:2178. */
+/* Network tab — Figma node 878:2178. */
 .network-scroll {
   position: absolute;
   inset: 47px 0 70px;
@@ -2508,10 +2508,10 @@ input[type="file"] {
 
 .contact-invite-header button {
   position: absolute;
-  top: 6px;
-  left: 20px;
-  width: 32px;
-  height: 32px;
+  top: 0;
+  left: 13px;
+  width: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
   padding: 0;
@@ -2548,11 +2548,13 @@ input[type="file"] {
 
 .contact-invite-hero {
   position: absolute;
-  top: 46px;
+  top: 36px;
   left: 10.5px;
+  z-index: 3;
   width: 369px;
   height: 253px;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .contact-invite-hero img {
@@ -2568,14 +2570,15 @@ input[type="file"] {
   position: absolute;
   top: 275px;
   left: 20px;
+  z-index: 2;
   width: 350px;
   height: 48px;
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 0 14px;
+  padding: 0 25px;
   border-radius: 12px;
-  color: var(--color-primary);
+  color: #0d2c52;
   background: #bfe0f5;
   font-size: 16px;
   line-height: 20px;
@@ -2591,7 +2594,7 @@ input[type="file"] {
   height: 258px;
   padding: 0;
   border: 1px solid var(--color-border);
-  border-radius: 14px;
+  border-radius: 16px;
   background: #fff;
   box-shadow: 0 2px 8px #0000000d;
 }
@@ -2618,9 +2621,9 @@ input[type="file"] {
   height: 106px;
   margin: 0;
   padding: 12px;
-  border-radius: 10px;
+  border-radius: 12px;
   color: var(--color-text);
-  background: #f5f7fa;
+  background: #f7f8fb;
   font-size: 14px;
   line-height: 20px;
 }
@@ -2670,7 +2673,7 @@ input[type="file"] {
   line-height: 20px;
 }
 
-.contact-share-options > div { display: flex; justify-content: space-between; }
+.contact-share-options > div { display: flex; justify-content: space-between; margin-top: 16px; }
 .contact-share-options button { width: 62px; display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 0; border: 0; color: var(--color-text-muted); background: transparent; font-size: 12px; font-weight: 600; }
 .contact-share-options button img { width: 48px; height: 48px; padding: 13px; border-radius: 50%; }
 .contact-share-options button:nth-child(1) img { background: #0073bf; }

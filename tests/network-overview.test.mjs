@@ -12,7 +12,7 @@ test('Network opens on the Figma My network overview scene', () => {
   assert.match(app, /function NetworkOverviewScreen/)
   assert.match(app, /<h1>My network<\/h1>/)
   assert.match(app, /Earn points when you invite/)
-  assert.match(app, /Contacts.*Invite.*Invited.*Nudge.*Registered.*Connect.*Influencer.*Connect.*Merchant.*Connect/s)
+  assert.match(app, /Contacts.*Invite.*Invited.*Nudge.*Registered.*Nudge.*Influencer.*Connect.*Merchant.*Connect/s)
 })
 
 test('first-launch network flow starts with synced contacts ready to invite', () => {
@@ -49,7 +49,7 @@ test('Network overview actions continue into the existing contact flows', () => 
 })
 
 test('Network overview preserves the 390px Figma geometry and VietPay tokens', () => {
-  assert.match(css, /Network overview — Figma node 1070:7668/)
+  assert.match(css, /Network overview — Figma node 1070:7959/)
   assert.match(css, /\.network-overview-banner[\s\S]*width: 342px;[\s\S]*height: 68px;/)
   assert.match(css, /\.network-overview-row[\s\S]*height: 90px;/)
   assert.match(css, /\.network-overview-title h1[\s\S]*color: #0d3c7d;[\s\S]*font-size: 24px;/)
