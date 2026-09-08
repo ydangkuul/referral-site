@@ -1039,7 +1039,7 @@ export default function App() {
 
   function restartLaunchMode(mode) {
     setLaunchMode(mode)
-    setSelectedNav(mode === 'first' ? 'Home' : 'Network')
+    setSelectedNav('Home')
     setContactsSynced(mode !== 'first')
     setIntroCompleted(false)
     setFirstLaunchStage(null)
