@@ -17,6 +17,6 @@ test('returns to Save changes when the amount slider or timeline changes', () =>
   assert.match(appSource, /onClick=\{\(\) => handleGoalMonthsChange\(m\)\}/)
 })
 
-test('offers 12, 18, and 24 month goal timelines', () => {
+test('offers 6, 12, and 18 month goal timelines', () => {
   assert.match(appSource, /\{\[6, 12, 18\]\.map\(\(m\) => \(/)
 })
