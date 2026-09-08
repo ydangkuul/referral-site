@@ -1529,7 +1529,8 @@ input[type="file"] {
   gap: 14px;
   margin: 0 4px 0 16px;
   border-bottom: 1px solid #ededed;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .network-sync-offer-metric:last-child {
@@ -1539,8 +1540,8 @@ input[type="file"] {
 .network-sync-offer-metric > strong {
   margin-left: auto;
   padding-right: 20px;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .network-sync-offer-metric-icon {
