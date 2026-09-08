@@ -1250,12 +1250,11 @@ input[type="file"] {
 .network-body.invited-tab .network-results-area {
   position: relative;
   min-height: 0;
-  height: 323px;
+  height: 540px;
 }
 
 .network-body.invited-tab .network-invited-list {
-  height: auto;
-  max-height: 100%;
+  height: 100%;
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: none;
@@ -1263,6 +1262,26 @@ input[type="file"] {
 
 .network-body.invited-tab .network-invited-list::-webkit-scrollbar {
   display: none;
+}
+
+.network-body.invited-tab {
+  padding-top: 16px;
+}
+
+.network-body.invited-tab .network-search-field {
+  margin-top: 16px;
+}
+
+.network-body.invited-tab .network-invited-person {
+  min-height: 76px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+.network-search-field > img {
+  width: 20px;
+  height: 20px;
+  flex: none;
 }
 
 .network-scroll-hint {
@@ -1770,6 +1789,43 @@ input[type="file"] {
   justify-content: flex-end;
   padding: 0 27px;
   color: #0d3c7d;
+}
+
+.network-contacts-header button {
+  left: 26px;
+  top: 14px;
+  width: 16px;
+  height: 16px;
+}
+
+.network-invited-back-icon {
+  position: relative;
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.network-invited-back-icon img {
+  position: absolute;
+  inset: -1px;
+  width: 16px;
+  height: 16px;
+  max-width: none;
+}
+
+.network-invited-info-icon {
+  position: relative;
+  display: block;
+  width: 27px;
+  height: 24px;
+}
+
+.network-invited-info-icon img {
+  position: absolute;
+  top: 4px;
+  left: 5.5px;
+  width: 16px;
+  height: 16px;
 }
 
 .network-body.contacts-unsynced {

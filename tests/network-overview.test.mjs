@@ -25,19 +25,22 @@ test('first-launch network flow starts with synced contacts ready to invite', ()
   assert.doesNotMatch(app, /contactInviteStage === 'select'/)
 })
 
-test('first launch keeps Invited empty until an invitation is sent', () => {
-  assert.match(app, /tab === 'Invited' && invitedContacts\.length > 0/)
-  assert.match(app, /const visibleInvitedContacts = recentlyInvitedNames\.map/)
-  assert.doesNotMatch(app, /launchMode === 'first'\s*\? \[\]\s*:\s*NETWORK_CONTACTS/)
+test('Invited uses the Figma ten-person reminder list', () => {
+  assert.match(app, /const NETWORK_CONTACTS = \[/)
+  assert.match(app, /invited-mai-anh[\s\S]*invited-minh-khang/)
+  assert.match(app, /timing: 'Not invited yet'/)
+  assert.match(app, /reward: 'Earn after signup'/)
+  assert.match(app, /const visibleInvitedContacts = NETWORK_CONTACTS/)
+  assert.doesNotMatch(app, /network-invited-summary/)
   assert.match(app, /setRecentlyInvitedNames\(\(names\) => \[\.\.\.new Set\(\[\.\.\.names, \.\.\.selectedInviteNames\]\)\]\)/)
 })
 
-test('keeps Nudge visible but disabled until at least one contact has been invited', () => {
+test('keeps Nudge driven by the populated Invited list', () => {
   assert.match(app, /function NetworkOverviewScreen\(\{[^}]*invitedCount = 0[^}]*\}\)/)
   assert.match(app, /const enabled = item\.key === 'contacts' \|\| \(item\.key === 'invited' && invitedCount > 0\)/)
   assert.match(app, /disabled=\{!enabled\}/)
   assert.doesNotMatch(app, /const hasAction/)
-  assert.match(app, /invitedCount=\{recentlyInvitedNames\.length\}/)
+  assert.match(app, /invitedCount=\{visibleInvitedContacts\.length\}/)
 })
 
 test('individual invite follows preview, 1,000-point reward, then sent status', () => {
@@ -48,13 +51,19 @@ test('individual invite follows preview, 1,000-point reward, then sent status', 
   assert.match(app, /images\/network-invitation-celebration\.png/)
 })
 
-test('bottom navigation stays visible on network lists and leaves deeper flows clear', () => {
+test('the Figma Invited scene hides bottom navigation and preserves exact list geometry', () => {
   assert.match(app, /selectedNav === 'Network' && \['consent', 'syncing', 'success', 'reward'\]\.includes\(networkStage\)/)
+  assert.match(app, /networkStage === 'contacts' && networkInitialTab === 'Invited'/)
+  assert.match(app, /onTabChange=\{setNetworkInitialTab\}/)
   assert.match(css, /\.network-body\.contacts-synced \.network-invite-button \{\s*display: none;/)
   assert.match(css, /\.network-scroll \{[\s\S]*inset: 47px 0 0;/)
-  assert.match(css, /\.network-body:not\(\.contacts-unsynced\) \.network-invite-button \{[\s\S]*top: 611px;/)
-  assert.match(css, /\.network-body\.contacts-synced \.network-results-area \{[\s\S]*height: auto;/)
-  assert.match(css, /\.network-body\.contacts-synced \.network-invited-person \{[\s\S]*min-height: 76px;/)
+  assert.match(css, /\.network-body\.invited-tab \.network-results-area \{[\s\S]*height: 540px;/)
+  assert.match(css, /\.network-body\.invited-tab \.network-invited-person \{[\s\S]*min-height: 76px;/)
+  assert.match(css, /\.network-invited-back-icon \{[\s\S]*width: 14px;[\s\S]*height: 14px;/)
+  assert.match(css, /\.network-invited-back-icon img \{[\s\S]*width: 16px;[\s\S]*height: 16px;/)
+  assert.match(css, /\.network-invited-info-icon \{[\s\S]*width: 27px;[\s\S]*height: 24px;/)
+  assert.match(css, /\.network-invited-info-icon img \{[\s\S]*width: 16px;[\s\S]*height: 16px;/)
+  assert.match(css, /\.network-search-field > img \{[\s\S]*width: 20px;[\s\S]*height: 20px;/)
 })
 
 test('Network overview actions continue into the existing contact flows', () => {

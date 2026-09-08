@@ -43,18 +43,19 @@ test('My network overview starts the Figma contact invitation flow', () => {
   assert.match(appSource, /onBack=\{\(\) => setNetworkStage\('overview'\)\}/)
 })
 
-test('Nudge stays visible but disabled until at least one contact has been invited', () => {
+test('Nudge is enabled by the populated Figma Invited list', () => {
   assert.match(appSource, /const enabled = item\.key === 'contacts' \|\| \(item\.key === 'invited' && invitedCount > 0\)/)
   assert.match(appSource, /disabled=\{!enabled\}/)
   assert.doesNotMatch(appSource, /const hasAction/)
   assert.match(appSource, /item\.key === 'invited'[\s\S]*?String\(invitedCount\)\.padStart\(2, '0'\)/)
-  assert.match(appSource, /invitedCount=\{recentlyInvitedNames\.length\}/)
+  assert.match(appSource, /invitedCount=\{visibleInvitedContacts\.length\}/)
 })
 
-test('first launch invited tab starts empty until the user sends an invite', () => {
-  assert.match(appSource, /const visibleInvitedContacts = recentlyInvitedNames\.map/)
-  assert.doesNotMatch(appSource, /launchMode === 'first'\s*\? \[\]\s*:\s*NETWORK_CONTACTS/)
-  assert.match(appSource, /tab === 'Invited' && invitedContacts\.length > 0 && \(/)
+test('first launch invited tab follows the Figma ten-person reminder scene', () => {
+  assert.match(appSource, /const visibleInvitedContacts = NETWORK_CONTACTS/)
+  assert.match(appSource, /invited-mai-anh[\s\S]*invited-minh-khang/)
+  assert.doesNotMatch(appSource, /network-invited-summary/)
+  assert.match(appSource, /person\.reward \?\? 'Waiting to register'/)
 })
 
 test('replaying first launch keeps already invited contacts in the current session', () => {
@@ -82,8 +83,9 @@ test('contact invitation moves through preview, 1,000-point reward, then sent st
   assert.match(appSource, /images\/network-invitation-celebration\.png/)
 })
 
-test('bottom navigation stays visible on network overview and lists', () => {
+test('bottom navigation stays on overview but hides on the Figma Invited scene', () => {
   assert.match(appSource, /selectedNav === 'Network' && \['consent', 'syncing', 'success', 'reward'\]\.includes\(networkStage\)/)
+  assert.match(appSource, /networkStage === 'contacts' && networkInitialTab === 'Invited'/)
 })
 
 test('invitation sent actions use the same label size', () => {

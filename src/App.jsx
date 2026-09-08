@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   Landmark, UserRound, Info,
-  ChevronDown, ChevronLeft, Clock3, Search, UsersRound,
+  ChevronDown, ChevronLeft, Clock3, UsersRound,
   CircleCheck, X, Play, Pause, ArrowLeft, CreditCard, QrCode,
 } from 'lucide-react'
 import PointsFlow from './PointsFlow.jsx'
@@ -177,12 +177,6 @@ function GuideDialog({ topic, onClose }) {
   )
 }
 
-const NETWORK_CONTACTS = [
-  { name: 'Tran Thi B', timing: 'Invited today', initial: 'T' },
-  { name: 'Le Van C', timing: 'Invited 2 days ago', initial: 'L' },
-  { name: 'Hoang Van E', timing: 'Invited 5 days ago', initial: 'H' },
-]
-
 const SYNCED_CONTACTS = [
   { name: 'Mai Anh', initial: 'M' },
   { name: 'Nguyễn Minh', initial: 'N' },
@@ -196,6 +190,23 @@ const SYNCED_CONTACTS = [
   { name: 'Thanh Trúc', initial: 'T' },
   { name: 'Gia Hân', initial: 'G' },
 ]
+
+const NETWORK_CONTACTS = [
+  { id: 'invited-mai-anh', name: 'Mai Anh', initial: 'M' },
+  { id: 'invited-nguyen-minh', name: 'Nguyễn Minh', initial: 'N' },
+  { id: 'invited-lan-phuong', name: 'Lan Phương', initial: 'L' },
+  { id: 'invited-duc-long', name: 'Duc Long', initial: 'D' },
+  { id: 'invited-thu-ha-1', name: 'Thu Ha', initial: 'T' },
+  { id: 'invited-thu-ha-2', name: 'Thu Ha', initial: 'T' },
+  { id: 'invited-thu-ha-3', name: 'Thu Ha', initial: 'T' },
+  { id: 'invited-quang-huy', name: 'Quang Huy', initial: 'Q' },
+  { id: 'invited-bao-ngoc', name: 'Bảo Ngọc', initial: 'B' },
+  { id: 'invited-minh-khang', name: 'Minh Khang', initial: 'M' },
+].map((contact) => ({
+  ...contact,
+  timing: 'Not invited yet',
+  reward: 'Earn after signup',
+}))
 
 const NETWORK_SYNC_METRICS = [
   { label: 'Contacts', icon: assetUrl('images/network-contacts.svg'), tone: 'contacts' },
@@ -494,7 +505,7 @@ function NetworkOverviewScreen({ onBack, onInvite, onNudge, invitedCount = 0 }) 
   )
 }
 
-function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contacts = SYNCED_CONTACTS, invitedContacts = NETWORK_CONTACTS, onBack, onRemind, onSync, onSkip, onInviteContact }) {
+function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contacts = SYNCED_CONTACTS, invitedContacts = NETWORK_CONTACTS, onBack, onRemind, onSync, onSkip, onInviteContact, onTabChange }) {
   const [tab, setTab] = useState(initialTab)
   const [query, setQuery] = useState('')
   const [showScrollHint, setShowScrollHint] = useState(true)
@@ -510,8 +521,14 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
     <div className="network-scroll" tabIndex={0} aria-label="My Network">
       <div className="network-screen">
         <header className="network-header network-contacts-header">
-          <button type="button" aria-label="Back to My network" onClick={onBack}><ChevronLeft size={22} /></button>
-          <Info size={18} aria-label="About invitations" />
+          <button type="button" aria-label="Back to My network" onClick={onBack}>
+            <span className="network-invited-back-icon" aria-hidden="true">
+              <img src={assetUrl('images/network-invited-back.svg')} alt="" />
+            </span>
+          </button>
+          <span className="network-invited-info-icon" aria-hidden="true">
+            <img src={assetUrl('images/network-invited-info.svg')} alt="" />
+          </span>
         </header>
 
         <div className={`network-body${tab === 'Contacts' && !contactsSynced ? ' contacts-unsynced' : ''}${showingSyncedContacts ? ' contacts-synced' : ''}${tab === 'Invited' ? ' invited-tab' : ''}`}>
@@ -522,22 +539,15 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
                 type="button"
                 role="tab"
                 aria-selected={tab === item}
-                onClick={() => setTab(item)}
+                onClick={() => {
+                  setTab(item)
+                  onTabChange?.(item)
+                }}
               >
                 {item}
               </button>
             ))}
           </div>
-
-          {tab === 'Invited' && invitedContacts.length > 0 && (
-            <section className="network-invited-summary" aria-label="Invited summary">
-              <div>
-                <strong>{invitedContacts.length} people invited</strong>
-                <p>They'll appear in Registered after signing up with your link.</p>
-              </div>
-              <span aria-hidden="true"><UsersRound size={28} /></span>
-            </section>
-          )}
 
           {tab === 'Contacts' && !contactsSynced ? (
             <section className="network-contact-sync-content">
@@ -566,7 +576,7 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
           ) : (
             <>
               <label className="network-search-field">
-                <Search size={20} aria-hidden="true" />
+                <img src={assetUrl('images/network-invited-search.svg')} alt="" aria-hidden="true" />
                 <input
                   type="search"
                   value={query}
@@ -592,7 +602,7 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
                         <div className="network-person-copy">
                           <h3>{person.name}</h3>
                           <p>{showingSyncedContacts ? (person.invited ? 'Invited today' : 'Not invited yet') : person.timing}</p>
-                          <span><i aria-hidden="true" />{showingSyncedContacts && !person.invited ? 'Earn after signup' : 'Waiting to register'}</span>
+                          <span><i aria-hidden="true" />{showingSyncedContacts && !person.invited ? 'Earn after signup' : person.reward ?? 'Waiting to register'}</span>
                         </div>
                         <button
                           type="button"
@@ -616,7 +626,7 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
                 )}
               </div>
 
-              {!showingSyncedContacts && (
+              {tab === 'Registered' && (
                 <button
                   type="button"
                   className="network-invite-button"
@@ -1037,11 +1047,7 @@ export default function App() {
   }
 
   const availableSyncedContacts = SYNCED_CONTACTS.filter(({ name }) => !recentlyInvitedNames.includes(name))
-  const visibleInvitedContacts = recentlyInvitedNames.map((name) => ({
-    name,
-    timing: 'Invited today',
-    initial: name.slice(0, 1).toUpperCase(),
-  }))
+  const visibleInvitedContacts = NETWORK_CONTACTS
 
   function handlePhoneCommentClick(e) {
     if (!redCommentMode) return
@@ -1211,7 +1217,7 @@ export default function App() {
               />
             ) : networkStage === 'overview' ? (
               <NetworkOverviewScreen
-                invitedCount={recentlyInvitedNames.length}
+                invitedCount={visibleInvitedContacts.length}
                 onBack={() => setSelectedNav('Home')}
                 onInvite={() => {
                   setNetworkInitialTab('Contacts')
@@ -1257,6 +1263,7 @@ export default function App() {
                 onSync={() => setNetworkStage('consent')}
                 onSkip={() => setSelectedNav('Home')}
                 onInviteContact={openContactInvite}
+                onTabChange={setNetworkInitialTab}
               />
             )
           ) : selectedNav === 'Plan' ? (
@@ -1554,7 +1561,7 @@ export default function App() {
           </div>
           )}
 
-          {!(checkinFlowOpen && checkinStage === 'success') && !(launchMode === 'first' && !introCompleted) && !(launchMode === 'first' && firstLaunchStage) && !reminderStage && !contactInviteStage && !(selectedNav === 'Network' && ['consent', 'syncing', 'success', 'reward'].includes(networkStage)) && (
+          {!(checkinFlowOpen && checkinStage === 'success') && !(launchMode === 'first' && !introCompleted) && !(launchMode === 'first' && firstLaunchStage) && !reminderStage && !contactInviteStage && !(selectedNav === 'Network' && ['consent', 'syncing', 'success', 'reward'].includes(networkStage)) && !(selectedNav === 'Network' && networkStage === 'contacts' && networkInitialTab === 'Invited') && (
           <nav className="bottom-bar" aria-label="Main navigation">
             {[
               { key: 'Home', icon: '/images/dashboard-home.svg' },
