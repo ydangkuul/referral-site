@@ -6,8 +6,6 @@ import {
 } from 'lucide-react'
 import PointsFlow from './PointsFlow.jsx'
 import CheckInFlow from './CheckInFlow.jsx'
-import IntroFlow from './IntroFlow.jsx'
-import FirstLaunchDashboard from './FirstLaunchDashboard.jsx'
 
 // Brand bank icon (from design handoff) — recolored to currentColor so it
 // tracks the theme token instead of the hardcoded #0D3C7D in the source file.
@@ -873,15 +871,13 @@ export default function App() {
   const [goalAmount, setGoalAmount] = useState(30)
   const [months, setMonths] = useState(12)
   const [selectedNav, setSelectedNav] = useState('Home')
-  const [launchMode, setLaunchMode] = useState('first')
+  const launchMode = 'returning'
   const [contactsSynced, setContactsSynced] = useState(false)
   const [redCommentMode, setRedCommentMode] = useState(false)
   const [redComments, setRedComments] = useState([])
   const [checkinFlowOpen, setCheckinFlowOpen] = useState(false)
   const [checkinStage, setCheckinStage] = useState('checkin')
   const [activitiesOpen, setActivitiesOpen] = useState(false)
-  const [introCompleted, setIntroCompleted] = useState(false)
-  const [firstLaunchStage, setFirstLaunchStage] = useState(null)
   const [reminderStage, setReminderStage] = useState(null)
   const [reminderNames, setReminderNames] = useState([])
   const [networkStage, setNetworkStage] = useState('contacts')
@@ -1038,71 +1034,7 @@ export default function App() {
             </div>
           </div>
 
-          {launchMode === 'first' && !introCompleted ? (
-            <IntroFlow
-              onComplete={() => {
-                setIntroCompleted(true)
-                setSelectedNav('Home')
-                setFirstLaunchStage('preview')
-              }}
-              onOpenEstimateGuide={() => setGuideTopic('estimate')}
-            />
-          ) : launchMode === 'first' && firstLaunchStage === 'preview' ? (
-            <FirstLaunchDashboard preview onPreviewComplete={() => setFirstLaunchStage('checkin')} />
-          ) : launchMode === 'first' && firstLaunchStage === 'checkin' ? (
-            <CheckInFlow
-              launchMode="first"
-              rewardPoints={1000}
-              onStageChange={setCheckinStage}
-              onBack={() => setFirstLaunchStage('preview')}
-              onClose={() => {
-                setCheckinStage('checkin')
-                setFirstLaunchStage('network-offer')
-              }}
-            />
-          ) : launchMode === 'first' && firstLaunchStage === 'network-offer' ? (
-            <NetworkSyncOfferScreen
-              onBack={() => setFirstLaunchStage('checkin')}
-              onContinue={() => setFirstLaunchStage('privacy')}
-            />
-          ) : launchMode === 'first' && firstLaunchStage === 'privacy' ? (
-            <NetworkPrivacyConsentScreen
-              onBack={() => setFirstLaunchStage('network-offer')}
-              onSkip={() => setFirstLaunchStage('dashboard')}
-              onContinue={() => setFirstLaunchStage('syncing')}
-              onOpenGuide={() => setGuideTopic('contactSync')}
-            />
-          ) : launchMode === 'first' && firstLaunchStage === 'syncing' ? (
-            <NetworkSyncingScreen
-              onBack={() => setFirstLaunchStage('privacy')}
-              onComplete={() => setFirstLaunchStage('sync-success')}
-              onOpenGuide={() => setGuideTopic('contactSync')}
-            />
-          ) : launchMode === 'first' && firstLaunchStage === 'sync-success' ? (
-            <NetworkSyncSuccessScreen
-              onBack={() => setFirstLaunchStage('privacy')}
-              onContinue={() => setFirstLaunchStage('sync-reward')}
-              onOpenGuide={() => setGuideTopic('contactSync')}
-            />
-          ) : launchMode === 'first' && firstLaunchStage === 'sync-reward' ? (
-            <NetworkSyncRewardScreen
-              points={2000}
-              onBack={() => setFirstLaunchStage('sync-success')}
-              onNext={() => {
-                setContactsSynced(true)
-                setFirstLaunchStage('dashboard')
-              }}
-            />
-          ) : launchMode === 'first' && firstLaunchStage === 'dashboard' && selectedNav === 'Home' ? (
-            <FirstLaunchDashboard
-              onInvite={() => {
-                setFirstLaunchStage(null)
-                setSelectedNav('Network')
-                setNetworkStage('contacts')
-                setNetworkInitialTab('Contacts')
-              }}
-            />
-          ) : checkinFlowOpen ? (
+          {checkinFlowOpen ? (
             <CheckInFlow
               launchMode={launchMode}
               onStageChange={setCheckinStage}
@@ -1467,7 +1399,7 @@ export default function App() {
           </div>
           )}
 
-          {!(checkinFlowOpen && checkinStage === 'success') && !(launchMode === 'first' && !introCompleted) && !(launchMode === 'first' && firstLaunchStage && !['preview', 'dashboard'].includes(firstLaunchStage)) && !reminderStage && !contactInviteStage && !(selectedNav === 'Network' && networkStage !== 'contacts') && (
+          {!(checkinFlowOpen && checkinStage === 'success') && !reminderStage && !contactInviteStage && !(selectedNav === 'Network' && networkStage !== 'contacts') && (
           <nav className="bottom-bar" aria-label="Main navigation">
             {[
               { key: 'Home', icon: '/images/dashboard-home.svg' },
@@ -1480,7 +1412,6 @@ export default function App() {
                 className={`nav-item ${selectedNav === key ? 'selected' : ''}`}
                 aria-pressed={selectedNav === key}
                 onClick={() => {
-                  if (launchMode === 'first' && firstLaunchStage === 'dashboard' && key !== 'Home') setFirstLaunchStage(null)
                   setSelectedNav(key)
                 }}
               >
@@ -1531,23 +1462,6 @@ export default function App() {
       </div>
 
       <div className="launch-mode-controls" aria-label="Preview controls">
-        {[
-          { key: 'first', label: 'first launch' },
-          { key: 'returning', label: '>= second times launch' },
-        ].map(({ key, label }) => (
-          <button
-            key={key}
-            type="button"
-            aria-pressed={launchMode === key}
-            onClick={() => {
-              setLaunchMode(key)
-              setIntroCompleted(false)
-              setFirstLaunchStage(null)
-            }}
-          >
-            {label}
-          </button>
-        ))}
         <button
           type="button"
           className="red-comment-mode-button"
