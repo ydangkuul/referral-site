@@ -1051,7 +1051,15 @@ export default function App() {
   }
 
   const availableSyncedContacts = SYNCED_CONTACTS.filter(({ name }) => !recentlyInvitedNames.includes(name))
-  const visibleInvitedContacts = NETWORK_CONTACTS
+  const visibleInvitedContacts = recentlyInvitedNames.length
+    ? recentlyInvitedNames.map((name) => ({
+      name,
+      timing: 'Invited today',
+      initial: name.slice(0, 1).toUpperCase(),
+    }))
+    : launchMode === 'first'
+      ? []
+      : NETWORK_CONTACTS
 
   function handlePhoneCommentClick(e) {
     if (!redCommentMode) return
