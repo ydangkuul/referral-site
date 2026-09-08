@@ -1250,7 +1250,7 @@ input[type="file"] {
 .network-body.invited-tab .network-results-area {
   position: relative;
   min-height: 0;
-  height: 540px;
+  height: 323px;
 }
 
 .network-body.invited-tab .network-invite-button {
@@ -1258,7 +1258,8 @@ input[type="file"] {
 }
 
 .network-body.invited-tab .network-invited-list {
-  height: 100%;
+  height: auto;
+  max-height: 100%;
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: none;
