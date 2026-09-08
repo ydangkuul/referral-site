@@ -101,7 +101,7 @@
   border-radius: 16px;
   margin: 0;
   padding: 16px 18px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
   overflow: hidden;
 }
 
@@ -118,7 +118,6 @@
   line-height: 25px;
   color: var(--color-ink);
   margin: 0;
-  white-space: nowrap;
 }
 
 .checkin-day-name {
@@ -169,7 +168,7 @@
 }
 
 .checkin-day-circle.completed {
-  background: var(--color-primary);
+  background: #0073bf;
   border: 0;
   color: white;
 }
