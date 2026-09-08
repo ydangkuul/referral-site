@@ -6,6 +6,7 @@ import './figma-overrides.css'
 import './checkin.css'
 import './intro.css'
 import './first-launch.css'
+import './dashboard-home.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

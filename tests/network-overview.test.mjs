@@ -12,15 +12,17 @@ test('Network opens on the Figma My network overview scene', () => {
   assert.match(app, /function NetworkOverviewScreen/)
   assert.match(app, /<h1>My network<\/h1>/)
   assert.match(app, /Earn points when you invite/)
-  assert.match(app, /Contacts.*Invite.*Invited.*Nudge.*Registered.*Connect.*Influencer.*Connect.*Merchant.*Connect/s)
+  assert.match(app, /Contacts.*Invite.*Invited.*Nudge.*Registered.*Nudge.*Influencer.*Connect.*Merchant.*Connect/s)
 })
 
 test('first-launch network flow starts with synced contacts ready to invite', () => {
   assert.match(app, /const \[contactsSynced, setContactsSynced\] = useState\(true\)/)
   assert.doesNotMatch(app, /contacts-case-toggle|contacts: synced|contacts: not synced/)
-  assert.match(app, /\.slice\(0, 5\)/)
-  assert.match(app, /setContactInviteStage\(person \? 'preview' : 'select'\)/)
-  assert.match(app, /setContactInviteStage\(contactInviteDirect \? null : 'select'\)/)
+  assert.match(app, /const availableSyncedContacts = SYNCED_CONTACTS\.filter/)
+  assert.match(app, /\{ name: 'Thu Ha', initial: 'T' \},\s*\{ name: 'Thu Ha', initial: 'T' \}/)
+  assert.match(app, /setSelectedInviteNames\(\[person\.name\]\)/)
+  assert.match(app, /setContactInviteStage\('preview'\)/)
+  assert.doesNotMatch(app, /contactInviteStage === 'select'/)
 })
 
 test('first launch keeps Invited empty until an invitation is sent', () => {
@@ -31,7 +33,7 @@ test('first launch keeps Invited empty until an invitation is sent', () => {
 })
 
 test('keeps Nudge visible but disabled until at least one contact has been invited', () => {
-  assert.match(app, /function NetworkOverviewScreen\(\{ invitedCount, onBack, onInvite, onNudge \}\)/)
+  assert.match(app, /function NetworkOverviewScreen\(\{[^}]*invitedCount = 0[^}]*\}\)/)
   assert.match(app, /const enabled = item\.key === 'contacts' \|\| \(item\.key === 'invited' && invitedCount > 0\)/)
   assert.match(app, /disabled=\{!enabled\}/)
   assert.doesNotMatch(app, /const hasAction/)
@@ -46,9 +48,13 @@ test('individual invite follows preview, 1,000-point reward, then sent status', 
   assert.match(app, /images\/network-invitation-celebration\.png/)
 })
 
-test('bottom navigation stays on the overview and leaves the invitation scenes clear', () => {
-  assert.match(app, /selectedNav === 'Network' && networkStage !== 'overview'/)
+test('bottom navigation stays visible on network lists and leaves deeper flows clear', () => {
+  assert.match(app, /selectedNav === 'Network' && \['consent', 'syncing', 'success', 'reward'\]\.includes\(networkStage\)/)
   assert.match(css, /\.network-body\.contacts-synced \.network-invite-button \{\s*display: none;/)
+  assert.match(css, /\.network-scroll \{[\s\S]*inset: 47px 0 0;/)
+  assert.match(css, /\.network-body:not\(\.contacts-unsynced\) \.network-invite-button \{[\s\S]*top: 611px;/)
+  assert.match(css, /\.network-body\.contacts-synced \.network-results-area \{[\s\S]*height: auto;/)
+  assert.match(css, /\.network-body\.contacts-synced \.network-invited-person \{[\s\S]*min-height: 76px;/)
 })
 
 test('Network overview actions continue into the existing contact flows', () => {
@@ -58,8 +64,9 @@ test('Network overview actions continue into the existing contact flows', () => 
 })
 
 test('Network overview preserves the 390px Figma geometry and VietPay tokens', () => {
-  assert.match(css, /Network overview — Figma node 1070:7668/)
+  assert.match(css, /Network overview — Figma node 1070:7959/)
   assert.match(css, /\.network-overview-banner[\s\S]*width: 342px;[\s\S]*height: 68px;/)
   assert.match(css, /\.network-overview-row[\s\S]*height: 90px;/)
   assert.match(css, /\.network-overview-title h1[\s\S]*color: #0d3c7d;[\s\S]*font-size: 24px;/)
+  assert.match(css, /\.contact-share-options > div \{ display: flex; justify-content: center; gap: 16px;/)
 })

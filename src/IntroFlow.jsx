@@ -54,16 +54,17 @@ function WelcomeScreen({ onNext }) {
 
       <div className="intro-welcome-container">
         <img src="/images/intro-bg.png" alt="" className="intro-bg-image" />
-        <img src="/images/intro-character.png" alt="" className="intro-character-image" />
+        <img src="/images/intro-linh-welcome.png" alt="" className="intro-character-image" />
       </div>
     </div>
   )
 }
 
-function PointingHero({ compact = false }) {
+function PointingHero({ compact = false, guideSrc = '/images/intro-linh-guide-line.png' }) {
   return (
     <div className={`intro-pointing-hero${compact ? ' compact' : ''}`} aria-hidden="true">
-      <img src="/images/intro-point-down.png" alt="" />
+      <img className="intro-pointing-guide" src={guideSrc} alt="" />
+      <img className="intro-pointing-mascot" src="/images/intro-linh-pointing.png" alt="" />
     </div>
   )
 }
@@ -177,7 +178,7 @@ function RewardScreen({ points, onNext, onBack }) {
         <img src={REWARD_ASSETS[points]} alt="" />
       </div>
       <img className="intro-reward-confetti" src="/images/intro-sequence-confetti.png" alt="" />
-      <img className="intro-reward-girl" src="/images/intro-sequence-girl.png" alt="" />
+      <img className="intro-reward-girl" src="/images/intro-linh-celebrate.png" alt="" />
       <div className="intro-reward-gradient" aria-hidden="true" />
       <SequenceFooter onClick={onNext}>Next</SequenceFooter>
       <div className="intro-home-indicator" aria-hidden="true" />
@@ -269,82 +270,13 @@ function InviteScreen({ playing, onPlayingChange, onNext, onBack }) {
     <div className="intro-screen intro-sequence-screen invite-screen">
       <IntroStatusBar />
       <IntroBackButton onBack={onBack} />
-      <PointingHero compact />
+      <h1 className="intro-video-title">Watch video<br />get more points</h1>
+      <PointingHero compact guideSrc="/images/intro-linh-video-guide-line.png" />
       <button className="intro-video-card" type="button" aria-label={playing ? 'Pause intro video' : 'Play intro video'} onClick={() => onPlayingChange(!playing)}>
         <img src="/images/intro-video-thumbnail.png" alt="" />
-        <span className={playing ? 'playing' : ''}><Play size={29} fill="none" /></span>
+        <span className={playing ? 'playing' : ''}><img src="/images/intro-video-play.svg" alt="" /></span>
       </button>
       <SequenceFooter onClick={onNext}>Next</SequenceFooter>
-    </div>
-  )
-}
-
-const INVITATION_LINK = 'vietpay.vn/invite/VIET2024XY'
-const DEFAULT_INVITATION_MESSAGE = 'Hi! I’d like to invite you to join VietPay — a simple way to make payments and earn rewards. Use my invitation link below.'
-
-function InvitationShareScreen({ onNext, onBack }) {
-  const [copied, setCopied] = useState(false)
-
-  async function copyInvitationLink() {
-    await navigator.clipboard.writeText(INVITATION_LINK)
-    setCopied(true)
-  }
-
-  return (
-    <div className="intro-screen invitation-share-screen">
-      <IntroStatusBar />
-      <IntroBackButton onBack={onBack} />
-      <button className="invitation-share-info" type="button" aria-label="About invitations">
-        <Info size={17} />
-      </button>
-
-      <PointingHero compact />
-
-      <div className="invitation-ready-banner">
-        <img src="/images/invite-sparkles.svg" alt="" />
-        <strong>Your invitation is ready to send</strong>
-      </div>
-
-      <section className="invitation-card" aria-label="Your invitation">
-        <div className="invitation-card-heading">
-          <h1>Your invitation</h1>
-        </div>
-
-        <div className="invitation-message-preview">
-          <p>{DEFAULT_INVITATION_MESSAGE}</p>
-        </div>
-
-        <span className="invitation-link-label">Invitation link</span>
-        <div className="invitation-link-row">
-          <strong>{INVITATION_LINK}</strong>
-          <button type="button" onClick={copyInvitationLink}>
-            <img src="/images/invite-copy.svg" alt="" />
-            {copied ? 'Copied' : 'Copy'}
-          </button>
-        </div>
-      </section>
-
-      <section className="invitation-share-options" aria-label="Send invitation via">
-        <h2>Send invitation via</h2>
-        <div>
-          <button type="button" onClick={onNext} aria-label="Send via Zalo">
-            <span className="invitation-share-icon zalo"><img src="/images/invite-zalo.svg" alt="" /></span>
-            <span>Zalo</span>
-          </button>
-          <button type="button" onClick={onNext} aria-label="Send via Messenger">
-            <span className="invitation-share-icon messenger"><img src="/images/invite-messenger.svg" alt="" /></span>
-            <span>Messenger</span>
-          </button>
-          <button type="button" onClick={onNext} aria-label="Send via SMS">
-            <span className="invitation-share-icon sms"><img src="/images/invite-sms.svg" alt="" /></span>
-            <span>SMS</span>
-          </button>
-          <button type="button" onClick={onNext} aria-label="Send via Email">
-            <span className="invitation-share-icon email"><img src="/images/invite-email.svg" alt="" /></span>
-            <span>Email</span>
-          </button>
-        </div>
-      </section>
     </div>
   )
 }

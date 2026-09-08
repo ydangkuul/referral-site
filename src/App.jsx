@@ -1,13 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
-  Signal, Wifi, BatteryFull, Landmark, UserRound, Info, CalendarCheck,
-  ChevronDown, ChevronLeft, Clock3, House, Search, UsersRound, Goal as GoalIcon,
+  Landmark, UserRound, Info,
+  ChevronDown, ChevronLeft, Clock3, Search, UsersRound,
   CircleCheck, X, Play, Pause, ArrowLeft, CreditCard, QrCode,
 } from 'lucide-react'
 import PointsFlow from './PointsFlow.jsx'
 import CheckInFlow from './CheckInFlow.jsx'
 import IntroFlow from './IntroFlow.jsx'
-import FirstLaunchDashboard from './FirstLaunchDashboard.jsx'
 
 const assetUrl = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, '')}`
 
@@ -30,19 +29,6 @@ function BankIcon({ width = 28, height = 25, 'aria-label': ariaLabel }) {
           <rect width="28" height="25" fill="white" />
         </clipPath>
       </defs>
-    </svg>
-  )
-}
-
-// Not exported by the pinned lucide-react version — reproduced inline from
-// the exact path captured in the reference site's rendered SVG.
-function CircleStar({ size = 24, strokeWidth = 1.7 }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24"
-      fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round"
-      aria-hidden="true">
-      <circle cx="12" cy="12" r="10" />
-      <path d="M11.051 7.616a1 1 0 0 1 1.909.024l.737 1.452a1 1 0 0 0 .737.535l1.634.256a1 1 0 0 1 .588 1.806l-1.172 1.168a1 1 0 0 0-.282.866l.259 1.613a1 1 0 0 1-1.541 1.134l-1.465-.75a1 1 0 0 0-.912 0l-1.465.75a1 1 0 0 1-1.539-1.133l.258-1.613a1 1 0 0 0-.282-.867l-1.156-1.152a1 1 0 0 1 .572-1.822l1.633-.256a1 1 0 0 0 .737-.535z" />
     </svg>
   )
 }
@@ -203,6 +189,7 @@ const SYNCED_CONTACTS = [
   { name: 'Lan Phương', initial: 'L' },
   { name: 'Duc Long', initial: 'D' },
   { name: 'Thu Ha', initial: 'T' },
+  { name: 'Thu Ha', initial: 'T' },
   { name: 'Quang Huy', initial: 'Q' },
   { name: 'Bảo Ngọc', initial: 'B' },
   { name: 'Minh Khang', initial: 'M' },
@@ -225,7 +212,8 @@ function NetworkSyncOfferScreen({ onBack, onContinue }) {
       </header>
 
       <div className="network-sync-offer-hero" aria-hidden="true">
-        <img src={assetUrl('images/intro-point-down.png')} alt="" />
+        <img className="network-sync-offer-guide" src={assetUrl('images/intro-linh-guide-line.png')} alt="" />
+        <img className="network-sync-offer-mascot" src={assetUrl('images/intro-linh-pointing.png')} alt="" />
       </div>
 
       <section className="network-sync-offer-title">
@@ -246,7 +234,6 @@ function NetworkSyncOfferScreen({ onBack, onContinue }) {
       </section>
 
       <button type="button" className="network-sync-offer-terms">Terms and Conditions</button>
-      <button type="button" className="network-sync-offer-skip" onClick={onBack}>Skip</button>
       <button type="button" className="network-sync-offer-primary" onClick={onContinue}>Sync contacts get 1,000 pts</button>
     </div>
   )
@@ -267,7 +254,7 @@ const NETWORK_PRIVACY_POINTS = [
   },
 ]
 
-function NetworkPrivacyConsentScreen({ onBack, onSkip, onContinue, onOpenGuide }) {
+function NetworkPrivacyConsentScreen({ onBack, onContinue, onOpenGuide }) {
   const [infoOpen, setInfoOpen] = useState(false)
 
   return (
@@ -319,7 +306,6 @@ function NetworkPrivacyConsentScreen({ onBack, onSkip, onContinue, onOpenGuide }
         </section>
 
         <div className="network-privacy-actions">
-          <button type="button" className="network-privacy-skip" onClick={onSkip}>Skip</button>
           <button type="button" className="network-privacy-primary" onClick={onContinue}>Agree &amp; Continue</button>
         </div>
       </main>
@@ -376,7 +362,7 @@ function NetworkSyncingScreen({ onBack, onComplete, onOpenGuide }) {
         </span>
         <h1>Synching<br />contacts</h1>
         <div className="network-flow-spacer" />
-        <button type="button" className="network-flow-primary" disabled>Claim 100,000 pts</button>
+        <button type="button" className="network-flow-primary" disabled>Claim 2,000 pts</button>
       </div>
     </div>
   )
@@ -395,7 +381,7 @@ function NetworkSyncSuccessScreen({ onBack, onContinue, onOpenGuide }) {
           <p>Contacts synced successfully!<br />Your network is now up to date.</p>
         </section>
         <div className="network-flow-spacer" />
-        <button type="button" className="network-flow-primary" onClick={onContinue}>Claim 100,000 pts</button>
+        <button type="button" className="network-flow-primary" onClick={onContinue}>Claim 2,000 pts</button>
       </div>
     </div>
   )
@@ -411,7 +397,7 @@ function NetworkSyncRewardScreen({ onBack, onNext, points = 1000 }) {
         <img src={assetUrl(`images/intro-reward-${points}.png`)} alt="" />
       </div>
       <img className="network-sync-reward-confetti" src={assetUrl('images/intro-sequence-confetti.png')} alt="" />
-      <img className="network-sync-reward-girl" src={assetUrl('images/intro-sequence-girl.png')} alt="" />
+      <img className="network-sync-reward-girl" src={assetUrl('images/intro-linh-celebrate.png')} alt="" />
       <div className="network-sync-reward-gradient" aria-hidden="true" />
       <button type="button" className="network-sync-reward-next" onClick={onNext}>Next</button>
       <div className="network-sync-reward-indicator" aria-hidden="true" />
@@ -422,12 +408,12 @@ function NetworkSyncRewardScreen({ onBack, onNext, points = 1000 }) {
 const NETWORK_OVERVIEW_ROWS = [
   { key: 'contacts', value: '70', label: 'Contacts', action: 'Invite', icon: assetUrl('images/network-overview-contacts.png') },
   { key: 'invited', value: '00', label: 'Invited', action: 'Nudge', icon: assetUrl('images/network-overview-invited.png') },
-  { key: 'registered', value: '00', label: 'Registered', action: 'Connect', icon: assetUrl('images/network-overview-registered.png') },
+  { key: 'registered', value: '00', label: 'Registered', action: 'Nudge', icon: assetUrl('images/network-overview-registered.png') },
   { key: 'influencer', value: '00', label: 'Influencer', action: 'Connect', icon: assetUrl('images/network-overview-influencer.png') },
   { key: 'merchant', value: '00', label: 'Merchant', action: 'Connect', icon: assetUrl('images/network-overview-merchant.png') },
 ]
 
-function NetworkOverviewScreen({ invitedCount, onBack, onInvite, onNudge }) {
+function NetworkOverviewScreen({ onBack, onInvite, onNudge, invitedCount = 0 }) {
   const [infoOpen, setInfoOpen] = useState(false)
   const overviewRows = NETWORK_OVERVIEW_ROWS.map((item) => (
     item.key === 'invited'
@@ -508,7 +494,7 @@ function NetworkOverviewScreen({ invitedCount, onBack, onInvite, onNudge }) {
   )
 }
 
-function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contacts = SYNCED_CONTACTS, invitedContacts = NETWORK_CONTACTS, onBack, onRemind, onSync, onSkip, onInviteContact, onInviteContacts }) {
+function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contacts = SYNCED_CONTACTS, invitedContacts = NETWORK_CONTACTS, onBack, onRemind, onSync, onSkip, onInviteContact }) {
   const [tab, setTab] = useState(initialTab)
   const [query, setQuery] = useState('')
   const [showScrollHint, setShowScrollHint] = useState(true)
@@ -519,7 +505,6 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
       ? contacts
       : []
   const filteredPeople = people.filter(({ name }) => name.toLowerCase().includes(query.trim().toLowerCase()))
-  const displayedPeopleCount = showingSyncedContacts && !query.trim() ? 5 : filteredPeople.length
 
   return (
     <div className="network-scroll" tabIndex={0} aria-label="My Network">
@@ -593,7 +578,7 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
 
               <div className="network-list-heading">
                 <h2>{showingSyncedContacts ? 'Contacts' : tab === 'Invited' ? 'Invited contacts' : tab}</h2>
-                <span>{displayedPeopleCount} {displayedPeopleCount === 1 ? 'person' : 'people'}</span>
+                <span>{filteredPeople.length} {filteredPeople.length === 1 ? 'person' : 'people'}</span>
               </div>
 
               <div className="network-results-area">
@@ -623,7 +608,7 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
                 ) : (
                   <p className="network-empty-state">No people found.</p>
                 )}
-                {showingSyncedContacts && filteredPeople.length > 5 && showScrollHint && (
+                {showingSyncedContacts && filteredPeople.length > 6 && showScrollHint && (
                   <div className="network-scroll-hint" aria-hidden="true">
                     <ChevronDown size={14} />
                     <span>Swipe up</span>
@@ -631,13 +616,15 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
                 )}
               </div>
 
-              <button
-                type="button"
-                className="network-invite-button"
-                onClick={onInviteContacts}
-              >
-                {showingSyncedContacts ? 'Select contacts to invite' : 'Invite more people'}
-              </button>
+              {!showingSyncedContacts && (
+                <button
+                  type="button"
+                  className="network-invite-button"
+                  onClick={() => setTab('Contacts')}
+                >
+                  Invite more people
+                </button>
+              )}
             </>
           )}
         </div>
@@ -659,55 +646,6 @@ function ContactInviteHeader({ title, onBack, info = false }) {
   )
 }
 
-function ContactSelectScreen({ contacts, selectedNames, onSelectedNamesChange, onBack, onContinue }) {
-  const [query, setQuery] = useState('')
-  const filteredContacts = contacts.filter(({ name }) => name.toLowerCase().includes(query.trim().toLowerCase()))
-  const allSelected = contacts.length > 0 && contacts.every(({ name }) => selectedNames.includes(name))
-
-  function toggleName(name) {
-    onSelectedNamesChange(selectedNames.includes(name)
-      ? selectedNames.filter((item) => item !== name)
-      : [...selectedNames, name])
-  }
-
-  return (
-    <div className="contact-invite-screen contact-select-screen">
-      <ContactInviteHeader title="Select contacts" onBack={onBack} />
-      <main className="contact-select-body">
-        <label className="contact-select-search">
-          <Search size={21} aria-hidden="true" />
-          <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search people" />
-        </label>
-        <button
-          type="button"
-          className="contact-select-all"
-          onClick={() => onSelectedNamesChange(allSelected ? [] : contacts.map(({ name }) => name))}
-        >
-          <span className={`contact-check${allSelected ? ' checked' : ''}`}>{allSelected && <CircleCheck size={22} />}</span>
-          <strong>Select all</strong>
-          <small>{selectedNames.length} of {contacts.length} selected</small>
-        </button>
-        <section className="contact-select-list" aria-label="Synced contacts">
-          {filteredContacts.map((person) => {
-            const checked = selectedNames.includes(person.name)
-            return (
-              <button type="button" className={`contact-select-row${checked ? ' selected' : ''}`} key={person.name} onClick={() => toggleName(person.name)}>
-                <span className="contact-select-avatar">{person.initial}</span>
-                <span className="contact-select-copy"><strong>{person.name}</strong><small>Not invited yet</small></span>
-                <span className={`contact-check${checked ? ' checked' : ''}`}>{checked && <CircleCheck size={22} />}</span>
-              </button>
-            )
-          })}
-        </section>
-      </main>
-      <footer className="contact-select-footer">
-        <p>{selectedNames.length} contact{selectedNames.length === 1 ? '' : 's'} selected</p>
-        <button type="button" disabled={!selectedNames.length} onClick={onContinue}>Invite {selectedNames.length} {selectedNames.length === 1 ? 'person' : 'people'}</button>
-      </footer>
-    </div>
-  )
-}
-
 function ContactInvitationPreview({ names, onBack, onSent }) {
   function copyLink() {
     navigator.clipboard?.writeText(INVITATION_LINK)
@@ -717,7 +655,7 @@ function ContactInvitationPreview({ names, onBack, onSent }) {
     <div className="contact-invite-screen contact-invite-preview">
       <ContactInviteHeader onBack={onBack} info />
       <div className="contact-invite-hero" aria-hidden="true"><img src={assetUrl('images/network-invitation-hero.png')} alt="" /></div>
-      <div className="contact-invite-ready"><img src={assetUrl('images/network-invitation-sparkles.svg')} alt="" /><strong>{names.length === 1 ? `Ready to send invitation to ${names[0]}` : `Ready to send to ${names.length} contacts`}</strong></div>
+      <div className="contact-invite-ready"><img src={assetUrl('images/network-invitation-sparkles.svg')} alt="" /><strong>Ready to send invitation to {names[0]}</strong></div>
       <section className="contact-invite-card" aria-label="Invitation preview">
         <h2>Your invitation</h2>
         <p>{INVITATION_MESSAGE}</p>
@@ -990,6 +928,8 @@ export default function App() {
   const [pointsInfoOpen, setPointsInfoOpen] = useState(false)
   const [activitiesInfoOpen, setActivitiesInfoOpen] = useState(false)
   const [goalInfoOpen, setGoalInfoOpen] = useState(false)
+  const [goalEditing, setGoalEditing] = useState(false)
+  const [goalSaved, setGoalSaved] = useState(false)
   const [guideTopic, setGuideTopic] = useState(null)
   const [goalAmount, setGoalAmount] = useState(30)
   const [months, setMonths] = useState(12)
@@ -1001,18 +941,28 @@ export default function App() {
   const [checkinFlowOpen, setCheckinFlowOpen] = useState(false)
   const [checkinStage, setCheckinStage] = useState('checkin')
   const [activitiesOpen, setActivitiesOpen] = useState(false)
-  const [activityPreviewOpen, setActivityPreviewOpen] = useState(false)
-  const [saved, setSaved] = useState(false)
   const [introCompleted, setIntroCompleted] = useState(false)
   const [firstLaunchStage, setFirstLaunchStage] = useState(null)
   const [reminderStage, setReminderStage] = useState(null)
   const [reminderNames, setReminderNames] = useState([])
   const [networkStage, setNetworkStage] = useState('overview')
   const [contactInviteStage, setContactInviteStage] = useState(null)
-  const [contactInviteDirect, setContactInviteDirect] = useState(false)
   const [selectedInviteNames, setSelectedInviteNames] = useState([])
   const [recentlyInvitedNames, setRecentlyInvitedNames] = useState([])
   const [networkInitialTab, setNetworkInitialTab] = useState('Contacts')
+
+  const handleGoalAmountChange = (event) => {
+    setGoalAmount(Number(event.target.value))
+    setGoalSaved(false)
+  }
+
+  const handleGoalMonthsChange = (nextMonths) => {
+    if (nextMonths === months) return
+    setMonths(nextMonths)
+    setGoalSaved(false)
+  }
+
+  const handleGoalSave = () => setGoalSaved(true)
 
   const sliderPct = ((goalAmount - MIN_GOAL) / (MAX_GOAL - MIN_GOAL)) * 100
 
@@ -1037,14 +987,25 @@ export default function App() {
     return { merchants: round(BASE_NETWORK.merchants), influencers: round(BASE_NETWORK.influencers) }
   }, [scale])
 
+  const editActions = useMemo(() => {
+    const round = (n) => Math.max(1, Math.round(n * scale))
+    const next = {
+      invites: round(BASE_ACTIONS.invites),
+      remind: round(BASE_ACTIONS.remind),
+      ppp: round(BASE_ACTIONS.ppp),
+      sharp: round(BASE_ACTIONS.sharp),
+    }
+    return { ...next, total: next.invites + next.remind + next.ppp + next.sharp }
+  }, [scale])
+
+  const editNetworkReach = useMemo(() => {
+    const round = (n) => Math.max(1, Math.round(n * scale))
+    return { merchants: round(6), influencers: round(8) }
+  }, [scale])
+
   function handleAvatarChange(e) {
     const file = e.target.files?.[0]
     if (file) setAvatarUrl(URL.createObjectURL(file))
-  }
-
-  function handleSave() {
-    setSaved(true)
-    setTimeout(() => setSaved(false), 1800)
   }
 
   function openReminder(person) {
@@ -1053,27 +1014,29 @@ export default function App() {
   }
 
   function openContactInvite(person) {
-    const remainingContacts = SYNCED_CONTACTS.filter(({ name }) => !recentlyInvitedNames.includes(name))
-    setSelectedInviteNames(person ? [person.name] : remainingContacts.slice(0, 3).map(({ name }) => name))
-    setContactInviteDirect(Boolean(person))
-    setContactInviteStage(person ? 'preview' : 'select')
+    setSelectedInviteNames([person.name])
+    setContactInviteStage('preview')
   }
 
-  const availableSyncedContacts = SYNCED_CONTACTS
-    .slice(0, 5)
-    .filter(({ name }) => !recentlyInvitedNames.includes(name))
-    .concat(
-      recentlyInvitedNames.includes('Thu Ha')
-        ? []
-        : [
-            { id: 'thu-ha-2', name: 'Thu Ha', initial: 'T' },
-            { id: 'thu-ha-3', name: 'Thu Ha', initial: 'T' },
-          ],
-    )
-  const syncedContactsWithStatus = SYNCED_CONTACTS.map((contact) => ({
-    ...contact,
-    invited: recentlyInvitedNames.includes(contact.name),
-  }))
+  function finishFirstLaunchInNetwork(contactsAreSynced) {
+    setContactsSynced(contactsAreSynced)
+    setFirstLaunchStage(null)
+    setSelectedNav('Network')
+    setNetworkStage('overview')
+    setNetworkInitialTab('Contacts')
+    setContactInviteStage(null)
+  }
+
+  function restartLaunchMode(mode) {
+    setLaunchMode(mode)
+    setIntroCompleted(false)
+    setFirstLaunchStage(null)
+    setSelectedInviteNames([])
+    setContactInviteStage(null)
+    setNetworkInitialTab('Contacts')
+  }
+
+  const availableSyncedContacts = SYNCED_CONTACTS.filter(({ name }) => !recentlyInvitedNames.includes(name))
   const visibleInvitedContacts = recentlyInvitedNames.map((name) => ({
     name,
     timing: 'Invited today',
@@ -1144,10 +1107,10 @@ export default function App() {
         >
           <div className="status-bar">
             <span>9:41</span>
-            <div>
-              <Signal size={17} />
-              <Wifi size={18} />
-              <BatteryFull size={25} />
+            <div className="status-icons" aria-hidden="true">
+              <img src="/images/dashboard-signal.svg" alt="" />
+              <img src="/images/dashboard-wifi.svg" alt="" />
+              <img src="/images/dashboard-battery.svg" alt="" />
             </div>
           </div>
 
@@ -1156,18 +1119,16 @@ export default function App() {
               onComplete={() => {
                 setIntroCompleted(true)
                 setSelectedNav('Home')
-                setFirstLaunchStage('preview')
+                setFirstLaunchStage('checkin')
               }}
               onOpenEstimateGuide={() => setGuideTopic('estimate')}
             />
-          ) : launchMode === 'first' && firstLaunchStage === 'preview' ? (
-            <FirstLaunchDashboard preview onPreviewComplete={() => setFirstLaunchStage('checkin')} />
           ) : launchMode === 'first' && firstLaunchStage === 'checkin' ? (
             <CheckInFlow
               launchMode="first"
               rewardPoints={1000}
               onStageChange={setCheckinStage}
-              onBack={() => setFirstLaunchStage('preview')}
+              onBack={() => setFirstLaunchStage(null)}
               onClose={() => {
                 setCheckinStage('checkin')
                 setFirstLaunchStage('network-offer')
@@ -1181,7 +1142,6 @@ export default function App() {
           ) : launchMode === 'first' && firstLaunchStage === 'privacy' ? (
             <NetworkPrivacyConsentScreen
               onBack={() => setFirstLaunchStage('network-offer')}
-              onSkip={() => setFirstLaunchStage('dashboard')}
               onContinue={() => setFirstLaunchStage('syncing')}
               onOpenGuide={() => setGuideTopic('contactSync')}
             />
@@ -1201,19 +1161,7 @@ export default function App() {
             <NetworkSyncRewardScreen
               points={2000}
               onBack={() => setFirstLaunchStage('sync-success')}
-              onNext={() => {
-                setContactsSynced(true)
-                setFirstLaunchStage('dashboard')
-              }}
-            />
-          ) : launchMode === 'first' && firstLaunchStage === 'dashboard' && selectedNav === 'Home' ? (
-            <FirstLaunchDashboard
-              onInvite={() => {
-                setFirstLaunchStage(null)
-                setSelectedNav('Network')
-                setNetworkStage('overview')
-                setNetworkInitialTab('Contacts')
-              }}
+              onNext={() => finishFirstLaunchInNetwork(true)}
             />
           ) : checkinFlowOpen ? (
             <CheckInFlow
@@ -1232,18 +1180,10 @@ export default function App() {
               onClose={() => setReminderStage(null)}
             />
           ) : selectedNav === 'Network' ? (
-            contactInviteStage === 'select' ? (
-              <ContactSelectScreen
-                contacts={syncedContactsWithStatus}
-                selectedNames={selectedInviteNames}
-                onSelectedNamesChange={setSelectedInviteNames}
-                onBack={() => setContactInviteStage(null)}
-                onContinue={() => setContactInviteStage('preview')}
-              />
-            ) : contactInviteStage === 'preview' ? (
+            contactInviteStage === 'preview' ? (
               <ContactInvitationPreview
                 names={selectedInviteNames}
-                onBack={() => setContactInviteStage(contactInviteDirect ? null : 'select')}
+                onBack={() => setContactInviteStage(null)}
                 onSent={() => {
                   setRecentlyInvitedNames((names) => [...new Set([...names, ...selectedInviteNames])])
                   setContactInviteStage('reward')
@@ -1257,9 +1197,14 @@ export default function App() {
             ) : contactInviteStage === 'sent' ? (
               <ContactInvitationSent
                 names={selectedInviteNames}
-                onBack={() => setContactInviteStage('preview')}
-                onInviteMore={() => openContactInvite()}
+                onBack={() => setContactInviteStage('reward')}
+                onInviteMore={() => {
+                  setNetworkStage('contacts')
+                  setNetworkInitialTab('Contacts')
+                  setContactInviteStage(null)
+                }}
                 onViewInvited={() => {
+                  setNetworkStage('contacts')
                   setNetworkInitialTab('Invited')
                   setContactInviteStage(null)
                 }}
@@ -1280,7 +1225,6 @@ export default function App() {
             ) : networkStage === 'consent' ? (
               <NetworkPrivacyConsentScreen
                 onBack={() => setNetworkStage('contacts')}
-                onSkip={() => setNetworkStage('contacts')}
                 onContinue={() => setNetworkStage('syncing')}
                 onOpenGuide={() => setGuideTopic('contactSync')}
               />
@@ -1313,7 +1257,6 @@ export default function App() {
                 onSync={() => setNetworkStage('consent')}
                 onSkip={() => setSelectedNav('Home')}
                 onInviteContact={openContactInvite}
-                onInviteContacts={() => openContactInvite()}
               />
             )
           ) : selectedNav === 'Plan' ? (
@@ -1338,55 +1281,64 @@ export default function App() {
           <div className="dashboard-scroll" tabIndex={0} aria-label="Dashboard content">
             <div className="dashboard-content">
               <div className="app-header">
-                <BankIcon width={27} height={24} aria-label="VietPay" />
+                <span className="dashboard-header-spacer" aria-hidden="true" />
+                <div className="dashboard-header-actions">
+                  <button type="button" aria-label="Open VietPay card">
+                    <span className="dashboard-card-icon" aria-hidden="true">
+                      <img src="/images/dashboard-header-circle.svg" alt="" />
+                      <img src="/images/dashboard-card.svg" alt="" />
+                    </span>
+                  </button>
+                  <button type="button" aria-label="Open QR code">
+                    <img src="/images/dashboard-qr.svg" alt="" />
+                  </button>
+                  <button type="button" aria-label="Open VietPay">
+                    <img className="dashboard-bank-icon" src="/images/dashboard-bank.svg" alt="" />
+                  </button>
+                </div>
               </div>
 
               <section className="profile-card card">
-                <div className="profile-row">
+                <button
+                  className="avatar profile-avatar"
+                  aria-label="Change profile photo"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <img src={avatarUrl || '/images/dashboard-profile.png'} alt="" />
+                </button>
+                <input
+                  ref={fileInputRef}
+                  className="sr-only"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  aria-label="Choose profile photo"
+                  tabIndex={-1}
+                  onChange={handleAvatarChange}
+                />
+
+                <div className="profile-name-row">
                   <button
-                    className="avatar profile-avatar"
-                    aria-label="Change profile photo"
-                    onClick={() => fileInputRef.current?.click()}
+                    id="points-help"
+                    className="profile-info-button"
+                    aria-label="About profile points"
+                    aria-expanded={pointsInfoOpen}
+                    onClick={() => setPointsInfoOpen((v) => !v)}
                   >
-                    {avatarUrl ? (
-                      <img src={avatarUrl} alt="" />
-                    ) : (
-                      <UserRound size={30} className="default-profile-icon" aria-hidden="true" />
-                    )}
+                    <img src="/images/dashboard-profile-info.svg" alt="" />
                   </button>
-                  <input
-                    ref={fileInputRef}
-                    className="sr-only"
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp"
-                    aria-label="Choose profile photo"
-                    tabIndex={-1}
-                    onChange={handleAvatarChange}
-                  />
-                  <strong>Hi, Y Dang</strong>
+                  <strong>Hi, Y Van Dang</strong>
                   <span className="tier">Silver</span>
                 </div>
 
-                <div className="points-row">
-                  <div className="points-total">
-                    <span className="points-label">
-                      Available points
-                      <button
-                        id="points-help"
-                        className="info-button"
-                        aria-label="About available points"
-                        aria-expanded={pointsInfoOpen}
-                        onClick={() => setPointsInfoOpen((v) => !v)}
-                      >
-                        <Info size={16} />
-                      </button>
-                    </span>
-                    <div><strong>1,245</strong><b>pts</b></div>
-                  </div>
-                  <div className="points-total lifetime-points">
-                    <span>Lifetime points</span>
-                    <div><strong>1,245</strong><b>pts</b></div>
-                  </div>
+                <div className="dashboard-points-line current-points">
+                  <span>Current points:</span>
+                  <strong>9,000,000</strong>
+                  <b>points</b>
+                </div>
+                <div className="dashboard-points-line my-points">
+                  <span>My points:</span>
+                  <strong>1,245,000,000</strong>
+                  <b>points</b>
                 </div>
               </section>
 
@@ -1401,9 +1353,9 @@ export default function App() {
                 </InfoBubble>
               )}
 
-              <section className="dashboard-goal-editor card" aria-label="Edit income goal">
+              <section className={`dashboard-goal-editor card${goalEditing ? ' editing' : ''}`} aria-label="Edit income goal">
                 <div className="sheet-label sheet-label-with-info">
-                  <label htmlFor="income-goal">Monthly income goal</label>
+                  <label htmlFor="income-goal">Monthly income plan</label>
                   <button
                     id="goal-help"
                     className="info-button"
@@ -1411,7 +1363,7 @@ export default function App() {
                     aria-expanded={goalInfoOpen}
                     onClick={() => setGoalInfoOpen((v) => !v)}
                   >
-                    <Info size={16} />
+                    <img src="/images/dashboard-info.svg" alt="" />
                   </button>
                   {goalInfoOpen && (
                     <>
@@ -1436,6 +1388,16 @@ export default function App() {
                 <div className="sheet-amount">
                   <output htmlFor="income-goal">{formatVnd(goalAmount * 1_000_000)}</output>
                   <span>VND</span>
+                  <button
+                    type="button"
+                    className="dashboard-edit-goal"
+                    aria-label={goalEditing ? 'Close monthly income plan editor' : 'Edit monthly income plan'}
+                    aria-pressed={goalEditing}
+                    onClick={() => setGoalEditing((editing) => !editing)}
+                  >
+                    <img src="/images/dashboard-edit.svg" alt="" />
+                    Edit
+                  </button>
                 </div>
 
                 <div className="sheet-slider">
@@ -1450,15 +1412,19 @@ export default function App() {
                     max={MAX_GOAL}
                     step={STEP_GOAL}
                     value={goalAmount}
-                    onChange={(e) => setGoalAmount(Number(e.target.value))}
+                    onChange={handleGoalAmountChange}
                   />
                 </div>
                 <div className="sheet-bounds"><span>5M</span><span>100M</span></div>
 
                 <div className="sheet-months" role="group" aria-label="Time to reach your goal">
                   {[6, 12, 18].map((m) => (
-                    <button key={m} aria-pressed={months === m} onClick={() => setMonths(m)}>
-                      {months === m && <CircleCheck size={16} fill="var(--color-primary)" stroke="white" />}
+                    <button
+                      key={m}
+                      aria-pressed={months === m}
+                      onClick={() => handleGoalMonthsChange(m)}
+                    >
+                      {months === m && <img src="/images/dashboard-check.svg" alt="" aria-hidden="true" />}
                       {m} months
                     </button>
                   ))}
@@ -1466,115 +1432,141 @@ export default function App() {
 
                 <section className="goal-network-stats card" aria-label="Network Reach">
                   <span className="goal-network-stats-values">
-                    <span className="stat"><strong>{networkReach.merchants}</strong><span>Merchants</span></span>
+                    <span className="stat">
+                      <strong>{goalEditing ? String(editNetworkReach.merchants).padStart(2, '0') : networkReach.merchants}</strong>
+                      <span>{goalEditing ? 'Merchants' : 'Target Merchants'}</span>
+                    </span>
                     <span className="divider" aria-hidden="true" />
-                    <span className="stat"><strong>{networkReach.influencers}</strong><span>Influencers</span></span>
+                    <span className="stat">
+                      <strong>{goalEditing ? String(editNetworkReach.influencers).padStart(2, '0') : networkReach.influencers}</strong>
+                      <span>{goalEditing ? 'Influencers' : 'Target Influencers'}</span>
+                    </span>
                   </span>
                 </section>
 
-                <section
-                  className={`sheet-preview ${activityPreviewOpen ? '' : 'collapsed'}`}
-                  aria-live="polite"
-                  aria-atomic="true"
-                  style={{ position: 'relative' }}
-                >
-                  <div className="preview-heading">
-                    <span className="activities-day-label">
-                      Activities / day
-                      <button
-                        id="activities-help"
-                        className="info-button"
-                        aria-label="About activities per day"
-                        aria-expanded={activitiesInfoOpen}
-                        onClick={() => setActivitiesInfoOpen((v) => !v)}
-                      >
-                        <Info size={16} />
-                      </button>
-                    </span>
-                    <span className="preview-actions">
-                      <span className="preview-total-pill">{actions.total} actions</span>
-                    </span>
-                    <button
-                      className="preview-toggle"
-                      aria-label={activityPreviewOpen ? 'Hide activities per day' : 'Show activities per day'}
-                      aria-expanded={activityPreviewOpen}
-                      onClick={() => setActivityPreviewOpen((v) => !v)}
-                    >
-                      <ChevronDown size={20} style={{ transform: activityPreviewOpen ? 'rotate(180deg)' : 'none' }} />
-                    </button>
-                  </div>
-                  {activitiesInfoOpen && (
-                    <>
-                      <button className="dismiss-tip" aria-label="Dismiss" onClick={() => setActivitiesInfoOpen(false)} />
-                      <div className="sheet-help-bubble" role="dialog">
-                        <button className="tip-close" aria-label="Close" onClick={() => setActivitiesInfoOpen(false)}>
-                          <X size={16} />
-                        </button>
-                        <strong>Activities / day</strong>
-                        <p>The daily actions needed to hit your goal — scales with the amount and timeline above.</p>
+                {goalEditing && (
+                  <section className="dashboard-activities-summary" aria-live="polite" aria-label="Activities per day">
+                    <div className="dashboard-activities-heading">
+                      <span>
+                        Activities / day
                         <button
-                          className="video-link"
-                          onClick={() => { setActivitiesInfoOpen(false); setGuideTopic('activities') }}
+                          type="button"
+                          className="info-button"
+                          aria-label="About activities per day"
+                          aria-expanded={activitiesInfoOpen}
+                          onClick={() => setActivitiesInfoOpen((open) => !open)}
                         >
-                          <Play size={14} /> Watch guide
+                          <img src="/images/dashboard-activities-info.svg" alt="" />
                         </button>
-                      </div>
-                    </>
-                  )}
-                  {activityPreviewOpen && (
-                    <div className="preview-counts">
-                      <div><strong>{actions.invites}</strong><span>Invites</span></div>
-                      <div><strong>{actions.remind}</strong><span>Remind</span></div>
-                      <div><strong>{actions.ppp}</strong><span>PPP</span></div>
-                      <div><strong>{actions.sharp}</strong><span>SHARP</span></div>
+                      </span>
+                      <b>{editActions.total} actions</b>
                     </div>
-                  )}
-                </section>
+                    {activitiesInfoOpen && (
+                      <>
+                        <button className="dismiss-tip" aria-label="Dismiss" onClick={() => setActivitiesInfoOpen(false)} />
+                        <div className="sheet-help-bubble" role="dialog">
+                          <button className="tip-close" aria-label="Close" onClick={() => setActivitiesInfoOpen(false)}>
+                            <X size={16} />
+                          </button>
+                          <strong>Activities / day</strong>
+                          <p>Your daily activity targets update with the income goal and timeline.</p>
+                          <button
+                            className="video-link"
+                            onClick={() => { setActivitiesInfoOpen(false); setGuideTopic('activities') }}
+                          >
+                            <Play size={14} /> Watch guide
+                          </button>
+                        </div>
+                      </>
+                    )}
+                    <div className="dashboard-activity-counts">
+                      <span><strong>{editActions.invites}</strong><b>Invites</b></span>
+                      <span><strong>{editActions.remind}</strong><b>Remind</b></span>
+                      <span><strong>{editActions.ppp}</strong><b>PPP</b></span>
+                      <span><strong>{editActions.sharp}</strong><b>SHARP</b></span>
+                    </div>
+                  </section>
+                )}
 
-                <button className="sheet-save" onClick={handleSave}>
-                  {saved ? 'Saved' : 'Save changes'}
-                </button>
+                {goalEditing ? (
+                  <button
+                    type="button"
+                    className="dashboard-save-button"
+                    disabled={goalSaved}
+                    aria-live="polite"
+                    aria-atomic="true"
+                    onClick={handleGoalSave}
+                  >
+                    {goalSaved ? 'Saved' : 'Save changes'}
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="dashboard-invite-button"
+                    onClick={() => {
+                      setSelectedNav('Network')
+                      setNetworkStage('contacts')
+                      setNetworkInitialTab('Contacts')
+                      setContactInviteStage(null)
+                    }}
+                  >
+                    Invite friends
+                  </button>
+                )}
+
               </section>
 
-              <button
-                className="checkin-card card"
-                onClick={() => {
-                  setCheckinStage('checkin')
-                  setCheckinFlowOpen(true)
-                }}
-              >
-                <CalendarCheck size={25} />
-                <span><strong>Check in</strong><small>Keep your daily streak going</small></span>
-              </button>
-
-              <button className="activities card" onClick={() => setActivitiesOpen((v) => !v)} aria-expanded={activitiesOpen}>
-                <Clock3 size={26} strokeWidth={1.5} />
-                <span>Recent Activities</span>
-                <ChevronDown size={25} style={{ transform: activitiesOpen ? 'rotate(180deg)' : 'none' }} />
-              </button>
-              {activitiesOpen && (
-                <div className="card" style={{ margin: '0 11px 10px', padding: '14px 16px', fontSize: 14, color: 'var(--color-text)' }}>
-                  No recent activity yet — invite a merchant to get started.
+              {goalEditing && (
+                <div className="dashboard-after-goal">
+                  <button
+                    type="button"
+                    className="dashboard-edit-checkin"
+                    onClick={() => {
+                      setCheckinStage('checkin')
+                      setCheckinFlowOpen(true)
+                    }}
+                  >
+                    <img src="/images/dashboard-calendar-check.svg" alt="" aria-hidden="true" />
+                    <span><strong>Check in</strong><small>Keep your daily streak going</small></span>
+                    <img src="/images/dashboard-chevron-down.svg" alt="" aria-hidden="true" />
+                  </button>
+                  <button
+                    type="button"
+                    className="dashboard-edit-recent"
+                    aria-expanded={activitiesOpen}
+                    onClick={() => setActivitiesOpen((open) => !open)}
+                  >
+                    <img src="/images/dashboard-clock.svg" alt="" aria-hidden="true" />
+                    <span>Recent Activities</span>
+                    <img
+                      src="/images/dashboard-recent-chevron.svg"
+                      alt=""
+                      aria-hidden="true"
+                      style={{ transform: activitiesOpen ? 'rotate(180deg)' : 'none' }}
+                    />
+                  </button>
+                  {activitiesOpen && (
+                    <div className="dashboard-recent-detail">No recent activity yet — invite a merchant to get started.</div>
+                  )}
                 </div>
               )}
             </div>
           </div>
           )}
 
-          {!(checkinFlowOpen && checkinStage === 'success') && !(launchMode === 'first' && !introCompleted) && !(launchMode === 'first' && firstLaunchStage && !['preview', 'dashboard'].includes(firstLaunchStage)) && !reminderStage && !contactInviteStage && !(selectedNav === 'Network' && networkStage !== 'overview') && (
+          {!(checkinFlowOpen && checkinStage === 'success') && !(launchMode === 'first' && !introCompleted) && !(launchMode === 'first' && firstLaunchStage) && !reminderStage && !contactInviteStage && !(selectedNav === 'Network' && ['consent', 'syncing', 'success', 'reward'].includes(networkStage)) && (
           <nav className="bottom-bar" aria-label="Main navigation">
             {[
-              { key: 'Home', icon: House },
-              { key: 'Network', icon: UsersRound },
-              { key: 'Plan', icon: GoalIcon },
-              { key: 'Points', icon: CircleStar },
-            ].map(({ key, icon: Icon }) => (
+              { key: 'Home', icon: '/images/dashboard-home.svg' },
+              { key: 'Network', icon: '/images/dashboard-network.svg' },
+              { key: 'Plan', icon: '/images/dashboard-plan.svg' },
+              { key: 'Points', icon: '/images/dashboard-points.svg' },
+            ].map(({ key, icon }) => (
               <button
                 key={key}
                 className={`nav-item ${selectedNav === key ? 'selected' : ''}`}
                 aria-pressed={selectedNav === key}
                 onClick={() => {
-                  if (launchMode === 'first' && firstLaunchStage === 'dashboard' && key !== 'Home') setFirstLaunchStage(null)
                   if (key === 'Network') {
                     setNetworkStage('overview')
                     setNetworkInitialTab('Contacts')
@@ -1583,7 +1575,7 @@ export default function App() {
                   setSelectedNav(key)
                 }}
               >
-                <Icon size={25} strokeWidth={1.7} />
+                <img className="nav-item-icon" src={icon} alt="" aria-hidden="true" />
                 <span>{key}</span>
               </button>
             ))}
@@ -1638,11 +1630,7 @@ export default function App() {
             key={key}
             type="button"
             aria-pressed={launchMode === key}
-            onClick={() => {
-              setLaunchMode(key)
-              setIntroCompleted(false)
-              setFirstLaunchStage(null)
-            }}
+            onClick={() => restartLaunchMode(key)}
           >
             {label}
           </button>
