@@ -943,9 +943,9 @@ export default function App() {
   const [guideTopic, setGuideTopic] = useState(null)
   const [goalAmount, setGoalAmount] = useState(30)
   const [months, setMonths] = useState(12)
-  const [selectedNav, setSelectedNav] = useState('Network')
-  const [launchMode, setLaunchMode] = useState('returning')
-  const [contactsSynced, setContactsSynced] = useState(true)
+  const [selectedNav, setSelectedNav] = useState('Home')
+  const [launchMode, setLaunchMode] = useState('first')
+  const [contactsSynced, setContactsSynced] = useState(false)
   const [redCommentMode, setRedCommentMode] = useState(false)
   const [redComments, setRedComments] = useState([])
   const [checkinFlowOpen, setCheckinFlowOpen] = useState(false)
@@ -955,7 +955,7 @@ export default function App() {
   const [firstLaunchStage, setFirstLaunchStage] = useState(null)
   const [reminderStage, setReminderStage] = useState(null)
   const [reminderNames, setReminderNames] = useState([])
-  const [networkStage, setNetworkStage] = useState('overview')
+  const [networkStage, setNetworkStage] = useState('contacts')
   const [contactInviteStage, setContactInviteStage] = useState(null)
   const [selectedInviteNames, setSelectedInviteNames] = useState([])
   const [recentlyInvitedNames, setRecentlyInvitedNames] = useState([])
@@ -1039,10 +1039,14 @@ export default function App() {
 
   function restartLaunchMode(mode) {
     setLaunchMode(mode)
+    setSelectedNav(mode === 'first' ? 'Home' : 'Network')
+    setContactsSynced(mode !== 'first')
     setIntroCompleted(false)
     setFirstLaunchStage(null)
     setSelectedInviteNames([])
+    setRecentlyInvitedNames([])
     setContactInviteStage(null)
+    setNetworkStage(mode === 'first' ? 'contacts' : 'overview')
     setNetworkInitialTab('Contacts')
   }
 
