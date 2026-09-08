@@ -1051,6 +1051,25 @@ export default function App() {
       : NETWORK_CONTACTS
 
   function handlePhoneCommentClick(e) {
+    const infoTarget = e.target.closest('[aria-label*="About"], [aria-label*="information"]')
+    if (infoTarget && !redCommentMode) {
+      e.preventDefault()
+      e.stopPropagation()
+      const label = infoTarget.getAttribute('aria-label') || ''
+      const topic = /point/i.test(label)
+        ? 'points'
+        : /goal|activity/i.test(label)
+          ? (/activ/i.test(label) ? 'activities' : 'goal')
+          : /estimate/i.test(label)
+            ? 'estimate'
+          : /sync|privacy/i.test(label)
+              ? 'contactSync'
+              : /contact|network|invitation/i.test(label)
+                ? 'network'
+              : 'network'
+      setGuideTopic(topic)
+      return
+    }
     if (!redCommentMode) return
     if (e.target.closest('.red-comment-note')) return
 
