@@ -1028,6 +1028,7 @@ export default function App() {
   }
 
   function finishFirstLaunchInNetwork(contactsAreSynced) {
+    setLaunchMode('returning')
     setContactsSynced(contactsAreSynced)
     setFirstLaunchStage(null)
     setSelectedNav('Network')
