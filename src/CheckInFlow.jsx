@@ -124,7 +124,6 @@ function SuccessScreen({ onNext, rewardPoints = 5000 }) {
         <button onClick={onNext} aria-label="Back to dashboard">
           <ArrowLeft size={16} />
         </button>
-        <h1>Daily check-in</h1>
       </header>
 
       <div className="checkin-success-content">
