@@ -191,21 +191,10 @@ const SYNCED_CONTACTS = [
 ]
 
 const NETWORK_CONTACTS = [
-  { id: 'invited-mai-anh', name: 'Mai Anh', initial: 'M' },
-  { id: 'invited-nguyen-minh', name: 'Nguyễn Minh', initial: 'N' },
-  { id: 'invited-lan-phuong', name: 'Lan Phương', initial: 'L' },
-  { id: 'invited-duc-long', name: 'Duc Long', initial: 'D' },
-  { id: 'invited-thu-ha-1', name: 'Thu Ha', initial: 'T' },
-  { id: 'invited-thu-ha-2', name: 'Thu Ha', initial: 'T' },
-  { id: 'invited-thu-ha-3', name: 'Thu Ha', initial: 'T' },
-  { id: 'invited-quang-huy', name: 'Quang Huy', initial: 'Q' },
-  { id: 'invited-bao-ngoc', name: 'Bảo Ngọc', initial: 'B' },
-  { id: 'invited-minh-khang', name: 'Minh Khang', initial: 'M' },
-].map((contact) => ({
-  ...contact,
-  timing: 'Not invited yet',
-  reward: 'Earn after signup',
-}))
+  { name: 'Tran Thi B', timing: 'Invited today', initial: 'T' },
+  { name: 'Le Van C', timing: 'Invited 2 days ago', initial: 'L' },
+  { name: 'Hoang Van E', timing: 'Invited 5 days ago', initial: 'H' },
+]
 
 const NETWORK_SYNC_METRICS = [
   { label: 'Contacts', icon: assetUrl('images/network-contacts.svg'), tone: 'contacts' },
@@ -1229,7 +1218,7 @@ export default function App() {
               />
             ) : networkStage === 'overview' ? (
               <NetworkOverviewScreen
-                invitedCount={visibleInvitedContacts.length}
+                invitedCount={recentlyInvitedNames.length}
                 onBack={() => setSelectedNav('Home')}
                 onInvite={() => {
                   setNetworkInitialTab('Contacts')
