@@ -1518,20 +1518,7 @@ export default function App() {
                   >
                     {goalSaved ? 'Saved' : 'Save changes'}
                   </button>
-                ) : (
-                  <button
-                    type="button"
-                    className="dashboard-invite-button"
-                    onClick={() => {
-                      setSelectedNav('Network')
-                      setNetworkStage('contacts')
-                      setNetworkInitialTab('Contacts')
-                      setContactInviteStage(null)
-                    }}
-                  >
-                    Invite friends
-                  </button>
-                )}
+                ) : null}
 
               </section>
 
