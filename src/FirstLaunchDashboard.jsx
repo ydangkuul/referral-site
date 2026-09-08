@@ -68,7 +68,6 @@ export default function FirstLaunchDashboard({ preview = false, onPreviewComplet
         </>
       </section>
 
-      <button className="first-launch-invite" type="button" onClick={onInvite}>Invite friends</button>
     </div>
   )
 }
