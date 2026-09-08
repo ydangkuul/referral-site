@@ -110,7 +110,7 @@ function PointsHome({ onConvert, BankIcon, onOpenPointsGuide }) {
   )
 }
 
-function ConvertPoints({ points, setPoints, onBack, onDone }) {
+function ConvertPoints({ points, setPoints, onBack, onDone, onOpenGuide }) {
   const pct = ((points - MIN_POINTS) / (MAX_POINTS - MIN_POINTS)) * 100
   const amount = useMemo(() => points * POINT_VALUE, [points])
 
@@ -121,7 +121,7 @@ function ConvertPoints({ points, setPoints, onBack, onDone }) {
           <ArrowLeft size={22} />
         </button>
         <h1>Convert points</h1>
-        <button aria-label="About convert points">
+        <button aria-label="About convert points" onClick={onOpenGuide}>
           <Info size={16} />
         </button>
       </header>
@@ -161,7 +161,7 @@ function ConvertPoints({ points, setPoints, onBack, onDone }) {
   )
 }
 
-function ConvertedSuccess({ points, onBack }) {
+function ConvertedSuccess({ points, onBack, onOpenGuide }) {
   return (
     <div className="points-flow-scroll success">
       <header className="points-flow-header convert">
@@ -169,7 +169,7 @@ function ConvertedSuccess({ points, onBack }) {
           <ArrowLeft size={22} />
         </button>
         <h1>Convert points</h1>
-        <button aria-label="About converted points">
+        <button aria-label="About converted points" onClick={onOpenGuide}>
           <Info size={16} />
         </button>
       </header>
@@ -206,12 +206,13 @@ export default function PointsFlow({ BankIcon, onOpenPointsGuide }) {
         setPoints={setPoints}
         onBack={() => setScreen('points')}
         onDone={() => setScreen('success')}
+        onOpenGuide={onOpenPointsGuide}
       />
     )
   }
 
   if (screen === 'success') {
-    return <ConvertedSuccess points={points} onBack={() => setScreen('points')} />
+    return <ConvertedSuccess points={points} onBack={() => setScreen('points')} onOpenGuide={onOpenPointsGuide} />
   }
 
   return <PointsHome onConvert={() => setScreen('convert')} BankIcon={BankIcon} onOpenPointsGuide={onOpenPointsGuide} />
