@@ -1362,7 +1362,22 @@ export default function App() {
                 </InfoBubble>
               )}
 
-              <section className={`dashboard-goal-editor card${goalEditing ? ' editing' : ''}`} aria-label="Edit income goal">
+                <div className="dashboard-checkin-row">
+                  <button
+                    type="button"
+                    className="dashboard-edit-checkin"
+                    onClick={() => {
+                      setCheckinStage('checkin')
+                      setCheckinFlowOpen(true)
+                    }}
+                  >
+                    <img src="/images/dashboard-calendar-check.svg" alt="" aria-hidden="true" />
+                    <span><strong>Check in</strong><small>Keep your daily streak going</small></span>
+                    <img src="/images/dashboard-chevron-down.svg" alt="" aria-hidden="true" />
+                  </button>
+                </div>
+
+                <section className={`dashboard-goal-editor card${goalEditing ? ' editing' : ''}`} aria-label="Edit income goal">
                 <div className="sheet-label sheet-label-with-info">
                   <label htmlFor="income-goal">Monthly income plan</label>
                   <button
@@ -1427,7 +1442,7 @@ export default function App() {
                 <div className="sheet-bounds"><span>5M</span><span>100M</span></div>
 
                 <div className="sheet-months" role="group" aria-label="Time to reach your goal">
-                  {[12, 18, 24].map((m) => (
+                  {[6, 12, 18].map((m) => (
                     <button
                       key={m}
                       aria-pressed={months === m}
@@ -1514,18 +1529,6 @@ export default function App() {
 
               {goalEditing && (
                 <div className="dashboard-after-goal">
-                  <button
-                    type="button"
-                    className="dashboard-edit-checkin"
-                    onClick={() => {
-                      setCheckinStage('checkin')
-                      setCheckinFlowOpen(true)
-                    }}
-                  >
-                    <img src="/images/dashboard-calendar-check.svg" alt="" aria-hidden="true" />
-                    <span><strong>Check in</strong><small>Keep your daily streak going</small></span>
-                    <img src="/images/dashboard-chevron-down.svg" alt="" aria-hidden="true" />
-                  </button>
                   <button
                     type="button"
                     className="dashboard-edit-recent"

@@ -250,7 +250,7 @@
 
 .dashboard-content .dashboard-goal-editor {
   width: 368px;
-  height: 496px;
+  height: 328px;
   margin: 0 11px;
   padding: 0;
   position: relative;
@@ -360,6 +360,14 @@
 
 .dashboard-goal-editor.editing {
   height: 514px;
+}
+
+.dashboard-checkin-row {
+  width: 390px;
+  height: 58px;
+  margin: 0 0 10px;
+  padding: 0 11px;
+  background: #fff;
 }
 
 .dashboard-edit-goal[aria-pressed='true'],
@@ -679,6 +687,7 @@
 .dashboard-edit-checkin {
   height: 58px;
   gap: 13px;
+  background: #dceaf2;
 }
 
 .dashboard-edit-checkin > img:first-child {
