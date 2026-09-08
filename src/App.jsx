@@ -241,7 +241,7 @@ function NetworkSyncOfferScreen({ onBack, onContinue }) {
       </section>
 
       <button type="button" className="network-sync-offer-terms">Terms and Conditions</button>
-      <button type="button" className="network-sync-offer-primary" onClick={onContinue}>Sync contacts get 1,000 pts</button>
+      <button type="button" className="network-sync-offer-primary" onClick={onContinue}>Sync contacts get 2,000 pts</button>
     </div>
   )
 }
@@ -559,7 +559,7 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
                 ))}
               </section>
               <button type="button" className="network-sync-offer-skip" onClick={onSkip}>Skip</button>
-              <button type="button" className="network-sync-offer-primary" onClick={onSync}>Sync contacts get 1,000 pts</button>
+              <button type="button" className="network-sync-offer-primary" onClick={onSync}>Sync contacts get 2,000 pts</button>
             </section>
           ) : (
             <>
