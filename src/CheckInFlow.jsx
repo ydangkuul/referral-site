@@ -27,7 +27,7 @@ function CheckInScreen({ onCheckIn }) {
       </header>
 
       <div className="checkin-character">
-        <img src="/images/checkin-character-figma.png" alt="" />
+        <img src="/images/checkin-character.png" alt="" />
       </div>
 
       <div className="checkin-info-bubble">
