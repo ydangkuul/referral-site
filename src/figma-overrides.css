@@ -722,7 +722,7 @@ input[type="file"] {
 /* Network overview — Figma node 1070:7959. */
 .network-overview-screen {
   position: absolute;
-  inset: 47px 0 0;
+  inset: 47px 0 70px;
   z-index: 4;
   overflow: hidden;
   background: #fff;
@@ -1221,7 +1221,7 @@ input[type="file"] {
 
 .network-body.contacts-synced .network-results-area {
   min-height: 0;
-  height: auto;
+  height: 544px;
   position: relative;
 }
 
@@ -1251,6 +1251,10 @@ input[type="file"] {
   position: relative;
   min-height: 0;
   height: 540px;
+}
+
+.network-body.invited-tab .network-invite-button {
+  top: 648px;
 }
 
 .network-body.invited-tab .network-invited-list {
