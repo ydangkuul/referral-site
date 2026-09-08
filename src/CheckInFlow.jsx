@@ -96,23 +96,6 @@ function ReturningSuccessScreen({ onNext }) {
         </button>
       </div>
 
-      <nav className="bottom-bar reward-bottom-bar" aria-label="Main navigation">
-        {[
-          { key: 'Home', icon: House },
-          { key: 'Network', icon: UsersRound },
-          { key: 'Plan', icon: Goal },
-          { key: 'Points', icon: CircleStar },
-        ].map(({ key, icon: Icon }) => (
-          <button
-            key={key}
-            className={`nav-item ${selectedNav === key ? 'selected' : ''}`}
-            aria-pressed={selectedNav === key}
-          >
-            <Icon size={25} strokeWidth={1.7} />
-            <span>{key}</span>
-          </button>
-        ))}
-      </nav>
     </div>
   )
 }
