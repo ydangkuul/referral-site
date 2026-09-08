@@ -88,6 +88,14 @@ const GUIDE_TOPICS = {
       { label: 'STEP 3', heading: 'Sync and earn points', number: '+1,000 pts', detail: 'Continue the contact sync flow to update your network and claim the reward.' },
     ],
   },
+  network: {
+    title: 'My network guide',
+    steps: [
+      { label: 'STEP 1', heading: 'See your network', number: 'Contacts', detail: 'Track contacts, invited people and registered referrals in one place.' },
+      { label: 'STEP 2', heading: 'Invite and remind', number: 'Invite', detail: 'Choose the next action for each person in your network.' },
+      { label: 'STEP 3', heading: 'Earn referral points', number: 'Rewards', detail: 'Points unlock as your invited contacts register.' },
+    ],
+  },
 }
 
 function formatVnd(n) {
@@ -412,8 +420,7 @@ const NETWORK_OVERVIEW_ROWS = [
   { key: 'merchant', value: '00', label: 'Merchant', action: 'Connect', icon: assetUrl('images/network-overview-merchant.png') },
 ]
 
-function NetworkOverviewScreen({ onBack, onInvite, onNudge, invitedCount = 0 }) {
-  const [infoOpen, setInfoOpen] = useState(false)
+function NetworkOverviewScreen({ onBack, onInvite, onNudge, invitedCount = 0, onOpenGuide }) {
   const overviewRows = NETWORK_OVERVIEW_ROWS.map((item) => (
     item.key === 'invited'
       ? { ...item, value: String(invitedCount).padStart(2, '0') }
@@ -444,17 +451,10 @@ function NetworkOverviewScreen({ onBack, onInvite, onNudge, invitedCount = 0 }) 
           <button
             type="button"
             aria-label="About My network"
-            aria-expanded={infoOpen}
-            onClick={() => setInfoOpen((open) => !open)}
+            onClick={onOpenGuide}
           >
             <Info size={17} strokeWidth={1.8} />
           </button>
-          {infoOpen && (
-            <div className="network-overview-info" role="dialog" aria-modal="false">
-              <strong>My network</strong>
-              <p>See everyone in your referral network and choose the next action for each group.</p>
-            </div>
-          )}
         </div>
 
         <button type="button" className="network-overview-banner" onClick={onInvite}>
@@ -1219,6 +1219,7 @@ export default function App() {
             ) : networkStage === 'overview' ? (
               <NetworkOverviewScreen
                 invitedCount={recentlyInvitedNames.length}
+                onOpenGuide={() => setGuideTopic('network')}
                 onBack={() => setSelectedNav('Home')}
                 onInvite={() => {
                   setNetworkInitialTab('Contacts')
