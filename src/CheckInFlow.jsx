@@ -117,11 +117,11 @@ function ReturningSuccessScreen({ onNext }) {
   )
 }
 
-function SuccessScreen({ onNext, rewardPoints = 5000 }) {
+function SuccessScreen({ onNext, onBack, rewardPoints = 5000 }) {
   return (
     <div className="checkin-flow-scroll success">
       <header className="checkin-flow-header">
-        <button onClick={onNext} aria-label="Back to dashboard">
+        <button onClick={onBack} aria-label="Back to check-in">
           <ArrowLeft size={16} />
         </button>
       </header>
@@ -162,7 +162,7 @@ export default function CheckInFlow({ launchMode = 'first', rewardPoints = 5000,
   if (screen === 'success') {
     return launchMode === 'returning'
       ? <ReturningSuccessScreen onNext={onClose} />
-      : <SuccessScreen onNext={onClose} rewardPoints={rewardPoints} />
+      : <SuccessScreen onNext={onClose} onBack={() => setScreen('checkin')} rewardPoints={rewardPoints} />
   }
 
   return <CheckInScreen onCheckIn={() => setScreen('success')} />
