@@ -1362,7 +1362,7 @@ export default function App() {
                 </InfoBubble>
               )}
 
-                <div className="dashboard-checkin-row">
+                {!goalEditing && <div className="dashboard-checkin-row">
                   <button
                     type="button"
                     className="dashboard-edit-checkin"
@@ -1375,7 +1375,7 @@ export default function App() {
                     <span><strong>Check in</strong><small>Keep your daily streak going</small></span>
                     <img src="/images/dashboard-chevron-down.svg" alt="" aria-hidden="true" />
                   </button>
-                </div>
+                </div>}
 
                 <section className={`dashboard-goal-editor card${goalEditing ? ' editing' : ''}`} aria-label="Edit income goal">
                 <div className="sheet-label sheet-label-with-info">
@@ -1529,6 +1529,18 @@ export default function App() {
 
               {goalEditing && (
                 <div className="dashboard-after-goal">
+                  <button
+                    type="button"
+                    className="dashboard-edit-checkin"
+                    onClick={() => {
+                      setCheckinStage('checkin')
+                      setCheckinFlowOpen(true)
+                    }}
+                  >
+                    <img src="/images/dashboard-calendar-check.svg" alt="" aria-hidden="true" />
+                    <span><strong>Check in</strong><small>Keep your daily streak going</small></span>
+                    <img src="/images/dashboard-chevron-down.svg" alt="" aria-hidden="true" />
+                  </button>
                   <button
                     type="button"
                     className="dashboard-edit-recent"
