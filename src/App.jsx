@@ -1418,7 +1418,7 @@ export default function App() {
                 <div className="sheet-bounds"><span>5M</span><span>100M</span></div>
 
                 <div className="sheet-months" role="group" aria-label="Time to reach your goal">
-                  {[12, 18, 24].map((m) => (
+                  {[6, 12, 18].map((m) => (
                     <button
                       key={m}
                       aria-pressed={months === m}
