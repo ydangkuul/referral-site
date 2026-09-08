@@ -19,18 +19,15 @@ const DAYS = [
   { key: 'W', label: 'W' },
 ]
 
-function CheckInScreen({ onCheckIn, onBack }) {
+function CheckInScreen({ onCheckIn }) {
   return (
     <div className="checkin-flow-scroll">
       <header className="checkin-flow-header">
-        <button onClick={onBack} aria-label="Back to dashboard">
-          <ArrowLeft size={16} />
-        </button>
         <h1>Daily check-in</h1>
       </header>
 
       <div className="checkin-character">
-        <img src="/images/checkin-character.png" alt="" />
+        <img src="/images/checkin-character-figma.png" alt="" />
       </div>
 
       <div className="checkin-info-bubble">
@@ -43,11 +40,9 @@ function CheckInScreen({ onCheckIn, onBack }) {
 
       <section className="checkin-card-main">
         <div className="checkin-card-header">
-          <h2>Check in 3 days</h2>
-          <span className="checkin-reward-badge">+1,000 pts</span>
+          <h2>3-day streak = 1000 pts</h2>
+          <span className="checkin-day-name">Monday</span>
         </div>
-
-        <p className="checkin-progress-text">1 of 3 days completed</p>
 
         <div className="checkin-progress-track">
           {DAYS.map((day, index) => (
@@ -63,7 +58,7 @@ function CheckInScreen({ onCheckIn, onBack }) {
         </div>
 
         <button className="checkin-primary-button" onClick={onCheckIn}>
-          Check in today
+          Check in today get 1,000 pts
         </button>
       </section>
     </div>
@@ -171,5 +166,5 @@ export default function CheckInFlow({ launchMode = 'first', rewardPoints = 5000,
       : <SuccessScreen onNext={onClose} rewardPoints={rewardPoints} />
   }
 
-  return <CheckInScreen onCheckIn={() => setScreen('success')} onBack={onBack} />
+  return <CheckInScreen onCheckIn={() => setScreen('success')} />
 }
