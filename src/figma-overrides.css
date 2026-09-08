@@ -1213,7 +1213,7 @@ input[type="file"] {
 
 .network-body:not(.contacts-unsynced) .network-invite-button {
   position: absolute;
-  top: 665px;
+  top: 611px;
   left: 24px;
   width: 342px;
   margin: 0;
@@ -1221,12 +1221,13 @@ input[type="file"] {
 
 .network-body.contacts-synced .network-results-area {
   min-height: 0;
-  height: 504px;
+  height: auto;
   position: relative;
 }
 
 .network-body.contacts-synced .network-invited-list {
-  height: 100%;
+  height: auto;
+  max-height: 100%;
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: none;
@@ -1238,6 +1239,12 @@ input[type="file"] {
 
 .network-body.contacts-synced .network-invite-button {
   display: none;
+}
+
+.network-body.contacts-synced .network-invited-person {
+  min-height: 76px;
+  padding-top: 7px;
+  padding-bottom: 7px;
 }
 
 .network-body.invited-tab .network-results-area {

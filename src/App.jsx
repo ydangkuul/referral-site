@@ -189,6 +189,7 @@ const SYNCED_CONTACTS = [
   { name: 'Lan Phương', initial: 'L' },
   { name: 'Duc Long', initial: 'D' },
   { name: 'Thu Ha', initial: 'T' },
+  { name: 'Thu Ha', initial: 'T' },
   { name: 'Quang Huy', initial: 'Q' },
   { name: 'Bảo Ngọc', initial: 'B' },
   { name: 'Minh Khang', initial: 'M' },

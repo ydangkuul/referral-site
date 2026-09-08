@@ -19,6 +19,7 @@ test('first-launch network flow starts with synced contacts ready to invite', ()
   assert.match(app, /const \[contactsSynced, setContactsSynced\] = useState\(true\)/)
   assert.doesNotMatch(app, /contacts-case-toggle|contacts: synced|contacts: not synced/)
   assert.match(app, /const availableSyncedContacts = SYNCED_CONTACTS\.filter/)
+  assert.match(app, /\{ name: 'Thu Ha', initial: 'T' \},\s*\{ name: 'Thu Ha', initial: 'T' \}/)
   assert.match(app, /setSelectedInviteNames\(\[person\.name\]\)/)
   assert.match(app, /setContactInviteStage\('preview'\)/)
   assert.doesNotMatch(app, /contactInviteStage === 'select'/)
@@ -51,7 +52,9 @@ test('bottom navigation stays visible on network lists and leaves deeper flows c
   assert.match(app, /selectedNav === 'Network' && \['consent', 'syncing', 'success', 'reward'\]\.includes\(networkStage\)/)
   assert.match(css, /\.network-body\.contacts-synced \.network-invite-button \{\s*display: none;/)
   assert.match(css, /\.network-scroll \{[\s\S]*inset: 47px 0 0;/)
-  assert.match(css, /\.network-body:not\(\.contacts-unsynced\) \.network-invite-button \{[\s\S]*top: 665px;/)
+  assert.match(css, /\.network-body:not\(\.contacts-unsynced\) \.network-invite-button \{[\s\S]*top: 611px;/)
+  assert.match(css, /\.network-body\.contacts-synced \.network-results-area \{[\s\S]*height: auto;/)
+  assert.match(css, /\.network-body\.contacts-synced \.network-invited-person \{[\s\S]*min-height: 76px;/)
 })
 
 test('Network overview actions continue into the existing contact flows', () => {
