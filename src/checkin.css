@@ -292,7 +292,7 @@
 .checkin-success-footer {
   position: absolute;
   left: 50%;
-  bottom: 23px;
+  bottom: 0;
   transform: translateX(-50%);
   width: 342px;
   padding: 0;
@@ -331,7 +331,7 @@
 /* Returning User Success Screen */
 
 .checkin-flow-scroll.returning .checkin-success-footer {
-  bottom: 93px;
+  bottom: 0;
 }
 
 .reward-bottom-bar {
