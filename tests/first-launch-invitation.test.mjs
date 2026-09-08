@@ -93,8 +93,8 @@ test('invitation sent actions use the same label size', () => {
 
 test('synced contacts list shows six complete rows before scrolling', () => {
   assert.match(appCss, /\.network-body\.contacts-synced \.network-results-area\s*\{[^}]*height:\s*auto;/s)
+  assert.match(appCss, /\.network-body\.contacts-synced \.network-invited-person\s*\{[^}]*min-height:\s*76px;/s)
   assert.match(appCss, /\.network-invited-person\s*\{[^}]*min-height:\s*84px;/s)
-  assert.doesNotMatch(appCss, /\.network-body\.contacts-synced \.network-invited-person/)
   assert.match(appSource, /showingSyncedContacts && filteredPeople\.length > 6 && showScrollHint/)
 })
 
