@@ -885,7 +885,11 @@ function PlanScreen({ actions, onOpenContacts, onOpenInvited }) {
     <div className="today-plan-scroll" tabIndex={0} aria-label="Today plan">
       <div className="today-plan-screen">
         <header className="network-header today-plan-header">
-          <BankIcon width={27} height={24} aria-label="VietPay" />
+          <div className="network-overview-tools" aria-label="Plan shortcuts">
+            <span className="selected" aria-hidden="true"><CreditCard size={21} strokeWidth={1.8} /></span>
+            <span aria-hidden="true"><QrCode size={20} strokeWidth={2} /></span>
+            <span aria-hidden="true"><BankIcon width={23} height={21} /></span>
+          </div>
         </header>
 
         <main className="today-plan-body">

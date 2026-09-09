@@ -107,15 +107,6 @@
   overflow: hidden;
 }
 
-.checkin-card-main.figma-streak-motion {
-  animation: checkin-streak-card 2s linear infinite;
-}
-
-@keyframes checkin-streak-card {
-  0% { transform: translateY(-544px); }
-  10.15%, 100% { transform: translateY(0); }
-}
-
 .checkin-card-header {
   display: flex;
   justify-content: space-between;
@@ -169,19 +160,23 @@
 }
 
 .checkin-day-circle {
+  position: relative;
   width: 30px;
   height: 30px;
-  border-radius: 50%;
-  background: white;
-  border: 1px solid #dedede;
-  display: grid;
-  place-items: center;
 }
 
-.checkin-day-circle.completed {
-  background: #0073bf;
-  border: 0;
-  color: white;
+.checkin-day-circle > img:first-child {
+  display: block;
+  width: 30px;
+  height: 30px;
+}
+
+.checkin-day-check {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 14px;
+  height: 14px;
 }
 
 .checkin-day-item > span {
@@ -196,13 +191,9 @@
 .checkin-connector {
   position: absolute;
   width: 116px;
-  height: 4px;
-  top: 17px;
+  height: 1.5px;
+  top: 18.25px;
   z-index: 1;
-  background-image: radial-gradient(circle, #0073bf 1.6px, transparent 1.8px);
-  background-repeat: repeat-x;
-  background-position: left center;
-  background-size: 7px 4px;
 }
 
 .checkin-connector-1 {
@@ -337,12 +328,6 @@
   height: 5px;
   border-radius: 999px;
   background: rgba(13, 60, 125, 0.4);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .checkin-card-main.figma-streak-motion {
-    animation: none;
-  }
 }
 
 /* Returning User Success Screen */

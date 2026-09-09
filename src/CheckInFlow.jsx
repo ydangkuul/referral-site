@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ArrowLeft, Check, House, UsersRound, Goal, CircleDollarSign } from 'lucide-react'
+import { ArrowLeft, House, UsersRound, Goal, CircleDollarSign } from 'lucide-react'
 
 // CircleStar component from App.jsx
 function CircleStar({ size = 24, strokeWidth = 1.7 }) {
@@ -19,13 +19,15 @@ const DAYS = [
   { key: 'W', label: 'W' },
 ]
 
-function CheckInScreen({ onBack, onCheckIn, animateStreak = false }) {
+function CheckInScreen({ onBack, onCheckIn, showBack = true }) {
   return (
     <div className="checkin-flow-scroll">
       <header className="checkin-flow-header">
-        <button type="button" onClick={onBack} aria-label="Back from daily check-in">
-          <ArrowLeft size={16} />
-        </button>
+        {showBack && (
+          <button type="button" onClick={onBack} aria-label="Back from daily check-in">
+            <ArrowLeft size={16} />
+          </button>
+        )}
         <h1>Daily check-in</h1>
       </header>
 
@@ -41,7 +43,7 @@ function CheckInScreen({ onBack, onCheckIn, animateStreak = false }) {
         </div>
       </div>
 
-      <section className={`checkin-card-main${animateStreak ? ' figma-streak-motion' : ''}`} data-node-id="1070:4903">
+      <section className="checkin-card-main" data-node-id="1107:12408">
         <div className="checkin-card-header">
           <h2>3-day streak = 1000 pts</h2>
           <span className="checkin-day-name">Monday</span>
@@ -50,14 +52,18 @@ function CheckInScreen({ onBack, onCheckIn, animateStreak = false }) {
         <div className="checkin-progress-track">
           {DAYS.map((day, index) => (
             <div key={day.key} className="checkin-day-item">
-              <div className={`checkin-day-circle ${index === 0 ? 'completed' : ''}`}>
-                {index === 0 && <Check size={16} strokeWidth={3} />}
+              <div className="checkin-day-circle">
+                <img
+                  src={index === 0 ? '/images/checkin-streak-day-done.svg' : '/images/checkin-streak-day-future.svg'}
+                  alt=""
+                />
+                {index === 0 && <img className="checkin-day-check" src="/images/checkin-streak-check.svg" alt="" />}
               </div>
               <span>{day.label}</span>
             </div>
           ))}
-          <span className="checkin-connector checkin-connector-1 active" aria-hidden="true" />
-          <span className="checkin-connector checkin-connector-2" aria-hidden="true" />
+          <img className="checkin-connector checkin-connector-1" src="/images/checkin-streak-connector.svg" alt="" />
+          <img className="checkin-connector checkin-connector-2" src="/images/checkin-streak-connector.svg" alt="" />
         </div>
 
         <button className="checkin-primary-button" onClick={onCheckIn}>
@@ -155,7 +161,7 @@ export default function CheckInFlow({ launchMode = 'first', rewardPoints = 5000,
     <CheckInScreen
       onBack={onBack}
       onCheckIn={() => setScreen('success')}
-      animateStreak={launchMode === 'first'}
+      showBack={launchMode !== 'first'}
     />
   )
 }

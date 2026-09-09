@@ -15,12 +15,12 @@ test('first-flow check-in follows the selected Figma contact-sync sequence', () 
   assert.match(appSource, /firstLaunchStage === 'sync-reward'[\s\S]*?points=\{2000\}[\s\S]*?contactSync/)
 })
 
-test('daily check-in keeps the Figma back action and motion values', () => {
-  assert.match(checkInSource, /aria-label="Back from daily check-in"/)
-  assert.match(checkInSource, /animateStreak=\{launchMode === 'first'\}/)
-  assert.match(checkInCss, /@keyframes checkin-streak-card\s*\{[\s\S]*?translateY\(-544px\)[\s\S]*?10\.15%, 100%[\s\S]*?translateY\(0\)/)
-  assert.match(checkInCss, /animation:\s*checkin-streak-card 2s linear infinite/)
-  assert.match(checkInCss, /prefers-reduced-motion:\s*reduce[\s\S]*?animation:\s*none/)
+test('first-flow daily check-in uses the static selected Figma frame', () => {
+  assert.match(checkInSource, /showBack=\{launchMode !== 'first'\}/)
+  assert.match(checkInSource, /data-node-id="1107:12408"/)
+  assert.match(checkInSource, /checkin-streak-connector\.svg/)
+  assert.doesNotMatch(checkInSource, /animateStreak/)
+  assert.doesNotMatch(checkInCss, /checkin-streak-card|figma-streak-motion/)
 })
 
 test('contact selection reuses the Figma avatar and checkbox geometry', () => {
@@ -28,4 +28,8 @@ test('contact selection reuses the Figma avatar and checkbox geometry', () => {
   assert.match(appSource, /className=\{`contact-sync-select-checkbox/)
   assert.match(appCss, /\.contact-sync-select-avatar\s*\{[^}]*width:\s*40px;[^}]*height:\s*40px;/s)
   assert.match(appCss, /\.contact-sync-select-checkbox\s*\{[^}]*width:\s*20px;[^}]*height:\s*20px;/s)
+})
+
+test('plan header reuses the three network shortcut icons', () => {
+  assert.match(appSource, /aria-label="Plan shortcuts"[\s\S]*?<CreditCard[\s\S]*?<QrCode[\s\S]*?<BankIcon/)
 })
