@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import {
-  ArrowLeft, Check, Info, Link2, Play, Rocket, Star, Sun, X,
+  ArrowLeft, Check, CreditCard, Info, Link2, Play, QrCode, Rocket, Star, Sun, X,
 } from 'lucide-react'
 
 const POINT_VALUE = 1000
@@ -38,7 +38,11 @@ function PointsHome({ onConvert, BankIcon, onOpenPointsGuide }) {
   return (
     <div className="points-flow-scroll">
       <header className="points-flow-header">
-        <BankIcon width={27} height={24} aria-label="VietPay" />
+        <div className="network-overview-tools" aria-label="Points shortcuts">
+          <span className="selected" aria-hidden="true"><CreditCard size={21} strokeWidth={1.8} /></span>
+          <span aria-hidden="true"><QrCode size={20} strokeWidth={2} /></span>
+          <span aria-hidden="true"><BankIcon width={23} height={21} /></span>
+        </div>
       </header>
 
       <section className="points-balance-card">
