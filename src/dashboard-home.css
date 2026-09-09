@@ -418,7 +418,7 @@
   margin-top: -5.5px;
   border: 0;
   border-radius: 50%;
-  background: url('/images/dashboard-slider.svg') center / 17px 17px no-repeat;
+  background: var(--dashboard-slider-image) center / 17px 17px no-repeat;
   box-shadow: none;
 }
 
@@ -427,7 +427,7 @@
   height: 17px;
   border: 0;
   border-radius: 50%;
-  background: url('/images/dashboard-slider.svg') center / 17px 17px no-repeat;
+  background: var(--dashboard-slider-image) center / 17px 17px no-repeat;
   box-shadow: none;
 }
 

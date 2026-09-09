@@ -1,7 +1,8 @@
 import { CircleCheck, Pencil, UserRound } from 'lucide-react'
+import { assetUrl } from './assetUrl.js'
 
 function BankMark() {
-  return <img className="first-launch-bank" src="/images/first-launch-bank.svg" alt="" />
+  return <img className="first-launch-bank" src={assetUrl('images/first-launch-bank.svg')} alt="" />
 }
 
 export default function FirstLaunchDashboard({ onInvite }) {

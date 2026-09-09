@@ -1244,9 +1244,9 @@ export default function App() {
           <div className="status-bar">
             <span>9:41</span>
             <div className="status-icons" aria-hidden="true">
-              <img src="/images/dashboard-signal.svg" alt="" />
-              <img src="/images/dashboard-wifi.svg" alt="" />
-              <img src="/images/dashboard-battery.svg" alt="" />
+              <img src={assetUrl('images/dashboard-signal.svg')} alt="" />
+              <img src={assetUrl('images/dashboard-wifi.svg')} alt="" />
+              <img src={assetUrl('images/dashboard-battery.svg')} alt="" />
             </div>
           </div>
 
@@ -1462,15 +1462,15 @@ export default function App() {
                 <div className="dashboard-header-actions">
                   <button type="button" aria-label="Open VietPay card">
                     <span className="dashboard-card-icon" aria-hidden="true">
-                      <img src="/images/dashboard-header-circle.svg" alt="" />
-                      <img src="/images/dashboard-card.svg" alt="" />
+                      <img src={assetUrl('images/dashboard-header-circle.svg')} alt="" />
+                      <img src={assetUrl('images/dashboard-card.svg')} alt="" />
                     </span>
                   </button>
                   <button type="button" aria-label="Open QR code">
-                    <img src="/images/dashboard-qr.svg" alt="" />
+                    <img src={assetUrl('images/dashboard-qr.svg')} alt="" />
                   </button>
                   <button type="button" aria-label="Open VietPay">
-                    <img className="dashboard-bank-icon" src="/images/dashboard-bank.svg" alt="" />
+                    <img className="dashboard-bank-icon" src={assetUrl('images/dashboard-bank.svg')} alt="" />
                   </button>
                 </div>
               </div>
@@ -1481,7 +1481,7 @@ export default function App() {
                   aria-label="Change profile photo"
                   onClick={() => fileInputRef.current?.click()}
                 >
-                  <img src={avatarUrl || '/images/dashboard-profile.png'} alt="" />
+                  <img src={avatarUrl || assetUrl('images/dashboard-profile.png')} alt="" />
                 </button>
                 <input
                   ref={fileInputRef}
@@ -1501,7 +1501,7 @@ export default function App() {
                     aria-expanded={pointsInfoOpen}
                     onClick={() => setPointsInfoOpen((v) => !v)}
                   >
-                    <img src="/images/dashboard-profile-info.svg" alt="" />
+                    <img src={assetUrl('images/dashboard-profile-info.svg')} alt="" />
                   </button>
                   <strong>Hi, Y Van Dang</strong>
                   <span className="tier">Silver</span>
@@ -1539,9 +1539,9 @@ export default function App() {
                       setCheckinFlowOpen(true)
                     }}
                   >
-                    <img src="/images/dashboard-calendar-check.svg" alt="" aria-hidden="true" />
+                    <img src={assetUrl('images/dashboard-calendar-check.svg')} alt="" aria-hidden="true" />
                     <span><strong>Check in</strong><small>Keep your daily streak going</small></span>
-                    <img src="/images/dashboard-chevron-down.svg" alt="" aria-hidden="true" />
+                    <img src={assetUrl('images/dashboard-chevron-down.svg')} alt="" aria-hidden="true" />
                   </button>
                 </div>}
 
@@ -1555,7 +1555,7 @@ export default function App() {
                     aria-expanded={goalInfoOpen}
                     onClick={() => setGoalInfoOpen((v) => !v)}
                   >
-                    <img src="/images/dashboard-info.svg" alt="" />
+                    <img src={assetUrl('images/dashboard-info.svg')} alt="" />
                   </button>
                   {goalInfoOpen && (
                     <>
@@ -1587,7 +1587,7 @@ export default function App() {
                     aria-pressed={goalEditing}
                     onClick={() => setGoalEditing((editing) => !editing)}
                   >
-                    <img src="/images/dashboard-edit.svg" alt="" />
+                    <img src={assetUrl('images/dashboard-edit.svg')} alt="" />
                     Edit
                   </button>
                 </div>
@@ -1616,7 +1616,7 @@ export default function App() {
                       aria-pressed={months === m}
                       onClick={() => handleGoalMonthsChange(m)}
                     >
-                      {months === m && <img src="/images/dashboard-check.svg" alt="" aria-hidden="true" />}
+                      {months === m && <img src={assetUrl('images/dashboard-check.svg')} alt="" aria-hidden="true" />}
                       {m} months
                     </button>
                   ))}
@@ -1648,7 +1648,7 @@ export default function App() {
                           aria-expanded={activitiesInfoOpen}
                           onClick={() => setActivitiesInfoOpen((open) => !open)}
                         >
-                          <img src="/images/dashboard-activities-info.svg" alt="" />
+                          <img src={assetUrl('images/dashboard-activities-info.svg')} alt="" />
                         </button>
                       </span>
                       <b>{editActions.total} actions</b>
@@ -1705,9 +1705,9 @@ export default function App() {
                       setCheckinFlowOpen(true)
                     }}
                   >
-                    <img src="/images/dashboard-calendar-check.svg" alt="" aria-hidden="true" />
+                    <img src={assetUrl('images/dashboard-calendar-check.svg')} alt="" aria-hidden="true" />
                     <span><strong>Check in</strong><small>Keep your daily streak going</small></span>
-                    <img src="/images/dashboard-chevron-down.svg" alt="" aria-hidden="true" />
+                    <img src={assetUrl('images/dashboard-chevron-down.svg')} alt="" aria-hidden="true" />
                   </button>
                   <button
                     type="button"
@@ -1715,10 +1715,10 @@ export default function App() {
                     aria-expanded={activitiesOpen}
                     onClick={() => setActivitiesOpen((open) => !open)}
                   >
-                    <img src="/images/dashboard-clock.svg" alt="" aria-hidden="true" />
+                    <img src={assetUrl('images/dashboard-clock.svg')} alt="" aria-hidden="true" />
                     <span>Recent Activities</span>
                     <img
-                      src="/images/dashboard-recent-chevron.svg"
+                      src={assetUrl('images/dashboard-recent-chevron.svg')}
                       alt=""
                       aria-hidden="true"
                       style={{ transform: activitiesOpen ? 'rotate(180deg)' : 'none' }}
@@ -1736,10 +1736,10 @@ export default function App() {
           {!checkinFlowOpen && !(launchMode === 'first' && !introCompleted) && !(launchMode === 'first' && firstLaunchStage) && !reminderStage && !contactInviteStage && !(selectedNav === 'Network' && ['contacts', 'consent', 'sync-select', 'syncing', 'success', 'reward'].includes(networkStage)) && !(selectedNav === 'Points' && pointsScreen === 'convert') && (
           <nav className="bottom-bar" aria-label="Main navigation">
             {[
-              { key: 'Home', icon: '/images/dashboard-home.svg' },
-              { key: 'Network', icon: '/images/dashboard-network.svg' },
-              { key: 'Plan', icon: '/images/dashboard-plan.svg' },
-              { key: 'Points', icon: '/images/dashboard-points.svg' },
+              { key: 'Home', icon: assetUrl('images/dashboard-home.svg') },
+              { key: 'Network', icon: assetUrl('images/dashboard-network.svg') },
+              { key: 'Plan', icon: assetUrl('images/dashboard-plan.svg') },
+              { key: 'Points', icon: assetUrl('images/dashboard-points.svg') },
             ].map(({ key, icon }) => (
               <button
                 key={key}

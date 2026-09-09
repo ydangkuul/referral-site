@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { ArrowLeft, House, UsersRound, Goal, CircleDollarSign } from 'lucide-react'
+import { assetUrl } from './assetUrl.js'
 
 // CircleStar component from App.jsx
 function CircleStar({ size = 24, strokeWidth = 1.7 }) {
@@ -32,7 +33,7 @@ function CheckInScreen({ onBack, onCheckIn, showBack = true }) {
       </header>
 
       <div className="checkin-character">
-        <img src="/images/linhcheckin.png" alt="" />
+        <img src={assetUrl('images/linhcheckin.png')} alt="" />
       </div>
 
       <div className="checkin-info-bubble">
@@ -54,16 +55,16 @@ function CheckInScreen({ onBack, onCheckIn, showBack = true }) {
             <div key={day.key} className="checkin-day-item">
               <div className="checkin-day-circle">
                 <img
-                  src={index === 0 ? '/images/checkin-streak-day-done.svg' : '/images/checkin-streak-day-future.svg'}
+                  src={assetUrl(index === 0 ? 'images/checkin-streak-day-done.svg' : 'images/checkin-streak-day-future.svg')}
                   alt=""
                 />
-                {index === 0 && <img className="checkin-day-check" src="/images/checkin-streak-check.svg" alt="" />}
+                {index === 0 && <img className="checkin-day-check" src={assetUrl('images/checkin-streak-check.svg')} alt="" />}
               </div>
               <span>{day.label}</span>
             </div>
           ))}
-          <img className="checkin-connector checkin-connector-1" src="/images/checkin-streak-connector.svg" alt="" />
-          <img className="checkin-connector checkin-connector-2" src="/images/checkin-streak-connector.svg" alt="" />
+          <img className="checkin-connector checkin-connector-1" src={assetUrl('images/checkin-streak-connector.svg')} alt="" />
+          <img className="checkin-connector checkin-connector-2" src={assetUrl('images/checkin-streak-connector.svg')} alt="" />
         </div>
 
         <button className="checkin-primary-button" onClick={onCheckIn}>
@@ -88,20 +89,20 @@ function ReturningSuccessScreen({ onNext }) {
 
       <div className="checkin-success-content">
         <div className="checkin-points-display">
-          <img src="/images/points-1000.png" alt="1,000 points" />
+          <img src={assetUrl('images/points-1000.png')} alt="1,000 points" />
         </div>
 
         <div className="checkin-success-character">
-          <img src="/images/intro-sequence-confetti.png" alt="" className="checkin-confetti" />
-          <img src="/images/intro-linh-celebrate.png" alt="" className="checkin-character-img" />
+          <img src={assetUrl('images/intro-sequence-confetti.png')} alt="" className="checkin-confetti" />
+          <img src={assetUrl('images/intro-linh-celebrate.png')} alt="" className="checkin-character-img" />
         </div>
 
-        <img src="/images/reward-gradient-bottom.png" alt="" className="checkin-gradient-overlay" />
+        <img src={assetUrl('images/reward-gradient-bottom.png')} alt="" className="checkin-gradient-overlay" />
       </div>
 
       <div className="checkin-success-footer">
         <button className="checkin-next-button" onClick={onNext}>
-          <img src="/images/reward-button.png" alt="Next" />
+          <img src={assetUrl('images/reward-button.png')} alt="Next" />
         </button>
       </div>
 
@@ -121,22 +122,22 @@ function SuccessScreen({ onNext, onBack, rewardPoints = 5000 }) {
       <div className="checkin-success-content">
         <div className="checkin-points-display">
           <img
-            src={rewardPoints === 1000 ? '/images/points-1000.png' : '/images/points-5000-figma.png'}
+            src={assetUrl(rewardPoints === 1000 ? 'images/points-1000.png' : 'images/points-5000-figma.png')}
             alt={`${rewardPoints.toLocaleString('en-US')} points`}
           />
         </div>
 
         <div className="checkin-success-character">
-          <img src="/images/intro-sequence-confetti.png" alt="" className="checkin-confetti" />
-          <img src="/images/intro-linh-celebrate.png" alt="" className="checkin-character-img" />
+          <img src={assetUrl('images/intro-sequence-confetti.png')} alt="" className="checkin-confetti" />
+          <img src={assetUrl('images/intro-linh-celebrate.png')} alt="" className="checkin-character-img" />
         </div>
 
-        <img src="/images/reward-gradient-bottom.png" alt="" className="checkin-gradient-overlay" />
+        <img src={assetUrl('images/reward-gradient-bottom.png')} alt="" className="checkin-gradient-overlay" />
       </div>
 
       <div className="checkin-success-footer">
         <button className="checkin-next-button" onClick={onNext}>
-          <img src="/images/reward-button.png" alt="Next" />
+          <img src={assetUrl('images/reward-button.png')} alt="Next" />
         </button>
       </div>
       <div className="checkin-success-progress" aria-hidden="true" />

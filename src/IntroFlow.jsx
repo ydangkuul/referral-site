@@ -4,6 +4,7 @@ import {
   Upload, UserPlus, Wifi, X,
 } from 'lucide-react'
 import { INTRO_STAGES } from './introSequence.js'
+import { assetUrl } from './assetUrl.js'
 
 function IntroStatusBar() {
   return (
@@ -53,18 +54,18 @@ function WelcomeScreen({ onNext }) {
       </div>
 
       <div className="intro-welcome-container">
-        <img src="/images/intro-bg.png" alt="" className="intro-bg-image" />
-        <img src="/images/intro-linh-welcome.png" alt="" className="intro-character-image" />
+        <img src={assetUrl('images/intro-bg.png')} alt="" className="intro-bg-image" />
+        <img src={assetUrl('images/intro-linh-welcome.png')} alt="" className="intro-character-image" />
       </div>
     </div>
   )
 }
 
-function PointingHero({ compact = false, guideSrc = '/images/intro-linh-guide-line.png' }) {
+function PointingHero({ compact = false, guideSrc = assetUrl('images/intro-linh-guide-line.png') }) {
   return (
     <div className={`intro-pointing-hero${compact ? ' compact' : ''}`} aria-hidden="true">
       <img className="intro-pointing-guide" src={guideSrc} alt="" />
-      <img className="intro-pointing-mascot" src="/images/intro-linh-pointing.png" alt="" />
+      <img className="intro-pointing-mascot" src={assetUrl('images/intro-linh-pointing.png')} alt="" />
     </div>
   )
 }
@@ -163,10 +164,10 @@ function EstimateScreen({ merchants, onMerchantsChange, onNext, onBack, onOpenEs
 }
 
 const REWARD_ASSETS = {
-  1000: '/images/intro-reward-1000.png',
-  2000: '/images/intro-reward-2000.png',
-  3000: '/images/intro-reward-3000.png',
-  4000: '/images/intro-reward-4000.png',
+  1000: assetUrl('images/intro-reward-1000.png'),
+  2000: assetUrl('images/intro-reward-2000.png'),
+  3000: assetUrl('images/intro-reward-3000.png'),
+  4000: assetUrl('images/intro-reward-4000.png'),
 }
 
 function RewardScreen({ points, onNext, onBack }) {
@@ -177,8 +178,8 @@ function RewardScreen({ points, onNext, onBack }) {
       <div className="intro-reward-points" aria-label={`${points.toLocaleString('en-US')} points`}>
         <img src={REWARD_ASSETS[points]} alt="" />
       </div>
-      <img className="intro-reward-confetti" src="/images/intro-sequence-confetti.png" alt="" />
-      <img className="intro-reward-girl" src="/images/intro-linh-celebrate.png" alt="" />
+      <img className="intro-reward-confetti" src={assetUrl('images/intro-sequence-confetti.png')} alt="" />
+      <img className="intro-reward-girl" src={assetUrl('images/intro-linh-celebrate.png')} alt="" />
       <div className="intro-reward-gradient" aria-hidden="true" />
       <SequenceFooter onClick={onNext}>Next</SequenceFooter>
       <div className="intro-home-indicator" aria-hidden="true" />
@@ -210,14 +211,14 @@ function AvatarScreen({ choice, name, onChoiceChange, onNameChange, onNext, onBa
         <AvatarChoice
           selected={choice === 'female'}
           label="Female"
-          image="/images/intro-avatar-female.png"
+          image={assetUrl('images/intro-avatar-female.png')}
           imageClass="female"
           onSelect={() => onChoiceChange('female')}
         />
         <AvatarChoice
           selected={choice === 'male'}
           label="Male"
-          image="/images/intro-avatar-male.png"
+          image={assetUrl('images/intro-avatar-male.png')}
           imageClass="male"
           onSelect={() => onChoiceChange('male')}
         />
@@ -271,10 +272,10 @@ function InviteScreen({ playing, onPlayingChange, onNext, onBack }) {
       <IntroStatusBar />
       <IntroBackButton onBack={onBack} />
       <h1 className="intro-video-title">Watch video<br />get more points</h1>
-      <PointingHero compact guideSrc="/images/intro-linh-video-guide-line.png" />
+      <PointingHero compact guideSrc={assetUrl('images/intro-linh-video-guide-line.png')} />
       <button className="intro-video-card" type="button" aria-label={playing ? 'Pause intro video' : 'Play intro video'} onClick={() => onPlayingChange(!playing)}>
-        <img src="/images/intro-video-thumbnail.png" alt="" />
-        <span className={playing ? 'playing' : ''}><img src="/images/intro-video-play.svg" alt="" /></span>
+        <img src={assetUrl('images/intro-video-thumbnail.png')} alt="" />
+        <span className={playing ? 'playing' : ''}><img src={assetUrl('images/intro-video-play.svg')} alt="" /></span>
       </button>
       <SequenceFooter onClick={onNext}>Next</SequenceFooter>
     </div>

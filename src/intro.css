@@ -41,7 +41,7 @@
   width: 111px;
   height: 60px;
   padding: 6px 8px 6px 6px;
-  background-image: url('/images/countdown-badge.png');
+  background-image: var(--countdown-badge-image);
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
