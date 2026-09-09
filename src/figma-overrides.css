@@ -1885,6 +1885,371 @@ input[type="file"] {
   top: 611px;
 }
 
+/* Contact-not-synced preview — Figma node 1109:13552. */
+.network-body.contact-not-sync-case .network-sync-offer-hero {
+  top: 20px;
+  left: 25px;
+  width: 340px;
+  height: 233px;
+  overflow: visible;
+}
+
+.network-body.contact-not-sync-case .network-sync-offer-hero img {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.network-body.contact-not-sync-case .network-sync-offer-guide-line {
+  top: 193px;
+  left: 25px;
+  width: 341px;
+  height: 4px;
+  object-fit: fill;
+}
+
+.network-body.contact-not-sync-case .network-sync-offer-title {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+.network-body.contact-not-sync-case .network-sync-offer-metric {
+  gap: 14px;
+  font-size: 16px;
+}
+
+.network-body.contact-not-sync-case .network-sync-offer-metric > strong {
+  font-size: 16px;
+}
+
+.network-body.contact-not-sync-case .network-sync-offer-skip {
+  display: none;
+}
+
+.contact-not-sync-offer-screen {
+  position: absolute;
+  inset: 47px 0 70px;
+  z-index: 4;
+  overflow: hidden;
+  color: #1c1d1b;
+  background: #fff;
+}
+
+.contact-not-sync-offer-content {
+  position: absolute;
+  top: 44px;
+  left: 0;
+  width: 390px;
+  height: 683px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.contact-not-sync-hero {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 390px;
+  height: 233px;
+  pointer-events: none;
+}
+
+.contact-not-sync-person {
+  position: absolute;
+  top: 0;
+  left: 14.75px;
+  z-index: 5;
+  width: 350.1px;
+  height: 233px;
+  max-width: none;
+}
+
+.contact-not-sync-line-a,
+.contact-not-sync-line-b {
+  position: absolute;
+  z-index: 4;
+  max-width: none;
+}
+
+.contact-not-sync-line-a {
+  top: 164.8px;
+  left: 87.2px;
+  width: 196.2px;
+  height: 2px;
+}
+
+.contact-not-sync-line-b {
+  top: 168.5px;
+  left: 147.5px;
+  width: 170.4px;
+  height: 2px;
+}
+
+.contact-not-sync-title {
+  position: absolute;
+  top: 224px;
+  left: 16px;
+  z-index: 3;
+  width: 358px;
+  height: 88px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  color: #373a36;
+  background: #bfe0f5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.contact-not-sync-title span {
+  line-height: 28px;
+}
+
+.contact-not-sync-metrics {
+  position: absolute;
+  top: 325px;
+  left: 16px;
+  width: 358px;
+  height: 176px;
+  overflow: hidden;
+  border: 1px solid #dfdfdf;
+  border-radius: 7px;
+  background: #fff;
+}
+
+.contact-not-sync-metric {
+  height: 58px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: 16px;
+  padding-right: 28px;
+  border-bottom: 1px solid #ededed;
+  color: #373a36;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.contact-not-sync-metric:last-child {
+  border-bottom: 0;
+}
+
+.contact-not-sync-metric > strong {
+  margin-left: auto;
+  color: #1c1d1b;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.contact-not-sync-terms {
+  position: absolute;
+  top: 509px;
+  left: 0;
+  width: 390px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  color: #1c1d1b;
+  background: transparent;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.contact-not-sync-primary {
+  position: absolute;
+  top: 611px;
+  left: 24px;
+  width: 342px;
+  height: 56px;
+  border: 0;
+  border-radius: 14px;
+  color: #fff;
+  background: #0d3c7d;
+  box-shadow: 0 10px 12px rgba(13, 44, 82, 0.15);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Selective contact sync — Figma node 1177:9414. */
+.contact-sync-select-screen {
+  position: absolute;
+  inset: 47px 0 0;
+  z-index: 4;
+  overflow: hidden;
+  color: #0d2c52;
+  background: #fff;
+}
+
+.contact-sync-select-header {
+  height: 44px;
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  padding: 0 8px;
+}
+
+.contact-sync-select-header button {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  color: #005baa;
+  background: transparent;
+}
+
+.contact-sync-select-header h1 {
+  margin: 0;
+  white-space: nowrap;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+}
+
+.contact-sync-select-search {
+  position: absolute;
+  top: 78px;
+  left: 24px;
+  width: 342px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 13px;
+  border: 1px solid #dfdfdf;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.contact-sync-select-search img {
+  width: 20px;
+  height: 20px;
+}
+
+.contact-sync-select-search input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  color: #373a36;
+  background: transparent;
+  font-size: 14px;
+}
+
+.contact-sync-select-toolbar {
+  position: absolute;
+  top: 137px;
+  left: 24px;
+  width: 342px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-radius: 12px;
+  color: #0073bf;
+  background: #eaf6fd;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.contact-sync-select-toolbar button {
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font-weight: 700;
+}
+
+.contact-sync-select-list {
+  position: absolute;
+  top: 200px;
+  left: 24px;
+  width: 342px;
+  height: 471px;
+  overflow: hidden;
+  border: 1px solid #dfdfdf;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+.contact-sync-select-list article {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1px solid #ededed;
+}
+
+.contact-sync-select-list article:last-child {
+  border-bottom: 0;
+}
+
+.contact-sync-select-list article > div {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.contact-sync-select-list strong {
+  color: #373a36;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.contact-sync-select-list span {
+  color: #696b68;
+  font-size: 13px;
+}
+
+.contact-sync-select-list article > button {
+  width: 78px;
+  height: 44px;
+  flex: none;
+  border: 1px solid #0073bf;
+  border-radius: 12px;
+  color: #0073bf;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.contact-sync-select-list article > button.selected {
+  color: #fff;
+  background: #0073bf;
+}
+
+.contact-sync-select-primary {
+  position: absolute;
+  top: 696px;
+  left: 24px;
+  width: 342px;
+  height: 56px;
+  border: 0;
+  border-radius: 14px;
+  color: #fff;
+  background: #0d3c7d;
+  box-shadow: 0 10px 12px rgba(13, 44, 82, 0.15);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.contact-sync-select-primary:disabled {
+  color: #dfdfdf;
+  background: #a9aba8;
+}
+
 .network-flow-header {
   height: 44px;
   display: flex;
@@ -2104,6 +2469,36 @@ input[type="file"] {
   height: 5px;
   border-radius: 999px;
   background: rgba(13, 60, 125, 0.4);
+}
+
+.network-sync-reward.contact-sync-reward .network-sync-reward-back {
+  display: none;
+}
+
+.network-sync-reward.contact-sync-reward .network-sync-reward-points {
+  top: 14px;
+  left: 44px;
+  width: 289px;
+  height: 207px;
+}
+
+.network-sync-reward.contact-sync-reward .network-sync-reward-points img {
+  top: -108.24%;
+  left: -18.64%;
+  width: 139.78%;
+  height: 494.25%;
+}
+
+.network-sync-reward.contact-sync-reward .network-sync-reward-girl {
+  top: 212px;
+  left: 30px;
+  width: 330px;
+  height: 480px;
+  object-fit: cover;
+}
+
+.network-sync-reward.contact-sync-reward .network-sync-reward-gradient {
+  height: 181px;
 }
 
 /* Invited -> Registered flow screens. */

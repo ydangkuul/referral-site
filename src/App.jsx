@@ -186,12 +186,12 @@ function GuideDialog({ topic, onClose }) {
 }
 
 const SYNCED_CONTACTS = [
-  { name: 'Mai Anh', initial: 'M' },
-  { name: 'Nguyễn Minh', initial: 'N' },
-  { name: 'Lan Phương', initial: 'L' },
-  { name: 'Duc Long', initial: 'D' },
-  { name: 'Thu Ha', initial: 'T' },
-  { name: 'Quang Huy', initial: 'Q' },
+  { name: 'Mai Anh', phone: '0901 234 567', initial: 'M' },
+  { name: 'Nguyễn Minh', phone: '0903 456 789', initial: 'N' },
+  { name: 'Lan Phương', phone: '0905 678 901', initial: 'L' },
+  { name: 'Duc Long', phone: '0907 890 123', initial: 'D' },
+  { name: 'Thu Ha', phone: '0908 123 456', initial: 'T' },
+  { name: 'Mai Anh', phone: '0904 567 890', initial: 'M' },
   { name: 'Bảo Ngọc', initial: 'B' },
   { name: 'Minh Khang', initial: 'M' },
   { name: 'Thanh Trúc', initial: 'T' },
@@ -202,6 +202,16 @@ const NETWORK_CONTACTS = [
   { name: 'Tran Thi B', timing: 'Invited today', initial: 'T' },
   { name: 'Le Van C', timing: 'Invited 2 days ago', initial: 'L' },
   { name: 'Hoang Van E', timing: 'Invited 5 days ago', initial: 'H' },
+]
+
+const CONTACT_SYNCED_RESULT_CONTACTS = [
+  { name: 'Mai Anh', phone: '091 234 567', initial: 'M', reward: 'Get 1,000 points' },
+  { name: 'Nguyễn Minh', phone: '093 456 789', initial: 'N', reward: 'Get 1,000 points' },
+  { name: 'Lan Phương', phone: '095 678 901', initial: 'L', reward: 'Get 1,000 points' },
+  { name: 'Duc Long', phone: '097 890 123', initial: 'D', reward: 'Get 1,000 points' },
+  { name: 'Thu Ha', phone: '098 123 456', initial: 'T', reward: 'Get 1,000 points' },
+  { name: 'Thu Ha', phone: '094 567 890', initial: 'T', reward: 'Get 1,000 points' },
+  { name: 'Thu Ha', phone: '096 789 012', initial: 'T', reward: 'Get 1,000 points' },
 ]
 
 const NETWORK_SYNC_METRICS = [
@@ -246,6 +256,50 @@ function NetworkSyncOfferScreen({ onBack, onContinue }) {
   )
 }
 
+function ContactNotSyncOfferScreen({ onBack, onContinue }) {
+  return (
+    <main className="contact-not-sync-offer-screen" aria-label="Sync contacts to get points">
+      <header className="network-overview-toolbar">
+        <button type="button" className="network-overview-back" aria-label="Back to My network" onClick={onBack}>
+          <ArrowLeft size={23} strokeWidth={2} />
+        </button>
+        <div className="network-overview-tools" aria-label="Network shortcuts">
+          <span className="selected" aria-hidden="true"><CreditCard size={21} strokeWidth={1.8} /></span>
+          <span aria-hidden="true"><QrCode size={20} strokeWidth={2} /></span>
+          <span aria-hidden="true"><BankIcon width={23} height={21} /></span>
+        </div>
+      </header>
+
+      <section className="contact-not-sync-offer-content">
+        <div className="contact-not-sync-hero" aria-hidden="true">
+          <img className="contact-not-sync-line-a" src={assetUrl('images/contact-not-sync-line-2.svg')} alt="" />
+          <img className="contact-not-sync-person" src={assetUrl('images/contact-not-sync-hero.png')} alt="" />
+        </div>
+
+        <section className="contact-not-sync-title">
+          <strong>Sync contacts</strong>
+          <span>to get points</span>
+        </section>
+
+        <section className="contact-not-sync-metrics" aria-label="Network totals">
+          {NETWORK_SYNC_METRICS.map((item) => (
+            <div className="contact-not-sync-metric" key={item.label}>
+              <span className={`network-sync-offer-metric-icon ${item.tone}`} aria-hidden="true">
+                <img src={item.icon} alt="" />
+              </span>
+              <span>{item.label}</span>
+              <strong>00</strong>
+            </div>
+          ))}
+        </section>
+
+        <button type="button" className="contact-not-sync-terms">Terms and Conditions</button>
+        <button type="button" className="contact-not-sync-primary" onClick={onContinue}>Sync contacts get 5,000 pts</button>
+      </section>
+    </main>
+  )
+}
+
 const NETWORK_PRIVACY_POINTS = [
   {
     icon: assetUrl('images/network-consent-forbid.svg'),
@@ -261,7 +315,7 @@ const NETWORK_PRIVACY_POINTS = [
   },
 ]
 
-function NetworkPrivacyConsentScreen({ onBack, onContinue, onOpenGuide }) {
+function NetworkPrivacyConsentScreen({ onBack, onSkip, onContinue, onOpenGuide, selective = false }) {
   const [infoOpen, setInfoOpen] = useState(false)
 
   return (
@@ -300,7 +354,9 @@ function NetworkPrivacyConsentScreen({ onBack, onContinue, onOpenGuide }) {
 
         <section className="network-privacy-copy">
           <h1>Your contacts are protected</h1>
-          <p>Only used to find friends who already have VietPay. We never share or contact anyone without your consent.</p>
+          <p>{selective
+            ? 'You can choose which contacts to sync — if you wish not to sync your entire contact list.'
+            : 'Only used to find friends who already have VietPay. We never share or contact anyone without your consent.'}</p>
         </section>
 
         <section className="network-privacy-card" aria-label="Contact privacy details">
@@ -313,6 +369,7 @@ function NetworkPrivacyConsentScreen({ onBack, onContinue, onOpenGuide }) {
         </section>
 
         <div className="network-privacy-actions">
+          {!selective && <button type="button" className="network-privacy-skip" onClick={onSkip}>Skip</button>}
           <button type="button" className="network-privacy-primary" onClick={onContinue}>Agree &amp; Continue</button>
         </div>
       </main>
@@ -354,7 +411,63 @@ function NetworkFlowHeader({ onBack, backLabel, onOpenGuide }) {
   )
 }
 
-function NetworkSyncingScreen({ onBack, onComplete, onOpenGuide }) {
+function ContactSyncSelectScreen({ onBack, onSync }) {
+  const contacts = SYNCED_CONTACTS.slice(0, 6)
+  const [query, setQuery] = useState('')
+  const [selected, setSelected] = useState(() => new Set([contacts[0].phone, contacts[2].phone]))
+  const visibleContacts = contacts.filter(({ name, phone }) => `${name} ${phone}`.toLowerCase().includes(query.trim().toLowerCase()))
+
+  function toggleContact(phone) {
+    setSelected((current) => {
+      const next = new Set(current)
+      if (next.has(phone)) next.delete(phone)
+      else next.add(phone)
+      return next
+    })
+  }
+
+  function toggleAll() {
+    setSelected((current) => current.size === contacts.length
+      ? new Set()
+      : new Set(contacts.map(({ phone }) => phone)))
+  }
+
+  return (
+    <div className="contact-sync-select-screen" aria-label="Select contacts to sync">
+      <header className="contact-sync-select-header">
+        <button type="button" aria-label="Back to contact privacy" onClick={onBack}><ChevronLeft size={22} /></button>
+        <h1>Select contacts to sync</h1>
+        <span aria-hidden="true" />
+      </header>
+
+      <label className="contact-sync-select-search">
+        <img src={assetUrl('images/network-invited-search.svg')} alt="" aria-hidden="true" />
+        <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search people" />
+      </label>
+
+      <div className="contact-sync-select-toolbar">
+        <button type="button" onClick={toggleAll}>Select all</button>
+        <span>{selected.size} of 70 selected</span>
+      </div>
+
+      <section className="contact-sync-select-list" aria-label="5 people">
+        {visibleContacts.map((person) => {
+          const isSelected = selected.has(person.phone)
+          return (
+            <article key={person.phone}>
+              <div><strong>{person.name}</strong><span>{person.phone}</span></div>
+              <button type="button" className={isSelected ? 'selected' : ''} aria-pressed={isSelected} onClick={() => toggleContact(person.phone)}>Select</button>
+            </article>
+          )
+        })}
+      </section>
+
+      <button type="button" className="contact-sync-select-primary" disabled={selected.size === 0} onClick={onSync}>Sync</button>
+    </div>
+  )
+}
+
+function NetworkSyncingScreen({ onBack, onComplete, onOpenGuide, showPendingAction = true }) {
   useEffect(() => {
     const timer = window.setTimeout(onComplete, 1000)
     return () => window.clearTimeout(timer)
@@ -369,13 +482,13 @@ function NetworkSyncingScreen({ onBack, onComplete, onOpenGuide }) {
         </span>
         <h1>Synching<br />contacts</h1>
         <div className="network-flow-spacer" />
-        <button type="button" className="network-flow-primary" disabled>Claim 2,000 pts</button>
+        {showPendingAction && <button type="button" className="network-flow-primary" disabled>Claim 2,000 pts</button>}
       </div>
     </div>
   )
 }
 
-function NetworkSyncSuccessScreen({ onBack, onContinue, onOpenGuide }) {
+function NetworkSyncSuccessScreen({ onBack, onContinue, onOpenGuide, points = 2000 }) {
   return (
     <div className="network-sync-success" aria-label="Contacts synced successfully">
       <NetworkFlowHeader onBack={onBack} backLabel="Back to syncing contacts" onOpenGuide={onOpenGuide} />
@@ -388,23 +501,23 @@ function NetworkSyncSuccessScreen({ onBack, onContinue, onOpenGuide }) {
           <p>Contacts synced successfully!<br />Your network is now up to date.</p>
         </section>
         <div className="network-flow-spacer" />
-        <button type="button" className="network-flow-primary" onClick={onContinue}>Claim 2,000 pts</button>
+        <button type="button" className="network-flow-primary" onClick={onContinue}>Claim {points.toLocaleString('en-US')} pts</button>
       </div>
     </div>
   )
 }
 
-function NetworkSyncRewardScreen({ onBack, onNext, points = 1000 }) {
+function NetworkSyncRewardScreen({ onBack, onNext, points = 1000, contactSync = false }) {
   return (
-    <div className="network-sync-reward" aria-label={`${points.toLocaleString('en-US')} points earned`}>
+    <div className={`network-sync-reward${contactSync ? ' contact-sync-reward' : ''}`} aria-label={`${points.toLocaleString('en-US')} points earned`}>
       <button type="button" className="network-sync-reward-back" aria-label="Back to contacts synced" onClick={onBack}>
         <ChevronLeft size={22} />
       </button>
       <div className="network-sync-reward-points" aria-hidden="true">
-        <img src={assetUrl(`images/intro-reward-${points}.png`)} alt="" />
+        <img src={assetUrl(contactSync ? 'images/contact-sync-reward-2000.png' : `images/intro-reward-${points}.png`)} alt="" />
       </div>
-      <img className="network-sync-reward-confetti" src={assetUrl('images/intro-sequence-confetti.png')} alt="" />
-      <img className="network-sync-reward-girl" src={assetUrl('images/intro-linh-celebrate.png')} alt="" />
+      <img className="network-sync-reward-confetti" src={assetUrl(contactSync ? 'images/contact-sync-confetti.png' : 'images/intro-sequence-confetti.png')} alt="" />
+      <img className="network-sync-reward-girl" src={assetUrl(contactSync ? 'images/contact-sync-celebration.png' : 'images/intro-linh-celebrate.png')} alt="" />
       <div className="network-sync-reward-gradient" aria-hidden="true" />
       <button type="button" className="network-sync-reward-next" onClick={onNext}>Next</button>
       <div className="network-sync-reward-indicator" aria-hidden="true" />
@@ -420,7 +533,7 @@ const NETWORK_OVERVIEW_ROWS = [
   { key: 'merchant', value: '00', label: 'Merchant', action: 'Connect', icon: assetUrl('images/network-overview-merchant.png') },
 ]
 
-function NetworkOverviewScreen({ onBack, onInvite, onNudge, invitedCount = 0, onOpenGuide }) {
+function NetworkOverviewScreen({ invitedCount = 0, onBack, onInvite, onNudge, onOpenGuide }) {
   const overviewRows = NETWORK_OVERVIEW_ROWS.map((item) => (
     item.key === 'invited'
       ? { ...item, value: String(invitedCount).padStart(2, '0') }
@@ -493,7 +606,7 @@ function NetworkOverviewScreen({ onBack, onInvite, onNudge, invitedCount = 0, on
   )
 }
 
-function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contacts = SYNCED_CONTACTS, invitedContacts = NETWORK_CONTACTS, onBack, onRemind, onSync, onSkip, onInviteContact, onTabChange }) {
+function NetworkContactsScreen({ contactsSynced, contactNotSyncCase = false, syncedResult = false, initialTab = 'Contacts', contacts = SYNCED_CONTACTS, invitedContacts = NETWORK_CONTACTS, onBack, onRemind, onSync, onSkip, onInviteContact, onTabChange }) {
   const [tab, setTab] = useState(initialTab)
   const [query, setQuery] = useState('')
   const [showScrollHint, setShowScrollHint] = useState(true)
@@ -519,7 +632,7 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
           </span>
         </header>
 
-        <div className={`network-body${tab === 'Contacts' && !contactsSynced ? ' contacts-unsynced' : ''}${showingSyncedContacts ? ' contacts-synced' : ''}${tab === 'Invited' ? ' invited-tab' : ''}`}>
+        <div className={`network-body${tab === 'Contacts' && !contactsSynced ? ' contacts-unsynced' : ''}${contactNotSyncCase ? ' contact-not-sync-case' : ''}${showingSyncedContacts ? ' contacts-synced' : ''}${tab === 'Invited' ? ' invited-tab' : ''}`}>
           <div className="network-tabs" role="tablist" aria-label="Network status">
             {['Contacts', 'Invited', 'Registered'].map((item) => (
               <button
@@ -540,9 +653,9 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
           {tab === 'Contacts' && !contactsSynced ? (
             <section className="network-contact-sync-content">
               <div className="network-sync-offer-hero" aria-hidden="true">
-                <img src={assetUrl('images/intro-point-down.png')} alt="" />
+                <img src={assetUrl(contactNotSyncCase ? 'images/contact-not-sync-hero.png' : 'images/intro-point-down.png')} alt="" />
               </div>
-              <img className="network-sync-offer-guide-line" src={assetUrl('images/network-sync-guide-line.svg')} alt="" aria-hidden="true" />
+              <img className="network-sync-offer-guide-line" src={assetUrl(contactNotSyncCase ? 'images/contact-not-sync-line.png' : 'images/network-sync-guide-line.svg')} alt="" aria-hidden="true" />
               <section className="network-sync-offer-title">
                 <strong>Sync contacts</strong>
                 <span>to get points</span>
@@ -558,8 +671,9 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
                   </div>
                 ))}
               </section>
+              {contactNotSyncCase && <button type="button" className="network-sync-offer-terms">Terms and Conditions</button>}
               <button type="button" className="network-sync-offer-skip" onClick={onSkip}>Skip</button>
-              <button type="button" className="network-sync-offer-primary" onClick={onSync}>Sync contacts get 2,000 pts</button>
+              <button type="button" className="network-sync-offer-primary" onClick={onSync}>Sync contacts get {contactNotSyncCase ? '5,000' : '2,000'} pts</button>
             </section>
           ) : (
             <>
@@ -576,7 +690,7 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
 
               <div className="network-list-heading">
                 <h2>{showingSyncedContacts ? 'Contacts' : tab === 'Invited' ? 'Invited contacts' : tab}</h2>
-                <span>{filteredPeople.length} {filteredPeople.length === 1 ? 'person' : 'people'}</span>
+                <span>{syncedResult && showingSyncedContacts && !query ? '5 people' : `${filteredPeople.length} ${filteredPeople.length === 1 ? 'person' : 'people'}`}</span>
               </div>
 
               <div className="network-results-area">
@@ -589,8 +703,8 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
                         <span className="network-person-avatar" aria-hidden="true">{person.initial}</span>
                         <div className="network-person-copy">
                           <h3>{person.name}</h3>
-                          <p>{showingSyncedContacts ? (person.invited ? 'Invited today' : 'Not invited yet') : person.timing}</p>
-                          <span><i aria-hidden="true" />{showingSyncedContacts && !person.invited ? 'Earn after signup' : person.reward ?? 'Waiting to register'}</span>
+                          <p>{showingSyncedContacts ? (person.phone ?? (person.invited ? 'Invited today' : 'Not invited yet')) : person.timing}</p>
+                          <span><i aria-hidden="true" />{showingSyncedContacts && !person.invited ? (person.reward ?? 'Earn after signup') : person.reward ?? 'Waiting to register'}</span>
                         </div>
                         <button
                           type="button"
@@ -618,7 +732,10 @@ function NetworkContactsScreen({ contactsSynced, initialTab = 'Contacts', contac
                 <button
                   type="button"
                   className="network-invite-button"
-                  onClick={() => setTab('Contacts')}
+                  onClick={() => {
+                    setTab('Contacts')
+                    onTabChange?.('Contacts')
+                  }}
                 >
                   Invite more people
                 </button>
@@ -1012,6 +1129,7 @@ export default function App() {
   }
 
   function openContactInvite(person) {
+    if (!person) return
     setSelectedInviteNames([person.name])
     setContactInviteStage('preview')
   }
@@ -1040,15 +1158,11 @@ export default function App() {
   }
 
   const availableSyncedContacts = SYNCED_CONTACTS.filter(({ name }) => !recentlyInvitedNames.includes(name))
-  const visibleInvitedContacts = recentlyInvitedNames.length
-    ? recentlyInvitedNames.map((name) => ({
-      name,
-      timing: 'Invited today',
-      initial: name.slice(0, 1).toUpperCase(),
-    }))
-    : launchMode === 'first'
-      ? []
-      : NETWORK_CONTACTS
+  const visibleInvitedContacts = recentlyInvitedNames.map((name) => ({
+    name,
+    timing: 'Invited today',
+    initial: name.slice(0, 1).toUpperCase(),
+  }))
 
   function handlePhoneCommentClick(e) {
     if (!redCommentMode) return
@@ -1216,6 +1330,11 @@ export default function App() {
                   setContactInviteStage(null)
                 }}
               />
+            ) : networkStage === 'not-sync' ? (
+              <ContactNotSyncOfferScreen
+                onBack={() => setNetworkStage('overview')}
+                onContinue={() => setNetworkStage('consent')}
+              />
             ) : networkStage === 'overview' ? (
               <NetworkOverviewScreen
                 invitedCount={recentlyInvitedNames.length}
@@ -1232,33 +1351,51 @@ export default function App() {
               />
             ) : networkStage === 'consent' ? (
               <NetworkPrivacyConsentScreen
-                onBack={() => setNetworkStage('contacts')}
-                onContinue={() => setNetworkStage('syncing')}
+                selective={launchMode === 'contact-not-sync'}
+                onBack={() => setNetworkStage(launchMode === 'contact-not-sync' ? 'not-sync' : 'contacts')}
+                onSkip={() => setNetworkStage('contacts')}
+                onContinue={() => setNetworkStage(launchMode === 'contact-not-sync' ? 'sync-select' : 'syncing')}
                 onOpenGuide={() => setGuideTopic('contactSync')}
+              />
+            ) : networkStage === 'sync-select' ? (
+              <ContactSyncSelectScreen
+                onBack={() => setNetworkStage('consent')}
+                onSync={() => setNetworkStage('syncing')}
               />
             ) : networkStage === 'syncing' ? (
               <NetworkSyncingScreen
-                onBack={() => setNetworkStage('consent')}
+                showPendingAction={launchMode !== 'contact-not-sync'}
+                onBack={() => setNetworkStage(launchMode === 'contact-not-sync' ? 'sync-select' : 'consent')}
                 onComplete={() => setNetworkStage('success')}
                 onOpenGuide={() => setGuideTopic('contactSync')}
               />
             ) : networkStage === 'success' ? (
               <NetworkSyncSuccessScreen
-                onBack={() => setNetworkStage('consent')}
+                points={2000}
+                onBack={() => setNetworkStage(launchMode === 'contact-not-sync' ? 'sync-select' : 'consent')}
                 onContinue={() => setNetworkStage('reward')}
                 onOpenGuide={() => setGuideTopic('contactSync')}
               />
             ) : networkStage === 'reward' ? (
               <NetworkSyncRewardScreen
+                points={2000}
+                contactSync={launchMode === 'contact-not-sync'}
                 onBack={() => setNetworkStage('success')}
-                onNext={() => setNetworkStage('contacts')}
+                onNext={() => {
+                  setContactsSynced(true)
+                  setSelectedNav('Network')
+                  setContactInviteStage(null)
+                  setNetworkInitialTab('Contacts')
+                  setNetworkStage('overview')
+                }}
               />
             ) : (
               <NetworkContactsScreen
                 key={`${contactsSynced ? 'contacts-synced' : 'contacts-not-synced'}-${networkInitialTab}-${recentlyInvitedNames.join('-')}`}
                 contactsSynced={contactsSynced}
+                syncedResult={launchMode === 'contact-not-sync' && contactsSynced}
                 initialTab={networkInitialTab}
-                contacts={availableSyncedContacts}
+                contacts={launchMode === 'contact-not-sync' && contactsSynced ? CONTACT_SYNCED_RESULT_CONTACTS : availableSyncedContacts}
                 invitedContacts={visibleInvitedContacts}
                 onBack={() => setNetworkStage('overview')}
                 onRemind={openReminder}
@@ -1565,7 +1702,7 @@ export default function App() {
           </div>
           )}
 
-          {!checkinFlowOpen && !(launchMode === 'first' && !introCompleted) && !(launchMode === 'first' && firstLaunchStage) && !reminderStage && !contactInviteStage && !(selectedNav === 'Network' && ['contacts', 'consent', 'syncing', 'success', 'reward'].includes(networkStage)) && (
+          {!checkinFlowOpen && !(launchMode === 'first' && !introCompleted) && !(launchMode === 'first' && firstLaunchStage) && !reminderStage && !contactInviteStage && !(selectedNav === 'Network' && ['contacts', 'consent', 'sync-select', 'syncing', 'success', 'reward'].includes(networkStage)) && (
           <nav className="bottom-bar" aria-label="Main navigation">
             {[
               { key: 'Home', icon: '/images/dashboard-home.svg' },
@@ -1633,6 +1770,23 @@ export default function App() {
       </div>
 
       <div className="launch-mode-controls" aria-label="Preview controls">
+        <button
+          type="button"
+          aria-pressed={launchMode === 'contact-not-sync'}
+          onClick={() => {
+            setLaunchMode('contact-not-sync')
+            setIntroCompleted(true)
+            setFirstLaunchStage(null)
+            setContactsSynced(false)
+            setSelectedNav('Network')
+            setNetworkStage('not-sync')
+            setNetworkInitialTab('Contacts')
+            setContactInviteStage(null)
+            setReminderStage(null)
+          }}
+        >
+          contact not sync
+        </button>
         {[
           { key: 'first', label: 'first launch' },
           { key: 'returning', label: '>= second times launch' },
