@@ -27,7 +27,7 @@ function IntroBackButton({ onBack }) {
 }
 
 function WelcomeScreen({ onNext }) {
-  const [seconds, setSeconds] = useState(5)
+  const [seconds, setSeconds] = useState(3)
 
   useEffect(() => {
     if (seconds > 0) {
