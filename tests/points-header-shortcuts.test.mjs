@@ -9,7 +9,8 @@ test('points header reuses the three network shortcut icons', () => {
   assert.match(pointsSource, /aria-label="Points shortcuts"[\s\S]*?<CreditCard[\s\S]*?<QrCode[\s\S]*?<BankIcon/)
 })
 
-test('points subflow hides the main bottom navigation', () => {
+test('only points conversion hides the main bottom navigation', () => {
   assert.match(pointsSource, /onScreenChange\?\.\(screen\)/)
-  assert.match(appSource, /selectedNav === 'Points' && pointsScreen !== 'points'/)
+  assert.match(appSource, /selectedNav === 'Points' && pointsScreen === 'convert'/)
+  assert.doesNotMatch(appSource, /pointsScreen !== 'points'/)
 })

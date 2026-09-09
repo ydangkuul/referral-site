@@ -1733,7 +1733,7 @@ export default function App() {
           </div>
           )}
 
-          {!checkinFlowOpen && !(launchMode === 'first' && !introCompleted) && !(launchMode === 'first' && firstLaunchStage) && !reminderStage && !contactInviteStage && !(selectedNav === 'Network' && ['contacts', 'consent', 'sync-select', 'syncing', 'success', 'reward'].includes(networkStage)) && !(selectedNav === 'Points' && pointsScreen !== 'points') && (
+          {!checkinFlowOpen && !(launchMode === 'first' && !introCompleted) && !(launchMode === 'first' && firstLaunchStage) && !reminderStage && !contactInviteStage && !(selectedNav === 'Network' && ['contacts', 'consent', 'sync-select', 'syncing', 'success', 'reward'].includes(networkStage)) && !(selectedNav === 'Points' && pointsScreen === 'convert') && (
           <nav className="bottom-bar" aria-label="Main navigation">
             {[
               { key: 'Home', icon: '/images/dashboard-home.svg' },
