@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   Landmark, UserRound, Info,
   ChevronDown, ChevronLeft, Clock3, UsersRound,
-  CircleCheck, X, Play, Pause, ArrowLeft, CreditCard, QrCode,
+  CircleCheck, Check, X, Play, Pause, ArrowLeft, CreditCard, QrCode,
 } from 'lucide-react'
 import PointsFlow from './PointsFlow.jsx'
 import CheckInFlow from './CheckInFlow.jsx'
@@ -220,12 +220,11 @@ const NETWORK_SYNC_METRICS = [
   { label: 'Registered', icon: assetUrl('images/network-registered.png'), tone: 'registered' },
 ]
 
-function NetworkSyncOfferScreen({ onBack, onContinue }) {
+function NetworkSyncOfferScreen({ onBack, onContinue, points = 2000 }) {
   return (
     <div className="network-sync-offer" aria-label="Sync contacts to get points">
       <header className="network-sync-offer-header">
         <button type="button" aria-label="Back to My Network" onClick={onBack}><ChevronLeft size={22} /></button>
-        <Info size={18} aria-label="About contact syncing" />
       </header>
 
       <div className="network-sync-offer-hero" aria-hidden="true">
@@ -251,7 +250,7 @@ function NetworkSyncOfferScreen({ onBack, onContinue }) {
       </section>
 
       <button type="button" className="network-sync-offer-terms">Terms and Conditions</button>
-      <button type="button" className="network-sync-offer-primary" onClick={onContinue}>Sync contacts get 2,000 pts</button>
+      <button type="button" className="network-sync-offer-primary" onClick={onContinue}>Sync contacts get {points.toLocaleString('en-US')} pts</button>
     </div>
   )
 }
@@ -315,25 +314,27 @@ const NETWORK_PRIVACY_POINTS = [
   },
 ]
 
-function NetworkPrivacyConsentScreen({ onBack, onSkip, onContinue, onOpenGuide, selective = false }) {
+function NetworkPrivacyConsentScreen({ onBack, onSkip, onContinue, onOpenGuide, selective = false, showInfo = true }) {
   const [infoOpen, setInfoOpen] = useState(false)
 
   return (
-    <div className="network-privacy-consent" aria-label="Contact sync privacy">
+    <div className={`network-privacy-consent${selective ? ' selective' : ''}`} aria-label="Contact sync privacy">
       <header className="network-privacy-header">
         <button type="button" aria-label="Back to sync contacts" onClick={onBack}><ChevronLeft size={22} /></button>
-        <button
-          type="button"
-          className="network-privacy-info"
-          aria-label="About contact privacy"
-          aria-expanded={infoOpen}
-          onClick={() => setInfoOpen((open) => !open)}
-        >
-          <Info size={18} />
-        </button>
+        {showInfo && (
+          <button
+            type="button"
+            className="network-privacy-info"
+            aria-label="About contact privacy"
+            aria-expanded={infoOpen}
+            onClick={() => setInfoOpen((open) => !open)}
+          >
+            <Info size={18} />
+          </button>
+        )}
       </header>
 
-      {infoOpen && (
+      {showInfo && infoOpen && (
         <InfoBubble
           variant="network-privacy-tip"
           title="Contact syncing"
@@ -377,24 +378,26 @@ function NetworkPrivacyConsentScreen({ onBack, onSkip, onContinue, onOpenGuide, 
   )
 }
 
-function NetworkFlowHeader({ onBack, backLabel, onOpenGuide }) {
+function NetworkFlowHeader({ onBack, backLabel, onOpenGuide, showInfo = true }) {
   const [infoOpen, setInfoOpen] = useState(false)
 
   return (
     <>
       <header className="network-flow-header">
         <button type="button" aria-label={backLabel} onClick={onBack}><ChevronLeft size={22} /></button>
-        <button
-          type="button"
-          className="network-flow-info"
-          aria-label="About contact syncing"
-          aria-expanded={infoOpen}
-          onClick={() => setInfoOpen((open) => !open)}
-        >
-          <Info size={18} />
-        </button>
+        {showInfo && (
+          <button
+            type="button"
+            className="network-flow-info"
+            aria-label="About contact syncing"
+            aria-expanded={infoOpen}
+            onClick={() => setInfoOpen((open) => !open)}
+          >
+            <Info size={18} />
+          </button>
+        )}
       </header>
-      {infoOpen && (
+      {showInfo && infoOpen && (
         <InfoBubble
           variant="network-privacy-tip"
           title="Contact syncing"
@@ -416,6 +419,7 @@ function ContactSyncSelectScreen({ onBack, onSync }) {
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(() => new Set([contacts[0].phone, contacts[2].phone]))
   const visibleContacts = contacts.filter(({ name, phone }) => `${name} ${phone}`.toLowerCase().includes(query.trim().toLowerCase()))
+  const allSelected = selected.size === contacts.length
 
   function toggleContact(phone) {
     setSelected((current) => {
@@ -446,16 +450,22 @@ function ContactSyncSelectScreen({ onBack, onSync }) {
       </label>
 
       <div className="contact-sync-select-toolbar">
-        <button type="button" onClick={toggleAll}>Select all</button>
+        <button type="button" aria-pressed={allSelected} onClick={toggleAll}>
+          <span className={`contact-sync-select-checkbox${allSelected ? ' selected' : ''}`} aria-hidden="true">
+            {allSelected && <Check size={13} strokeWidth={3} />}
+          </span>
+          <span>Select all</span>
+        </button>
         <span>{selected.size} of 70 selected</span>
       </div>
 
-      <section className="contact-sync-select-list" aria-label="5 people">
+      <section className="contact-sync-select-list" aria-label="6 people">
         {visibleContacts.map((person) => {
           const isSelected = selected.has(person.phone)
           return (
             <article key={person.phone}>
-              <div><strong>{person.name}</strong><span>{person.phone}</span></div>
+              <span className="contact-sync-select-avatar" aria-hidden="true">{person.initial}</span>
+              <div className="contact-sync-select-person"><strong>{person.name}</strong><span>{person.phone}</span></div>
               <button type="button" className={isSelected ? 'selected' : ''} aria-pressed={isSelected} onClick={() => toggleContact(person.phone)}>Select</button>
             </article>
           )
@@ -467,7 +477,7 @@ function ContactSyncSelectScreen({ onBack, onSync }) {
   )
 }
 
-function NetworkSyncingScreen({ onBack, onComplete, onOpenGuide, showPendingAction = true }) {
+function NetworkSyncingScreen({ onBack, onComplete, onOpenGuide, showPendingAction = true, showInfo = true }) {
   useEffect(() => {
     const timer = window.setTimeout(onComplete, 1000)
     return () => window.clearTimeout(timer)
@@ -475,7 +485,7 @@ function NetworkSyncingScreen({ onBack, onComplete, onOpenGuide, showPendingActi
 
   return (
     <div className="network-syncing-screen" aria-label="Syncing contacts">
-      <NetworkFlowHeader onBack={onBack} backLabel="Back to contact privacy" onOpenGuide={onOpenGuide} />
+      <NetworkFlowHeader onBack={onBack} backLabel="Back to contact privacy" onOpenGuide={onOpenGuide} showInfo={showInfo} />
       <div className="network-syncing-content">
         <span className="network-syncing-hourglass" aria-hidden="true">
           <img src={assetUrl('images/network-sync-hourglass.svg')} alt="" />
@@ -488,10 +498,10 @@ function NetworkSyncingScreen({ onBack, onComplete, onOpenGuide, showPendingActi
   )
 }
 
-function NetworkSyncSuccessScreen({ onBack, onContinue, onOpenGuide, points = 2000 }) {
+function NetworkSyncSuccessScreen({ onBack, onContinue, onOpenGuide, points = 2000, showInfo = true }) {
   return (
     <div className="network-sync-success" aria-label="Contacts synced successfully">
-      <NetworkFlowHeader onBack={onBack} backLabel="Back to syncing contacts" onOpenGuide={onOpenGuide} />
+      <NetworkFlowHeader onBack={onBack} backLabel="Back to syncing contacts" onOpenGuide={onOpenGuide} showInfo={showInfo} />
       <div className="network-sync-success-content">
         <span className="network-sync-success-check" aria-hidden="true">
           <img src={assetUrl('images/network-sync-success-check.svg')} alt="" />
@@ -1257,30 +1267,42 @@ export default function App() {
             />
           ) : launchMode === 'first' && firstLaunchStage === 'network-offer' ? (
             <NetworkSyncOfferScreen
+              points={1000}
               onBack={() => setFirstLaunchStage('checkin')}
               onContinue={() => setFirstLaunchStage('privacy')}
             />
           ) : launchMode === 'first' && firstLaunchStage === 'privacy' ? (
             <NetworkPrivacyConsentScreen
+              selective
+              showInfo={false}
               onBack={() => setFirstLaunchStage('network-offer')}
-              onContinue={() => setFirstLaunchStage('syncing')}
+              onContinue={() => setFirstLaunchStage('sync-select')}
               onOpenGuide={() => setGuideTopic('contactSync')}
+            />
+          ) : launchMode === 'first' && firstLaunchStage === 'sync-select' ? (
+            <ContactSyncSelectScreen
+              onBack={() => setFirstLaunchStage('privacy')}
+              onSync={() => setFirstLaunchStage('syncing')}
             />
           ) : launchMode === 'first' && firstLaunchStage === 'syncing' ? (
             <NetworkSyncingScreen
-              onBack={() => setFirstLaunchStage('privacy')}
+              showInfo={false}
+              showPendingAction={false}
+              onBack={() => setFirstLaunchStage('sync-select')}
               onComplete={() => setFirstLaunchStage('sync-success')}
               onOpenGuide={() => setGuideTopic('contactSync')}
             />
           ) : launchMode === 'first' && firstLaunchStage === 'sync-success' ? (
             <NetworkSyncSuccessScreen
-              onBack={() => setFirstLaunchStage('privacy')}
+              showInfo={false}
+              onBack={() => setFirstLaunchStage('sync-select')}
               onContinue={() => setFirstLaunchStage('sync-reward')}
               onOpenGuide={() => setGuideTopic('contactSync')}
             />
           ) : launchMode === 'first' && firstLaunchStage === 'sync-reward' ? (
             <NetworkSyncRewardScreen
               points={2000}
+              contactSync
               onBack={() => setFirstLaunchStage('sync-success')}
               onNext={() => finishFirstLaunchInNetwork(true)}
             />

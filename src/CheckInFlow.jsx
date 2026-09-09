@@ -19,10 +19,13 @@ const DAYS = [
   { key: 'W', label: 'W' },
 ]
 
-function CheckInScreen({ onCheckIn }) {
+function CheckInScreen({ onBack, onCheckIn, animateStreak = false }) {
   return (
     <div className="checkin-flow-scroll">
       <header className="checkin-flow-header">
+        <button type="button" onClick={onBack} aria-label="Back from daily check-in">
+          <ArrowLeft size={16} />
+        </button>
         <h1>Daily check-in</h1>
       </header>
 
@@ -38,7 +41,7 @@ function CheckInScreen({ onCheckIn }) {
         </div>
       </div>
 
-      <section className="checkin-card-main">
+      <section className={`checkin-card-main${animateStreak ? ' figma-streak-motion' : ''}`} data-node-id="1070:4903">
         <div className="checkin-card-header">
           <h2>3-day streak = 1000 pts</h2>
           <span className="checkin-day-name">Monday</span>
@@ -148,5 +151,11 @@ export default function CheckInFlow({ launchMode = 'first', rewardPoints = 5000,
       : <SuccessScreen onNext={onClose} onBack={() => setScreen('checkin')} rewardPoints={rewardPoints} />
   }
 
-  return <CheckInScreen onCheckIn={() => setScreen('success')} />
+  return (
+    <CheckInScreen
+      onBack={onBack}
+      onCheckIn={() => setScreen('success')}
+      animateStreak={launchMode === 'first'}
+    />
+  )
 }

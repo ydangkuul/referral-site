@@ -26,11 +26,13 @@
 
 .checkin-flow-header button {
   position: absolute;
-  left: 27px;
+  left: 13px;
+  width: 44px;
+  height: 44px;
   background: transparent;
   border: 0;
   color: var(--color-primary);
-  padding: 4px;
+  padding: 0;
   display: grid;
   place-items: center;
 }
@@ -103,6 +105,15 @@
   padding: 16px 18px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
   overflow: hidden;
+}
+
+.checkin-card-main.figma-streak-motion {
+  animation: checkin-streak-card 2s linear infinite;
+}
+
+@keyframes checkin-streak-card {
+  0% { transform: translateY(-544px); }
+  10.15%, 100% { transform: translateY(0); }
 }
 
 .checkin-card-header {
@@ -326,6 +337,12 @@
   height: 5px;
   border-radius: 999px;
   background: rgba(13, 60, 125, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .checkin-card-main.figma-streak-motion {
+    animation: none;
+  }
 }
 
 /* Returning User Success Screen */
