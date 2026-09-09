@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   ArrowLeft, Check, CreditCard, Info, Link2, Play, QrCode, Rocket, Star, Sun, X,
 } from 'lucide-react'
@@ -208,9 +208,13 @@ function ConvertedSuccess({ points, onBack, onOpenGuide }) {
   )
 }
 
-export default function PointsFlow({ BankIcon, onOpenPointsGuide }) {
+export default function PointsFlow({ BankIcon, onOpenPointsGuide, onScreenChange }) {
   const [screen, setScreen] = useState('points')
   const [points, setPoints] = useState(INITIAL_POINTS)
+
+  useEffect(() => {
+    onScreenChange?.(screen)
+  }, [onScreenChange, screen])
 
   if (screen === 'convert') {
     return (

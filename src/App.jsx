@@ -1079,6 +1079,7 @@ export default function App() {
   const [selectedInviteNames, setSelectedInviteNames] = useState([])
   const [recentlyInvitedNames, setRecentlyInvitedNames] = useState([])
   const [networkInitialTab, setNetworkInitialTab] = useState('Contacts')
+  const [pointsScreen, setPointsScreen] = useState('points')
 
   const handleGoalAmountChange = (event) => {
     setGoalAmount(Number(event.target.value))
@@ -1448,7 +1449,11 @@ export default function App() {
               }}
             />
           ) : selectedNav === 'Points' ? (
-            <PointsFlow BankIcon={BankIcon} onOpenPointsGuide={() => setGuideTopic('points')} />
+            <PointsFlow
+              BankIcon={BankIcon}
+              onOpenPointsGuide={() => setGuideTopic('points')}
+              onScreenChange={setPointsScreen}
+            />
           ) : (
           <div className="dashboard-scroll" tabIndex={0} aria-label="Dashboard content">
             <div className="dashboard-content">
@@ -1728,7 +1733,7 @@ export default function App() {
           </div>
           )}
 
-          {!checkinFlowOpen && !(launchMode === 'first' && !introCompleted) && !(launchMode === 'first' && firstLaunchStage) && !reminderStage && !contactInviteStage && !(selectedNav === 'Network' && ['contacts', 'consent', 'sync-select', 'syncing', 'success', 'reward'].includes(networkStage)) && (
+          {!checkinFlowOpen && !(launchMode === 'first' && !introCompleted) && !(launchMode === 'first' && firstLaunchStage) && !reminderStage && !contactInviteStage && !(selectedNav === 'Network' && ['contacts', 'consent', 'sync-select', 'syncing', 'success', 'reward'].includes(networkStage)) && !(selectedNav === 'Points' && pointsScreen !== 'points') && (
           <nav className="bottom-bar" aria-label="Main navigation">
             {[
               { key: 'Home', icon: '/images/dashboard-home.svg' },
