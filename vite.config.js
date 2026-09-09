@@ -2,6 +2,6 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  base: process.env.GITHUB_ACTIONS ? '/referral-dashboard/' : '/',
+  base: process.env.GITHUB_ACTIONS ? '/referral-site/' : '/',
   plugins: [react()],
 })
