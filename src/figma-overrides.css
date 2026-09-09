@@ -349,12 +349,57 @@ input[type="file"] {
 .points-history-amount.spend { color: #0d3c7d; }
 
 .points-flow-scroll.convert {
+  inset: 47px 0 0;
+  z-index: 30;
+  overflow: hidden;
   padding: 0 0 24px;
 }
 
+.convert-points-hero {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  width: 390px;
+  height: 228px;
+  pointer-events: none;
+}
+
+.convert-points-guide-line {
+  position: absolute;
+  top: 155px;
+  left: 93.5px;
+  z-index: 1;
+  width: 213px;
+  height: 2px;
+  max-width: none;
+}
+
+.convert-points-person-frame {
+  position: absolute;
+  top: 0;
+  left: 30px;
+  z-index: 2;
+  width: 330px;
+  height: 228px;
+  overflow: hidden;
+}
+
+.convert-points-person-frame img {
+  position: absolute;
+  top: -10.83px;
+  left: -59.53px;
+  width: 464.54px;
+  height: 326.15px;
+  max-width: none;
+}
+
 .convert-receive-card {
-  height: 101px;
-  margin: 32px 12px 25px;
+  position: absolute;
+  top: 339px;
+  left: 24px;
+  width: 342px;
+  height: 130px;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -363,7 +408,7 @@ input[type="file"] {
   color: #0073bf;
   background: #eaf6fd;
   border: 1px solid #dedede;
-  border-radius: 20px;
+  border-radius: 24px;
 }
 
 .convert-receive-card span {
@@ -372,20 +417,23 @@ input[type="file"] {
 }
 
 .convert-receive-card strong {
-  font-size: 32px;
+  font-size: 38px;
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.7px;
 }
 
 .points-stepper {
+  position: absolute;
+  top: 500px;
+  left: 24px;
   width: 342px;
-  height: 48px;
-  margin: 0 auto 33px;
+  height: 56px;
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 4px;
+  padding: 8px;
   background: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 100px;
@@ -2809,6 +2857,12 @@ input[type="file"] {
   border-radius: 50%;
 }
 
+.points-stepper-button img {
+  width: 40px;
+  height: 40px;
+  max-width: none;
+}
+
 .reminder-share-options button:nth-child(1) img {
   background: #0073bf;
 }
@@ -3597,4 +3651,30 @@ input[type="file"] {
   margin: 0;
   border-radius: 14px;
   font-size: 16px;
+}
+
+/* Convert points — Figma node 926:355. */
+.points-flow-scroll.convert .points-stepper-button.muted,
+.points-flow-scroll.convert .points-stepper-button.primary {
+  background: transparent;
+}
+
+.points-flow-scroll.convert .points-range {
+  position: absolute;
+  top: 588px;
+  left: 24px;
+  width: 342px;
+  height: 32px;
+  margin: 0;
+}
+
+.points-flow-scroll.convert .convert-cta {
+  position: absolute;
+  top: 696px;
+  bottom: auto;
+  left: 24px;
+  width: 342px;
+  height: 56px;
+  margin: 0;
+  border-radius: 14px;
 }

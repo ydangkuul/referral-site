@@ -1,11 +1,13 @@
 import { useMemo, useState } from 'react'
 import {
-  ArrowLeft, Check, Info, Link2, Minus, Play, Plus, Rocket, Star, Sun, X,
+  ArrowLeft, Check, Info, Link2, Play, Rocket, Star, Sun, X,
 } from 'lucide-react'
 
 const POINT_VALUE = 1000
 const MIN_POINTS = 100
-const MAX_POINTS = 1245
+const MAX_POINTS = 2000
+const INITIAL_POINTS = 1245
+const assetUrl = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, '')}`
 
 function formatNumber(n) {
   return n.toLocaleString('en-US')
@@ -126,6 +128,13 @@ function ConvertPoints({ points, setPoints, onBack, onDone, onOpenGuide }) {
         </button>
       </header>
 
+      <div className="convert-points-hero" aria-hidden="true">
+        <img className="convert-points-guide-line" src={assetUrl('images/points-convert-line.svg')} alt="" />
+        <div className="convert-points-person-frame">
+          <img src={assetUrl('images/points-convert-linh.png')} alt="" />
+        </div>
+      </div>
+
       <section className="convert-receive-card">
         <span>You will receive</span>
         <strong>{formatVnd(amount)}</strong>
@@ -133,11 +142,11 @@ function ConvertPoints({ points, setPoints, onBack, onDone, onOpenGuide }) {
 
       <div className="points-stepper">
         <StepperButton label="Decrease points" onClick={() => setPoints((v) => Math.max(MIN_POINTS, v - 100))}>
-          <Minus size={18} />
+          <img src={assetUrl('images/points-convert-minus.svg')} alt="" />
         </StepperButton>
         <strong>{formatNumber(points)} pts</strong>
         <StepperButton label="Increase points" variant="primary" onClick={() => setPoints((v) => Math.min(MAX_POINTS, v + 100))}>
-          <Plus size={19} />
+          <img src={assetUrl('images/points-convert-plus.svg')} alt="" />
         </StepperButton>
       </div>
 
@@ -197,7 +206,7 @@ function ConvertedSuccess({ points, onBack, onOpenGuide }) {
 
 export default function PointsFlow({ BankIcon, onOpenPointsGuide }) {
   const [screen, setScreen] = useState('points')
-  const [points, setPoints] = useState(MAX_POINTS)
+  const [points, setPoints] = useState(INITIAL_POINTS)
 
   if (screen === 'convert') {
     return (
